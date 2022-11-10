@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load widget_tweaks %}
+{% load mathfilters %}
 {% load static %}
 
 {% block body %}
@@ -7,11 +9,28 @@
   <div class="col-md-12 col-lg-8">
     <!-- 본문 & 댓글 -->
     <div class="p-3 mb-4" style="border-radius: 0.5rem; box-shadow: 0px 0 10px 1px rgb(169 169 169 / 50%); background-color: white;">
-      <!-- 사진 영역 -->
-      <div>
-        {% if review.image %}
-        <img src="{{ review.image.url }}" alt="{{ review.image }}">
-        {% endif %}
+      <!-- carousel 사진 영역 -->
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+        <div class="carousel-indicators">
+          {% for photo in review.photo_set.all %}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter|sub:1|mod:photo_cnt }}" class="{% if forloop.counter == 1 %} active {% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter|mod:photo_cnt }}"></button>
+          {% endfor %}
+        </div>
+        <div class="carousel-inner">
+          {% for photo in review.photo_set.all %}
+            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" style="height: 500px">
+              <img src="{{ photo.image.url }}" class="d-block h-100 mx-auto" alt="{{ photo.image }}">
+            </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
 
       <!-- 제목 본문 태그 -->
@@ -102,4 +121,29 @@
     <p>댓글이 없어요 ㅠ_ㅠ</p>
 {% endfor %}
 </div>
+
+<script>
+  // 리뷰 좋아요
+  const btnArticleLike = document.querySelector('#btn-review-like')
+  btnArticleLike.addEventListener('click', event => {
+    const reviewId = event.target.dataset.articleId
+
+    axios({
+      method: 'get',
+      url: `review/${reviewId}/like/`
+    })
+    .then(response => {
+      if (response.data.isLiked === true) {
+        event.target.classList.add('bi-heart-fill', 'text-danger')
+        event.target.classList.remove('bi-heart', 'text-dark')
+      } else {
+        event.target.classList.add('bi-heart', 'text-dark')
+        event.target.classList.remove('bi-heart-fill', 'text-danger')
+      }
+      const reviewLikeCount = document.querySelector('#review-like-count')
+      reviewLikeCount.innerText = response.data.likeCount
+    })
+  })
+</script>
+
 {% endblock body %}

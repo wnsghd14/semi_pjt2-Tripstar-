@@ -1,5 +1,6 @@
-from .models import Article, Comment, Review
+from .models import *
 from django import forms
+from django.forms import ClearableFileInput
 
 class ArticleForm(forms.ModelForm):
     class Meta:
@@ -27,10 +28,18 @@ class ReviewForm(forms.ModelForm):
             "title",
             "content",
             "grade",
-            "image",
         ]
         
-        
+
+class PhotoForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = ("image",)
+        widgets = {
+            "image": ClearableFileInput(attrs={"multiple": True}),
+        }
+
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

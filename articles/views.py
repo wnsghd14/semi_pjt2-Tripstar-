@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ArticleForm, CommentForm, ReviewForm
-from .models import Article, Review, Comment, Review
+from .forms import ArticleForm, CommentForm, ReviewForm, PhotoForm
+from .models import Article, Review, Comment, Photo
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponseForbidden
 
@@ -77,19 +77,29 @@ def review_create(request,article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES)
-        # images = request.FILES.getlist("image")
+        photo_form = PhotoForm(request.POST, request.FILES)
+        images = request.FILES.getlist("image")
+
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.user = request.user
+            if len(images):
+                for image in images:
+                    image_instance = Photo(review=review, image=image)
+                    review.article = article
+                    review.save()
+                    image_instance.save()
             review.article = article
             review.save()
-            return redirect("articles:detail",article_pk)
+            return redirect("articles:detail", article_pk)
     else:
         review_form = ReviewForm()
+        photo_form = PhotoForm()
     context = {
         "review_form": review_form,
+        "photo_form": photo_form,
     }
-    return render(request, "articles/review_create.html", context=context)
+    return render(request, "articles/review_create.html", context)
 
 
 def review_detail(request, review_pk):
@@ -98,7 +108,8 @@ def review_detail(request, review_pk):
     context = {
         "review": review,
         "comment_form":comment_form,
-        "comments": review.comment_set.all()
+        "comments": review.comment_set.all(),
+        "photo_cnt": review.photo_set.count(),
     }
     return render(request, "articles/review_detail.html", context)
 
@@ -106,29 +117,47 @@ def review_detail(request, review_pk):
 def review_delete(request, review_pk):
     # article = Article.objects.get(pk=pk)
     review = Review.objects.get(pk=review_pk)
-    if request.user == review.user:
-        if request.method == "POST":
-            if request.user == review.user:
-                review.delete()
-                return redirect("articles:detail", review.article.pk)
-        else:
+    if request.method == "POST":
+        if request.user == review.user:
+            review.delete()
             return redirect("articles:detail", review.article.pk)
+    else:
+        return redirect("articles:detail", review.article.pk)
 
 
 def review_update(request, review_pk):
     # article = Article.objects.get(pk=pk)
     review = Review.objects.get(pk=review_pk)
+    photos = Photo.objects.filter(review_id=review.pk)
+    
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES, instance=review)
-        # images = request.FILES.getlist("image")
-        if review_form.is_valid():
+        photo_form = PhotoForm(request.POST, request.FILES)
+        images = request.FILES.getlist("image")
+
+        for photo in photos:
+            if photo.image:
+                photo.delete()
+        
+        if review_form.is_valid() and photo_form.is_valid():
             review = review_form.save(commit=False)
+            if len(images):
+                for image in images:
+                    image_instance = Photo(review=review, image=image)
+                    review.save()
+                    image_instance.save()
             review.save()
             return redirect("articles:review_detail", review.pk)
     else:
         review_form = ReviewForm(instance=review)
+        if photos:
+            photo_form = PhotoForm(instance=photos[0])
+        else:
+            photo_form = PhotoForm()
+
     context = {
         "review_form": review_form,
+        "photo_form": photo_form,
     }
     return render(request, "articles/review_create.html", context)
 
