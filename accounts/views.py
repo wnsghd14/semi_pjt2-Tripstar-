@@ -42,12 +42,12 @@ def logout(request):
     return redirect("articles:index")
 
 
-def profile(request, pk):
+def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     context = {
         "user": user,
     }
-    return render(request, "accounts/profile.html", context)
+    return render(request, "accounts/detail.html", context)
 
 
 @login_required
