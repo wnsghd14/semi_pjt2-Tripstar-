@@ -3,4 +3,10 @@
 {% load static %}
 {% block body %}
   <h1>articles/index</h1>
+  <a href="{% url 'articles:create' %}">게시글생성</a>
+  {% for article in articles %}
+  <div>
+    <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
+  </div>
+  {% endfor %}
 {% endblock body %}

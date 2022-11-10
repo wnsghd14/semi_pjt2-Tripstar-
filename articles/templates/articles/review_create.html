@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container my-5">
-  {% if request.resolver_match.url_name == 'create' %}
+  {% if request.resolver_match.url_name == 'review_create' %}
     <h1> 리뷰 작성하기 </h1>
   {% else %}
     <h1> 리뷰 수정하기 </h1>
