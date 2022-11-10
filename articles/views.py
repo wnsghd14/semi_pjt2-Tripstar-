@@ -3,6 +3,8 @@ from .forms import ArticleForm, CommentForm, ReviewForm
 from .models import Article, Review, Comment, Review
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponseForbidden
+from django.db.models import Q
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 def index(request):
@@ -167,3 +169,24 @@ def comment_delete(request, review_pk, comment_pk):
     else:
         return HttpResponseForbidden()
 
+def search(request):
+    articles = None
+    reviews = None
+    users = None
+    query = None
+    if "q" in request.GET:
+        query = request.GET.get("q")
+        articles = Article.objects.order_by("-pk").filter(
+            Q(title__contains=query) | Q(content__contains=query)
+        )
+        reviews = Review.objects.order_by("-pk").filter(
+            Q(title__contains=query) | Q(content__contains=query)
+        )
+        users = get_user_model().objects.order_by("-pk").filter(username__contains=query)
+    context = {
+        "query": query,
+        "articles": articles,
+        "reviews": reviews,
+        "users": users,
+    }
+    return render(request, "articles/search.html", context)
