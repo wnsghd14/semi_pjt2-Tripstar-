@@ -12,10 +12,25 @@
     {% bootstrap_css %}
     {% block css %}{% endblock css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    </head>
-    
-    <body>
-        
+
+
+  </head>
+
+  <body>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-4">
+                <a class="navbar-brand" style="font-size:30px;" href="#">Navbar</a>
+            </div>
+            <form class="d-flex col-4" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success btn-sm" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+            <div class="col-4 justify-content-end d-flex align-items-center" style="background-color:gray;">유저정보</div>
+        </div>
+        <div class="col text-center mt-3 bg-light fs-5">카테고리</div>
+    </div>
+    <hr>
     {% block body %}{% endblock body %}
     {% bootstrap_javascript %}
 
