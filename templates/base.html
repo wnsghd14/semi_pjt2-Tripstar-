@@ -13,6 +13,7 @@
     {% block css %}{% endblock css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+
   </head>
 
   <body>
@@ -32,8 +33,10 @@
     <hr>
     {% block body %}{% endblock body %}
     {% bootstrap_javascript %}
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     {% block script %}{% endblock script %}
+
   </body>
 
 </html>

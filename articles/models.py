@@ -21,12 +21,12 @@ class CategorySelect(models.IntegerChoices):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=100),
-    price = models.CharField(max_length=50),
-    content = models.TextField(),
-    category = models.IntegerField(default=CategorySelect.seven, choices=CategorySelect.choices),
-    created_at = models.DateTimeField(auto_now_add=True),
-    updated_at = models.DateTimeField(auto_now=True),
+    title = models.CharField(max_length=100)
+    price = models.CharField(max_length=50)
+    content = models.TextField()
+    category = models.IntegerField(default=CategorySelect.seven, choices=CategorySelect.choices)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     image = ProcessedImageField(upload_to='images/',null=True,
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',

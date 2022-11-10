@@ -1,5 +1,10 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block body %}
-
+  <h1>articles/update</h1>
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form article_form %}
+    {% bootstrap_button button_type="submit" content="OK" button_class="btn btn-primary" %}
+  </form>
 {% endblock body %}
