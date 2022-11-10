@@ -3,7 +3,15 @@
 {% load static %}
 {% block body %}
   <h1>articles/detail</h1>
+  <img src="{{ article.image.url }}" alt="">
   <h3>{{ article.title }}</h3>
-  <a href="{% url 'articles:update' articles_pk %}">수정</a>
-  <a href="{% url 'articles:delete' articles_pk %}">삭제</a>
+  <a href="{% url 'articles:update' article.pk %}">수정</a>
+  <a href="{% url 'articles:delete' article.pk %}">삭제</a>
+  <a href="{% url 'articles:review_create' article.pk %}">리뷰작성</a>
+  {% for review in reviews %}
+  <div>
+    <h5>{{ review.title }}</h5>
+    <a href="{% url 'articles:review_detail' review.pk %}">리뷰디테일</a>
+  </div>
+  {% endfor %}
 {% endblock body %}

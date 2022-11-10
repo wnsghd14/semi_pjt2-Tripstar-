@@ -32,7 +32,7 @@ class Article(models.Model):
                                 format='JPEG',
                                 options={'quality': 80})
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    like_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='article_like')
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='article_like')
 
 
 class GradeSelector(models.IntegerChoices):
@@ -44,9 +44,7 @@ class GradeSelector(models.IntegerChoices):
 
 
 class Review(models.Model):
-    articles = models.ForeignKey(Article,on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
     image = ProcessedImageField(upload_to='images/',null=True,
                                 processors=[ResizeToFill(400, 300)],
@@ -55,10 +53,12 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True),
     updated_at = models.DateTimeField(auto_now=True),
     grade = models.IntegerField(default=GradeSelector.five,choices=GradeSelector.choices)
-    like_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='review_like')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article,on_delete=models.CASCADE,related_name='review')
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='review_like')
 
 
 class Comment(models.Model):
+    content = models.TextField()
     review = models.ForeignKey(Review,on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField()
