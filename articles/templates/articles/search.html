@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block body %}
+  <div class="container">
+    <h1>검색결과</h1>
+    <h5>articles</h5>
+    <div class="row">
+      {% for article in articles %}
+        <div class="col-2">
+          <a class='text-decoration-none text-dark' href="{% url 'articles:detail' article.pk %}">
+            <img class='w-100 rounded' src="{{ article.image.url }}" alt="{{ article.image }}">
+            <p>{{ article.title }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <hr>
+    <h5>reviews</h5>
+    <div class="row">
+      {% for review in reviews %}
+        <div class="col-2">
+          <a href="{% url 'articles:review_detail' review.pk %}">
+            <img class='w-100 rounded' src="{{ review.image.url }}" alt="{{ review.image }}">
+            <p>{{ review.title }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <hr>
+    <h5>users</h5>
+    <div class="row">
+      {% for user in users %}
+        <div class="col-2">
+          <a href="{% url 'accounts:detail' user.pk %}">
+            <img class='w-100 rounded' src="{{ user.image.url }}" alt="{{ user.image }}">
+            <p>{{ user.usernmae }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock body %}
