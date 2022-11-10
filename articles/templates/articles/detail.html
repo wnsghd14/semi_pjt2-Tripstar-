@@ -10,7 +10,7 @@
   <a href="{% url 'articles:review_create' article.pk %}">리뷰작성</a>
   {% for review in reviews %}
   <div>
-    <h5>{{ review.title }}</h5>
+    <h5>{{review.tit }}</h5>
     <a href="{% url 'articles:review_detail' review.pk %}">리뷰디테일</a>
   </div>
   {% endfor %}

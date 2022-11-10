@@ -11,6 +11,7 @@ def index(request):
     }
     return render(request, 'articles/index.html', context)
 
+
 # @login_required
 def create(request):
     if request.method == "POST":
@@ -38,6 +39,7 @@ def detail(request, article_pk):
     }
     return render(request, 'articles/detail.html', context)
 
+
 # @login_required
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
@@ -58,6 +60,7 @@ def update(request, article_pk):
     # else:
     #     return redirect('articles:detail', articles_pk)
     
+
 # @login_required
 def delete(request, article_pk):
     if request.user.is_authenticated:
@@ -66,12 +69,14 @@ def delete(request, article_pk):
             article.delete()
     return redirect('articles:index')
 
+
 def review_index(request):
     reviews = Review.objects.order_by("-pk")
     context = {
         "reviews" : reviews,
     }
     return render(request, "articles/review_index.html", context)
+
 
 def review_create(request,article_pk):
     article = Article.objects.get(pk=article_pk)
@@ -148,6 +153,7 @@ def review_like(request, review_pk):
     }
     return JsonResponse(data)
     
+
 def comment_create(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     comment_form = CommentForm(request.POST)
@@ -157,6 +163,7 @@ def comment_create(request, review_pk):
         comment.user = request.user
         comment.save()
     return redirect("articles:review_detail", review_pk)
+
 
 def comment_delete(request, review_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
