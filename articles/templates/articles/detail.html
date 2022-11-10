@@ -1,5 +1,9 @@
+{% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
 {% block body %}
-
+  <h1>articles/detail</h1>
+  <h3>{{ article.title }}</h3>
+  <a href="{% url 'articles:update' articles_pk %}">수정</a>
+  <a href="{% url 'articles:delete' articles_pk %}">삭제</a>
 {% endblock body %}
