@@ -12,6 +12,12 @@
       {% endif %}
     </form>
   {% endif %}
+
+<h1>{{ user.username }}</h1>
+<p>{{ user.email }}</p>
+<p>{{ user.content }}</p>
+<a href="{% url 'accounts:delete' user.pk %}">회원탈퇴</a>
+
 {% endblock body %}
 
 {% block script %}
@@ -41,3 +47,4 @@
     }
   </script>
 {% endblock script %}
+
