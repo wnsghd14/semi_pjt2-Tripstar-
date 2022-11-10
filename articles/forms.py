@@ -1,4 +1,5 @@
-from .models import Article
+
+from .models import Article, Comment
 from django import forms
 
 class ArticleForm(forms.ModelForm):
@@ -18,3 +19,10 @@ class ArticleForm(forms.ModelForm):
             'category' : '카테고리',
             'image' : '이미지 업로드',
         }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content',]
+
