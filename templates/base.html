@@ -2,7 +2,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
+
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +12,16 @@
     {% bootstrap_css %}
     {% block css %}{% endblock css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
     </head>
+    
     <body>
         
     {% block body %}{% endblock body %}
     {% bootstrap_javascript %}
-</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {% block script %}{% endblock script %}
+
+  </body>
 
 </html>
