@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
+
 {% block body %}
   {% if request.user != user %}
     <form id='follow-form' data-user-id="{{ user.pk }}">
-      <button class='btn btn-sm' id='follow-btn'>팔로우</button>
+      {% if request.user in user.followers.all %}
+        <button type='submit' class='btn btn-sm' id='follow-btn'>언팔로우</button>
+      {% else %}
+        <button type='submit' class='btn btn-sm' id='follow-btn'>팔로우</button>
+      {% endif %}
     </form>
   {% endif %}
 {% endblock body %}
