@@ -1,5 +1,14 @@
+{% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
+
 {% block body %}
+
+<h1>회원 가입</h1>
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="submit" value="확인">
+</form>
 
 {% endblock body %}
