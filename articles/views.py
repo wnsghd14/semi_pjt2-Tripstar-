@@ -2,16 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse,HttpResponseForbidden
+from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 
 # Create your views here.
 def index(request):
-    context = {
-        'articles': Article.objects.all()
-    }
-    return render(request, 'articles/index.html', context)
+    context = {"articles": Article.objects.all()}
+    return render(request, "articles/index.html", context)
 
 
 @login_required
@@ -30,26 +28,26 @@ def create(request):
                     article.save()
                     image_instance.save()
             article.save()
-            return redirect('articles:index')
+            return redirect("articles:index")
     else:
         article_form = ArticleForm()
         article_photo_form = ArticlePhotoForm()
     context = {
-        'article_form': article_form,
-        'article_photo_form': article_photo_form,
+        "article_form": article_form,
+        "article_photo_form": article_photo_form,
     }
-    return render(request, 'articles/create.html', context)
+    return render(request, "articles/create.html", context)
 
 
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     reviews = Review.objects.filter(article=article)
     context = {
-        'article':article,
-        'reviews':reviews,
+        "article": article,
+        "reviews": reviews,
         "photo_cnt": article.articlephoto_set.count(),
     }
-    return render(request, 'articles/detail.html', context)
+    return render(request, "articles/detail.html", context)
 
 
 @login_required
@@ -70,7 +68,7 @@ def update(request, article_pk):
                     article.save()
                     image_instance.save()
             article.save()
-            return redirect('articles:detail', article_pk)
+            return redirect("articles:detail", article_pk)
     else:
         article_form = ArticleForm(instance=article)
         if photos:
@@ -78,14 +76,12 @@ def update(request, article_pk):
         else:
             article_photo_form = ArticlePhotoForm()
     context = {
-        'article_form' :article_form,
+        "article_form": article_form,
         "article_photo_form": article_photo_form,
     }
-    return render(request, 'articles/update.html', context)
+    return render(request, "articles/update.html", context)
     # 작성자가 아닐 경우
-    else:
-        return redirect('articles:detail', articles_pk)
-    
+
 
 # @login_required
 def delete(request, article_pk):
@@ -94,18 +90,18 @@ def delete(request, article_pk):
         if request.user == article.user:
             article.delete()
 
-    return redirect('articles:index')
+    return redirect("articles:index")
 
 
 def review_index(request):
     reviews = Review.objects.order_by("-pk")
     context = {
-        "reviews" : reviews,
+        "reviews": reviews,
     }
     return render(request, "articles/review_index.html", context)
 
 
-def review_create(request,article_pk):
+def review_create(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES)
@@ -139,7 +135,7 @@ def review_detail(request, review_pk):
     comment_form = CommentForm()
     context = {
         "review": review,
-        "comment_form":comment_form,
+        "comment_form": comment_form,
         "comments": review.comment_set.all(),
         "photo_cnt": review.reviewphoto_set.count(),
     }
@@ -161,12 +157,12 @@ def review_update(request, review_pk):
     # article = Article.objects.get(pk=pk)
     review = Review.objects.get(pk=review_pk)
     photos = ReviewPhoto.objects.filter(review_id=review_pk)
-    
+
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES, instance=review)
         review_photo_form = ReviewPhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
-        
+
         if review_form.is_valid() and review_photo_form.is_valid():
             review = review_form.save(commit=False)
             if len(images):
@@ -204,7 +200,7 @@ def review_like(request, review_pk):
         "likeCount": review.like_users.count(),
     }
     return JsonResponse(data)
-    
+
 
 def comment_create(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
@@ -220,7 +216,7 @@ def comment_create(request, review_pk):
 def comment_delete(request, review_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     if comment.user == request.user:
-        if request.method == 'POST':
+        if request.method == "POST":
             comment.delete()
             return redirect("reviews:review_detail", review_pk)
     else:
@@ -240,7 +236,9 @@ def search(request):
         reviews = Review.objects.order_by("-pk").filter(
             Q(title__contains=query) | Q(content__contains=query)
         )
-        users = get_user_model().objects.order_by("-pk").filter(username__contains=query)
+        users = (
+            get_user_model().objects.order_by("-pk").filter(username__contains=query)
+        )
     context = {
         "query": query,
         "articles": articles,

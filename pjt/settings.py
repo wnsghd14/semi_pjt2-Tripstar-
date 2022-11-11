@@ -31,20 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
-    'articles',
-    'service_center',
-    'django_bootstrap5',
-    'django_extensions',
-    'imagekit',
-    'widget_tweaks',
-    'mathfilters',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "accounts",
+    "articles",
+    "service_center",
+    "django_bootstrap5",
+    "django_extensions",
+    "imagekit",
+    "widget_tweaks",
+    "mathfilters",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
