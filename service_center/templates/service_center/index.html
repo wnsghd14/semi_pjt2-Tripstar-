@@ -1,9 +1,178 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1>고객 센터</h1>
-  <h3>
-    자주 묻는 질문</h3>
-  <p>궁금한 내용이 없으신가요?</p>
-  <a href="{% url 'service_center:question' %}" class="btn btn-outline-warning">문의하기</a>
+  <h1 class="my-">고객 센터</h1>
+  <h3 class="text-center">
+    자주 묻는 질문
+  </h3>
+
+  <!-- 자주 묻는 질문 아코디언 -->
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          [서비스]PC웹에서 게시판이 정상적으로 동작하지 않습니다.
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>게시판은 Chrome 및 Microsoft Edge 최신 버전을 지원합니다.</p>
+          <p>지원하지 않는 브라우저에서는 게시판이 정상적으로 동작하지 않거나 일부 기능 사용에 제약이 있을 수 있으니 양해 부탁드립니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          [서비스]작성자 외에도 게시글을 삭제할 수 있나요?
+        </button>
+      </h2>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>게시글 작성자 외에도 관리자 및 게시판 관리자는 관리 목적상 구성원이 작성한 글을 삭제할 수 있습니다.</p>
+          <p>게시글 작성자, 관리자 및 게시판 관리자를 제외한 사용자는 작성된 글을 삭제할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          [서비스]로그인 방법을 알려주세요.
+        </button>
+      </h2>
+      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>회원가입을 완료한 경우 : 트립스타 홈페이지 > 상단에 로그인(로그인 페이지 바로가기) > ID 입력 > 비밀번호 입력</p>
+          <p>회원가입을 완료하지 않은 경우 : 트립스타 홈페이지 > 상단에 회원가입(회원가입 페이지 바로가기) > 사용할 ID 입력 > 비밀번호 입력 > 비밀번호 확인 > 가입 > 서비스 이용</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading7">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse7" aria-expanded="false" aria-controls="flush-collapse7">
+          [실시간 항공권] 탑승자 이름을 변경할 수 있나요?
+        </button>
+      </h2>
+      <div id="flush-collapse7" class="accordion-collapse collapse" aria-labelledby="flush-heading7" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>
+            탑승객 영문명은 여권과 동일해야 합니다.<br>
+            [예약 확인]에서 변경 신청이 가능합니다.<br>
+            자세한 가이드는 아래 내용 확인 바랍니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading8">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse8" aria-expanded="false" aria-controls="flush-collapse8">
+          [실시간 항공권] 출국일/귀국일 예약변경 가능한가요?
+        </button>
+      </h2>
+      <div id="flush-collapse8" class="accordion-collapse collapse" aria-labelledby="flush-heading8" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>
+            출국일/귀국일 변경은 기존 예약을 취소하고 다시 예약 하시는 것을 권장합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading10">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse10" aria-expanded="false" aria-controls="flush-collapse10">
+          [여행/티켓] 현금 영수증 발행 가능 한가요?
+        </button>
+      </h2>
+      <div id="flush-collapse10" class="accordion-collapse collapse" aria-labelledby="flush-heading10" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>
+            여행/티켓 상품은 현금영수증을 오프라인에서 발급이 가능합니다.<br>
+            다만, 판매자가 해외 사업자인 경우, 국내 소득세법이 아닌 해외 법이 적용되기 때문에 현금영수증 발행을 하지 않습니다.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading9">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse9" aria-expanded="false" aria-controls="flush-collapse9">
+          [티켓] 티켓 취소 시 수수료 규정을 알고 싶어요.
+        </button>
+      </h2>
+      <div id="flush-collapse9" class="accordion-collapse collapse" aria-labelledby="flush-heading9" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>
+            상품에 따라 티켓 취소/환불규정이 다를 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading12">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse12" aria-expanded="false" aria-controls="flush-collapse12">
+          [티켓 문자] 티켓 구매 후 문자가 오지 않습니다.
+        </button>
+      </h2>
+      <div id="flush-collapse12" class="accordion-collapse collapse" aria-labelledby="flush-heading12" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>구매 확인 문자가 오지 않는 경우 구매자의 휴대폰 정보가 정확한 지 확인해 주십시오.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading6">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse6" aria-expanded="false" aria-controls="flush-collapse6">
+          [티켓 취소] 취소할 수 없는 경우가 있나요?
+        </button>
+      </h2>
+      <div id="flush-collapse6" class="accordion-collapse collapse" aria-labelledby="flush-heading6" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>사용 당일이나 이미 사용처리된 경우 취소되지 않을 수 있습니다.
+            <br>
+            자세한 내용은 상품페이지에서 [사용조건]을 확인해 주시기 바랍니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading5">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse5" aria-expanded="false" aria-controls="flush-collapse5">
+          [취소] 주문한 상품을 취소하고 싶은데 어떻게 해야 하나요?
+        </button>
+      </h2>
+      <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>
+            주문하신 상품은 마이페이지에서 쉽고 빠르게 취소 및 반품을 신청할 수 있습니다.
+          </p>
+
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading11">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse11" aria-expanded="false" aria-controls="flush-collapse11">
+          [취소 철회] 티켓상품 주문취소 신청했는데 철회하고 싶어요.
+        </button>
+      </h2>
+      <div id="flush-collapse11" class="accordion-collapse collapse" aria-labelledby="flush-heading11" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>티켓 상품의 경우 취소신청을 철회할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-heading4">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
+          [환불] 다른 사람 명의의 계좌로 환불받을 수 있나요?
+        </button>
+      </h2>
+      <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <p>
+            고객님 본인 명의의 계좌로만 환불이 가능합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-end">
+    <p>궁금한 내용이 없으신가요?</p>
+    <a href="{% url 'service_center:question' %}" class="btn btn-outline-warning">문의하기</a>
+  </div>
 {% endblock body %}
