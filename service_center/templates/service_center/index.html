@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>고객 센터</h1>
+  <h3>
+    자주 묻는 질문</h3>
+  <p>궁금한 내용이 없으신가요?</p>
+  <a href="{% url 'service_center:question' %}" class="btn btn-outline-warning">문의하기</a>
+{% endblock body %}

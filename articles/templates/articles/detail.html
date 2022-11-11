@@ -7,6 +7,7 @@
   <h3>{{ article.title }}</h3>
   <a href="{% url 'articles:update' article.pk %}">수정</a>
   <a href="{% url 'articles:delete' article.pk %}">삭제</a>
+
   <a href="{% url 'articles:review_create' article.pk %}">리뷰작성</a>
   {% for review in reviews %}
   <div>
@@ -14,4 +15,5 @@
     <a href="{% url 'articles:review_detail' review.pk %}">리뷰디테일</a>
   </div>
   {% endfor %}
+
 {% endblock body %}

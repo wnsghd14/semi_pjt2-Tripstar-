@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>나의 문의</h1>
+  <h3>{{ user.reverse_service.count }}개의 문의가 있습니다.</h3>
+  {% for question in user.reverse_service.all %}
+    <a href="{% url 'service_center:detail' question.pk %}" class="text-decoration-none text-dark">
+      <p>
+        {{ question.title }}
+        {% if not question.center.count %}
+          <span class="text-danger fw-bold">(아직 답변이 없습니다)</span>
+        {% endif %}
+      </p>
+    </a>
+  {% endfor %}
+{% endblock body %}

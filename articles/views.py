@@ -13,7 +13,7 @@ def index(request):
     }
     return render(request, 'articles/index.html', context)
 
-# @login_required
+@login_required
 def create(request):
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES)
@@ -40,32 +40,36 @@ def detail(request, article_pk):
     }
     return render(request, 'articles/detail.html', context)
 
-# @login_required
-def update(request, article_pk):
-    article = get_object_or_404(Article, pk=article_pk)
+
+@login_required
+def update(request, articles_pk):
+    article = get_object_or_404(Article, pk=articles_pk)
     # 로그인한 유저와 작성한 유저가 같다면
-    # if request.user == article.user:
-    if request.method == "POST":
-        article_form = ArticleForm(request.POST, request.FILES, instance=article)
-        if article_form.is_valid():
-            article_form.save()
-            return redirect('articles:detail', article_pk)
-    else:
-        article_form = ArticleForm(instance=article)
-    context = {
-        'article_form' :article_form,
-    }
-    return render(request, 'articles/update.html', context)
+    if request.user == article.user:
+        if request.method == "POST":
+            article_form = ArticleForm(request.POST, request.FILES, instance=article)
+            if article_form.is_valid():
+                article_form.save()
+                return redirect('articles:detail', articles_pk)
+        else:
+            article_form = ArticleForm(instance=article)
+        context = {
+            'article_form' :article_form,
+        }
+        return render(request, 'articles/update.html', context)
+
     # 작성자가 아닐 경우
-    # else:
-    #     return redirect('articles:detail', articles_pk)
+    else:
+        return redirect('articles:detail', articles_pk)
     
+
 # @login_required
 def delete(request, article_pk):
     if request.user.is_authenticated:
         article = get_object_or_404(Article, pk=article_pk)
         if request.user == article.user:
             article.delete()
+
     return redirect('articles:index')
 
 def review_index(request):
