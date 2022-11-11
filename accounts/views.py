@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -55,12 +55,12 @@ def detail(request, pk):
 def update(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST, request.FILES, instance=user)
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return redirect("accounts:profile", pk)
+            return redirect("accounts:detail", pk)
     else:
-        form = CustomUserCreationForm(instance=user)
+        form = CustomUserChangeForm(instance=user)
     context = {
         "form": form,
     }

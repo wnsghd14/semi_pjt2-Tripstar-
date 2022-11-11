@@ -40,9 +40,18 @@
       <h2>광주</h2>
     {% endif %}
   </div>
-  {% for region_article in region_articles %}
-    <a href="{% url 'articles:detail' region_article.pk %}">
-      <p>{{ region_article.title }}</p>
-    </a>
-  {% endfor %}
+  <div class="row">
+    {% for region_article in region_articles %}
+      <div class="col-3">
+        <div class="card" style="width: 18rem;">
+          <img src="{{ region_article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ region_article.image }}" style="height: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ region_article.title }}</h5>
+            <p>{{ region_article.price }}원</p>
+            <a href="{% url 'articles:detail' region_article.pk %}" class="btn btn-primary">더 보기</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock body %}
