@@ -1,17 +1,44 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load widget_tweaks %}
+{% load mathfilters %}
 {% load static %}
+
 {% block body %}
   <h1>articles/detail</h1>
-  <img src="{{ article.image.url }}" alt="">
+    <!-- carousel 사진 영역 -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-indicators">
+        {% for photo in article.articlephoto_set.all %}
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter|sub:1|mod:photo_cnt }}" class="{% if forloop.counter == 1 %} active {% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter|mod:photo_cnt }}"></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for photo in article.articlephoto_set.all %}
+          <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" style="height: 500px">
+            <img src="{{ photo.image.url }}" class="d-block h-100 mx-auto" alt="{{ photo.image }}">
+          </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
   <h3>{{ article.title }}</h3>
   <a href="{% url 'articles:update' article.pk %}">수정</a>
   <a href="{% url 'articles:delete' article.pk %}">삭제</a>
+
   <a href="{% url 'articles:review_create' article.pk %}">리뷰작성</a>
   {% for review in reviews %}
   <div>
-    <h5>{{ review.title }}</h5>
+    <h5>{{review.tit }}</h5>
     <a href="{% url 'articles:review_detail' review.pk %}">리뷰디테일</a>
   </div>
   {% endfor %}
+
 {% endblock body %}

@@ -1,23 +1,166 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% block body %}
-  {% if request.user != user %}
-    <form id='follow-form' data-user-id="{{ user.pk }}">
-      {% if request.user in user.followers.all %}
-        <button type='submit' class='btn btn-sm' id='follow-btn'>언팔로우</button>
-      {% else %}
-        <button type='submit' class='btn btn-sm' id='follow-btn'>팔로우</button>
-      {% endif %}
-    </form>
-  {% endif %}
 
-<h1>{{ user.username }}</h1>
-<p>{{ user.email }}</p>
-<p>{{ user.content }}</p>
-<a href="{% url 'accounts:delete' user.pk %}">회원탈퇴</a>
+    <div class="row">
+        <div class="col-12 border d-flex justify-content-between rounded-4">
+            <div class="rounded-circle ms-3 col-2 border border-4 border-opacity-25 d-flex justify-content-center flex-column ">
+                <img class="rounded-circle" src="{{ user.image.url }}" style="width:100%; height:100%;" alt="">
+            </div>
+            <div class="ms-5 col-7 mx-2 text-start border border-2 border-opacity-25 rounded-5">
+                <div>
+                    <h4 class="mx-2"><b> {{ user.username }} </b>
+                    <span>
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal"><i class=" bi bi-gear-wide"></i></a>
+                    </span>
+                    </h4>             
+                </div>
+                
+                <div class="mx-2">
+                    <span><b>게시물수</b></span>
+                    <span><a href=""></a>{{ review.count }}</span>
+                    <span><b>팔로워</b></span>
+                    <span><a href=""></a>{{ user.followers.count }}</span>
+                    <span><b>팔로잉</b></span>
+                    <span><a href=""></a>{{ user.followings.count }}</span>
+                </div>
+                <div>
+                    <p class="mx-2">{{ user.content }}</p>
+                    
+                </div>
+                {% if request.user != user %}
+                    <form class="mx-2" id='follow-form' data-user-id="{{ user.pk }}">
+                    {% csrf_token %}
+                    {% if request.user in user.followers.all %}
+                    <button type='submit' class='btn btn-sm btn-outline-info rounded-pill' id='follow-btn'>언팔로우</button>
+                    {% else %}
+                    <button type='submit' class='btn btn-sm btn-outline-info rounded-pill' id='follow-btn'>팔로우</button>
+                    {% endif %}
+                    </form>
+                    {% endif %}
+              
+            </div>
+        </div>
+    </div>
+    <div class="about text-center">
+        <span class="nick_name">리뷰목록</span>
+        <span class="book_mark">북마크</span>
+    </div>
 
+        <div class="mylist_contents contents_container active">
+            <div class="pic">
+                <a href="#"><img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"><img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+        </div>
+
+
+        <div class="bookmark_contents contents_container">
+            <div class="pic">
+                <a href="#"><img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"><img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+            <div class="pic">
+                <a href="#"> <img src="https://dummyimage.com/300x200/000/fff" alt=""></a>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">프로필수정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <a href="{% url 'accounts:update' user.pk %}">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            프로필수정
+                        </div>
+                    </div>
+                </a>
+                <div class="card text-center">
+                    <div class="card-body">
+                        뭐넣을까요?
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-body">
+                        ???!!!
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-body">
+                        ?!??!!!
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-body">
+                        ?!???!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock body %}
 
 {% block script %}
@@ -46,5 +189,58 @@
         })
     }
   </script>
-{% endblock script %}
+  <script>
+    $('#openCloseDiv').click(function () {
 
+        if ($('#noneDiv').css("display") == "none") {
+
+          $(".button-toggle").click(function (event) {
+            x = $(this).attr("href");
+            $("html, body")
+              .stop()
+              .animate({
+                scrollTop: $(x)
+                  .offset()
+                  .top = 10
+              }, 1000, "easeInOutExpo");
+          });
+
+          $('#noneDiv').show();
+
+        } else {
+          $('#noneDiv').hide();
+        }
+      });
+  </script>
+  <script>
+    const tapContainer = document.querySelector('.about');
+const flex_Container = document.querySelectorAll('.contents_container');
+const taps = document.querySelectorAll('.about > span');
+
+
+function openCity(e){
+    let elem = e.target;
+    
+    for (var i = 0; i < flex_Container.length; i++) {
+        flex_Container[i].classList.remove('active');
+        taps[i].classList.remove('on');
+    }
+    
+    if(elem.matches('[class="nick_name"]')){
+        
+        flex_Container[0].classList.add('active');
+        taps[0].classList.add('on');
+        
+    }else if(elem.matches('[class="book_mark"]')){
+        
+        flex_Container[1].classList.add('active');
+        taps[1].classList.add('on');
+        
+    }
+    
+}
+
+
+tapContainer.addEventListener('click', openCity);
+  </script>
+{% endblock script %}
