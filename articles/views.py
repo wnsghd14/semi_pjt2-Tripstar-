@@ -18,16 +18,25 @@ def index(request):
 def create(request):
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES)
+        article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
+        images = request.FILES.getlist("image")
         if article_form.is_valid():
             # accounts 연결 후에
             article = article_form.save(commit=False)
             article.user = request.user
-            article_form.save()
+            if len(images):
+                for image in images:
+                    image_instance = ArticlePhoto(article=article, image=image)
+                    article.save()
+                    image_instance.save()
+            article.save()
             return redirect('articles:index')
     else:
         article_form = ArticleForm()
+        article_photo_form = ArticlePhotoForm()
     context = {
-        'article_form':article_form,
+        'article_form': article_form,
+        'article_photo_form': article_photo_form,
     }
     return render(request, 'articles/create.html', context)
 
@@ -38,6 +47,7 @@ def detail(request, article_pk):
     context = {
         'article':article,
         'reviews':reviews,
+        "photo_cnt": article.articlephoto_set.count(),
     }
     return render(request, 'articles/detail.html', context)
 
@@ -45,17 +55,31 @@ def detail(request, article_pk):
 # @login_required
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
+    photos = ArticlePhoto.objects.filter(article_id=article_pk)
     # 로그인한 유저와 작성한 유저가 같다면
     # if request.user == article.user:
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES, instance=article)
-        if article_form.is_valid():
-            article_form.save()
+        article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
+        images = request.FILES.getlist("image")
+        if article_form.is_valid() and article_photo_form.is_valid():
+            article = article_form.save()(commit=False)
+            if len(images):
+                for image in images:
+                    image_instance = ArticlePhoto(article=article, image=image)
+                    article.save()
+                    image_instance.save()
+            article.save()
             return redirect('articles:detail', article_pk)
     else:
         article_form = ArticleForm(instance=article)
+        if photos:
+            article_photo_form = ArticlePhotoForm(instance=photos[0])
+        else:
+            article_photo_form = ArticlePhotoForm()
     context = {
         'article_form' :article_form,
+        "article_photo_form": article_photo_form,
     }
     return render(request, 'articles/update.html', context)
     # 작성자가 아닐 경우
@@ -135,16 +159,12 @@ def review_delete(request, review_pk):
 def review_update(request, review_pk):
     # article = Article.objects.get(pk=pk)
     review = Review.objects.get(pk=review_pk)
-    photos = ReviewPhoto.objects.filter(review_id=review.pk)
+    photos = ReviewPhoto.objects.filter(review_id=review_pk)
     
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES, instance=review)
         review_photo_form = ReviewPhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
-
-        for photo in photos:
-            if photo.image:
-                photo.delete()
         
         if review_form.is_valid() and review_photo_form.is_valid():
             review = review_form.save(commit=False)
@@ -154,7 +174,7 @@ def review_update(request, review_pk):
                     review.save()
                     image_instance.save()
             review.save()
-            return redirect("articles:review_detail", review.pk)
+            return redirect("articles:review_detail", review_pk)
     else:
         review_form = ReviewForm(instance=review)
         if photos:
