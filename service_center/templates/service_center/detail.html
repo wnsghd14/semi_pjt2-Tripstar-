@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block body %}
+  <h1>{{ question.title }}</h1>
+  <p>{{ question.content }}</p>
+  {% if question.image %}
+    <img src="{{ question.image.url }}" alt="{{ question.image }}">
+  {% endif %}
+  <div class="d-flex justify-content-end">
+    <a href="" class="btn btn-outline-warning">수정하기</a>
+  </div>
+  <!-- 운영자라면 -->
+  {% if user.is_superuser %}
+    <form action="{% url 'service_center:create_comment' question.pk %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      {% bootstrap_button button_type="submit" content="OK" button_class="btn btn-outline-primary" %}
+    </form>
+  {% endif %}
+  <hr>
+  <div class="my-4">
+    <h4 class="my-3">문의 답변</h3>
+    {% for comment in comments %}
+      <div>
+        <p>{{ comment.content }}</p>
+        {% if user.is_superuser %}
+          <a href="{% url 'service_center:delete_comment' comment.pk question.pk %}" class="btn btn-outline-danger">삭제</a>
+        {% endif %}
+      </div>
+      {% empty %}
+      <p>아직 답변이 없습니다.</p>
+    {% endfor %}
+  </div>
+{% endblock body %}
