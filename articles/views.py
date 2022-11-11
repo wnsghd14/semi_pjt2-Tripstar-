@@ -246,3 +246,12 @@ def search(request):
         "users": users,
     }
     return render(request, "articles/search.html", context)
+
+def region_index(request,article_category):
+    region_articles = Article.objects.filter(category=article_category)
+    
+    context = {
+        'region_articles':region_articles,
+        'article_category':article_category,
+    }
+    return render(request, 'articles/region_index.html', context)

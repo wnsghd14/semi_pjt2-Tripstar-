@@ -16,5 +16,6 @@ urlpatterns = [
     path("review/<int:review_pk>/like", views.review_like, name="review_like"),
     path('review/<int:review_pk>/comments/', views.comment_create, name='comment_create'),
     path("review/<int:review_pk>/comments/<int:comment_pk>/delete/",views.comment_delete, name="comment_delete"),
-    path("search/", views.search, name='search')
+    path("search/", views.search, name='search'),
+    path('<int:article_category>/region_index/', views.region_index, name="region_index"),
 ]

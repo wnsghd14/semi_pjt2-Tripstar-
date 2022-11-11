@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>지역별 카테고리 인덱스 페이지</h1>
+  <div class="text-center">
+    {% if article_category == 1 %}
+      <h2>경기도</h2>
+    {% endif %}
+    {% if article_category == 2 %}
+      <h2>강원도</h2>
+    {% endif %}
+    {% if article_category == 3 %}
+      <h2>제주도</h2>
+    {% endif %}
+    {% if article_category == 4 %}
+      <h2>경상도</h2>
+    {% endif %}
+    {% if article_category == 5 %}
+      <h2>전라도</h2>
+    {% endif %}
+    {% if article_category == 6 %}
+      <h2>충청도</h2>
+    {% endif %}
+    {% if article_category == 7 %}
+      <h2>서울</h2>
+    {% endif %}
+    {% if article_category == 8 %}
+      <h2>부산</h2>
+    {% endif %}
+    {% if article_category == 9 %}
+      <h2>인천</h2>
+    {% endif %}
+    {% if article_category == 10 %}
+      <h2>대전</h2>
+    {% endif %}
+    {% if article_category == 11 %}
+      <h2>대구</h2>
+    {% endif %}
+    {% if article_category == 12 %}
+      <h2>광주</h2>
+    {% endif %}
+  </div>
+  {% for region_article in region_articles %}
+    <a href="{% url 'articles:detail' region_article.pk %}">
+      <p>{{ region_article.title }}</p>
+    </a>
+  {% endfor %}
+{% endblock body %}
