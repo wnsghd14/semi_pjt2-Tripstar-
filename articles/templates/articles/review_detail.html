@@ -12,12 +12,12 @@
       <!-- carousel 사진 영역 -->
       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
         <div class="carousel-indicators">
-          {% for photo in review.photo_set.all %}
+          {% for photo in review.reviewphoto_set.all %}
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter|sub:1|mod:photo_cnt }}" class="{% if forloop.counter == 1 %} active {% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter|mod:photo_cnt }}"></button>
           {% endfor %}
         </div>
         <div class="carousel-inner">
-          {% for photo in review.photo_set.all %}
+          {% for photo in review.reviewphoto_set.all %}
             <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" style="height: 500px">
               <img src="{{ photo.image.url }}" class="d-block h-100 mx-auto" alt="{{ photo.image }}">
             </div>
@@ -48,9 +48,9 @@
             <div>
               {% if request.user.is_authenticated %}
                 {% if request.user in review.like_users.all %}
-                  <i id="btn-review-like" data-article-id="{{ review.pk }}" class="bi bi-heart-fill text-danger"></i>
+                  <i id="btn-review-like" data-review-id="{{ review.pk }}" class="bi bi-heart-fill text-danger"></i>
                 {% else %}
-                  <i id="btn-review-like" data-article-id="{{ review.pk }}" class="bi bi-heart text-dark"></i>
+                  <i id="btn-review-like" data-review-id="{{ review.pk }}" class="bi bi-heart text-dark"></i>
                 {% endif %}
               {% else %}
                 <a href="{% url 'accounts:login' %}"><i class="bi bi-heart"></i></a>
@@ -122,15 +122,16 @@
 {% endfor %}
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   // 리뷰 좋아요
-  const btnArticleLike = document.querySelector('#btn-review-like')
-  btnArticleLike.addEventListener('click', event => {
-    const reviewId = event.target.dataset.articleId
+  const btnReviewLike = document.querySelector('#btn-review-like')
+  btnReviewLike.addEventListener('click', event => {
+    const reviewId = event.target.dataset.reviewId
 
     axios({
       method: 'get',
-      url: `review/${reviewId}/like/`
+      url: `/articles/review/${reviewId}/like` 
     })
     .then(response => {
       if (response.data.isLiked === true) {

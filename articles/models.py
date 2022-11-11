@@ -35,6 +35,11 @@ class Article(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='article_like')
 
 
+class ArticlePhoto(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to="images/articles", blank=True, null=True)
+
+
 class GradeSelector(models.IntegerChoices):
     one = 1, '⭐'
     two = 2, '⭐⭐'
@@ -58,7 +63,7 @@ class Review(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='review_like')
 
 
-class Photo(models.Model):
+class ReviewPhoto(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="images/reviews", blank=True, null=True)
 

@@ -10,14 +10,24 @@ class ArticleForm(forms.ModelForm):
             'price',
             'content',
             'category',
-            'image',
         )
         labels = {
             'title': '제목',
             'price': '가격',
             'content': '내용',
             'category' : '카테고리',
-            'image' : '이미지 업로드',
+        }
+
+
+class ArticlePhotoForm(forms.ModelForm):
+    class Meta:
+        model = ArticlePhoto
+        fields = ("image",)
+        widgets = {
+            "image": ClearableFileInput(attrs={"multiple": True}),
+        }
+        labels = {
+            'image': '이미지 업로드',
         }
 
 
@@ -29,15 +39,25 @@ class ReviewForm(forms.ModelForm):
             "content",
             "grade",
         ]
+        labels = {
+            'title': '제목',
+            'content': '내용',
+            'grade' : '별점',
+        }
+
         
 
-class PhotoForm(forms.ModelForm):
+class ReviewPhotoForm(forms.ModelForm):
     class Meta:
-        model = Photo
+        model = ReviewPhoto
         fields = ("image",)
         widgets = {
             "image": ClearableFileInput(attrs={"multiple": True}),
         }
+        labels = {
+            'image': '이미지 업로드',
+        }
+
 
 
 class CommentForm(forms.ModelForm):
