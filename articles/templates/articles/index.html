@@ -7,87 +7,103 @@
 {% endblock css %}
 
 {% block body %}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
 
   <div class="container">
+
     {%if request.user.is_seller%}
       <div class="d-flex justify-content-end">
         <a href="{% url 'articles:create' %}" class="btn btn-outline-success">상품 등록</a>
       </div>
       {%endif%}
-      <!-- Swiper -->
-      <div class="my-5 swiper mySwiper" style="height:380px;">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="{% static 'images/경기도.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">경기도</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/강원도.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">강원도</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/제주도.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">제주도</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/경상도.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">경상도</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/전라도.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">전라도</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/충청도.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">충청도</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/서울.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">서울</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/부산.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">부산</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/인천.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">인천</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/대전.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">대전</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/대구.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">대구</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
-          <div class="swiper-slide">
-            <img src="{% static 'images/광주.jpg' %}" style="border-radius: 20px;">
-            <h3 class="main_image_text">광주</h3>
-            <a class="main_image_btn btn">둘러보기</a>
-          </div>
+    <!-- Swiper -->
+    <div class="my-5 swiper mySwiper" style="height:380px;">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="{% static 'images/경기도.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">경기도</h3>
+          <a class="main_image_btn btn " href="/articles/1/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/강원도.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">강원도</h3>
+          <a class="main_image_btn btn" href="/articles/2/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/제주도.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">제주도</h3>
+          <a class="main_image_btn btn" href="/articles/3/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/경상도.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">경상도</h3>
+          <a class="main_image_btn btn" href="/articles/4/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/전라도.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">전라도</h3>
+          <a class="main_image_btn btn" href="/articles/5/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/충청도.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">충청도</h3>
+          <a class="main_image_btn btn" href="/articles/6/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/서울.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">서울</h3>
+          <a class="main_image_btn btn" href="/articles/7/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/부산.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">부산</h3>
+          <a class="main_image_btn btn" href="/articles/8/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/인천.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">인천</h3>
+          <a class="main_image_btn btn" href="/articles/9/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/대전.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">대전</h3>
+          <a class="main_image_btn btn" href="/articles/10/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/대구.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">대구</h3>
+          <a class="main_image_btn btn" href="/articles/11/region_index/">둘러보기</a>
+        </div>
+        <div class="swiper-slide">
+          <img src="{% static 'images/광주.jpg' %}" style="border-radius: 20px;">
+          <h3 class="main_image_text">광주</h3>
+          <a class="main_image_btn btn" href="/articles/1/region_index/">둘러보기</a>
         </div>
       </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
 
-      <!-- slide -->
-      <div class="mb-5">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <!-- slide -->
+  <div class="mb-5">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img style="height:300px; width:100%;" src="{% static 'images/야경.jpg' %}" class="d-block">
+        </div>
+        <div class="carousel-item">
+          <img style="height:300px; width:100%;" src="{% static 'images/해운대.jpg' %}" class="d-block">
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img style="height:300px; width:100%;" src="{% static 'images/야경.jpg' %}" class="d-block">
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -133,27 +149,28 @@
         <div class="swiper-button-prev"></div>
         <div class="swiper-pagination"></div>
       </div>
+  </div>
 
-      <!-- Swiper JS -->
-      <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-      <!-- Initialize Swiper -->
-      <script>
-        var swiper = new Swiper(".mySwiper", {
-          slidesPerView: 4,
-          spaceBetween: 28,
-          slidesPerGroup: 4,
-          loop: true,
-          loopFillGroupWithBlank: true,
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true
-          },
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev"
-          }
-        });
-      </script>
-
-    {% endblock body %}
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 4,
+    spaceBetween: 28,
+    slidesPerGroup: 4,
+    loop: true,
+    loopFillGroupWithBlank: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script>
+    
+{% endblock body %}
