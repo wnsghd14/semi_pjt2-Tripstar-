@@ -1,137 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
 {% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Swiper demo</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
-    />
-    <!-- Link Swiper's CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
-    />
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock css %}
 
-    <!-- Demo styles -->
-    <style>
-      html,
-      body {
-        position: relative;
-        height: 100%;
-      }
+{% block body %}
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+  />
 
-      body {
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color: #000;
-        margin: 0;
-        padding: 0;
-      }
-
-      .swiper {
-        width: 100%;
-        height: 100%;
-      }
-
-      .swiper-slide {
-        font-size: 18px;
-        background: #fff;
-
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-      }
-
-      .swiper-slide img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 15px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- navbar -->
-    <div class="container mt-3">
-      <div class="row">
-          <div class="col-4">
-              <a class="navbar-brand" style="font-size:30px;" href="{% url 'articles:index' %}">Navbar</a>
+  <div class="container">
+    <!-- Swiper -->
+    <div class="my-5 swiper mySwiper" style="height: 420px;">
+      <div class="swiper-wrapper" style="height: 370px;">
+        {% for article in articles %}
+        <div class="swiper-slide">         
+          {% if article.articlephoto_set.all.0.image %}
+          <img src="{{ article.articlephoto_set.all.0.image.url }}"> 
+          {% endif %}
+          <div class="card-img-overlay p-3">
+            <h4 class="fw-bold" style="color:white; line-height:90px; font-size:30px;">{{ article.title }}</h4>
+            <a class="btn" style="bottom: 30px; position: absolute; background-color: white; border: 1px solid white;">둘러보기</a>
           </div>
-          <form class="d-flex col-4" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success btn-sm" type="submit"><i class="bi bi-search"></i></button>
-          </form>
-          <div class="col-4 justify-content-end d-flex align-items-center" style="background-color:gray;">유저정보</div>
+        </div>
+        {% endfor %}
       </div>
-      <div class="col text-center mt-3 bg-light fs-5">카테고리</div>
+      <div class="swiper-pagination"></div>
     </div>
 
-    <hr>
-
-    <div class="container">
-      <!-- Swiper -->
-      <div class="my-5 swiper mySwiper" style="height: 420px;">
-        <div class="swiper-wrapper" style="height: 370px;">
-          {% for article in articles %}
-          <div class="swiper-slide">         
-            {% if article.articlephoto_set.all.0.image %}
-            <img src="{{ article.articlephoto_set.all.0.image.url }}"> 
-            {% endif %}
-            <div class="card-img-overlay p-3">
-              <h4 class="fw-bold" style="color:white; line-height:90px; font-size:30px;">{{ article.title }}</h4>
-              <a class="btn" style="bottom: 30px; position: absolute; background-color: white; border: 1px solid white;">둘러보기</a>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        <div class="swiper-pagination"></div>
+ <!-- slide -->
+ <div class="mb-5" style="height:300px;">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
-
-      <!-- slide -->
-      <div class="mb-5" style="height:300px;">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://dummyimage.com/300x200/000/fff" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="https://dummyimage.com/300x200/000/fff" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="https://dummyimage.com/300x200/000/fff" class="d-block w-100" alt="...">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://dummyimage.com/600x400/000/fff" class="d-block w-100" alt="...">
         </div>
+        <div class="carousel-item">
+          <img src="https://dummyimage.com/600x400/000/fff" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://dummyimage.com/600x400/000/fff" class="d-block w-100" alt="...">
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
 
     <!-- Swiper JS -->
@@ -148,5 +76,6 @@
         },
       });
     </script>
-  </body>
-</html>
+    
+{% endblock body %}
+  
