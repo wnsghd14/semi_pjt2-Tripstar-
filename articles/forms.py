@@ -21,6 +21,15 @@ class ArticleForm(forms.ModelForm):
         }
 
 
+class ArticlePhotoForm(forms.ModelForm):
+    class Meta:
+        model = ArticlePhoto
+        fields = ("image",)
+        widgets = {
+            "image": ClearableFileInput(attrs={"multiple": True}),
+        }
+
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
@@ -31,9 +40,9 @@ class ReviewForm(forms.ModelForm):
         ]
         
 
-class PhotoForm(forms.ModelForm):
+class ReviewPhotoForm(forms.ModelForm):
     class Meta:
-        model = Photo
+        model = ReviewPhoto
         fields = ("image",)
         widgets = {
             "image": ClearableFileInput(attrs={"multiple": True}),
