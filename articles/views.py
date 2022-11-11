@@ -63,7 +63,7 @@ def update(request, article_pk):
         article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
         if article_form.is_valid() and article_photo_form.is_valid():
-            article = article_form.save()(commit=False)
+            article = article_form.save(commit=False)
             if len(images):
                 for image in images:
                     image_instance = ArticlePhoto(article=article, image=image)
@@ -83,8 +83,8 @@ def update(request, article_pk):
     }
     return render(request, 'articles/update.html', context)
     # 작성자가 아닐 경우
-    else:
-        return redirect('articles:detail', articles_pk)
+    # else:
+    #     return redirect('articles:detail', articles_pk)
     
 
 # @login_required
@@ -95,6 +95,22 @@ def delete(request, article_pk):
             article.delete()
 
     return redirect('articles:index')
+
+
+@login_required
+def like(request, pk):
+    article = Article.objects.get(pk=pk)
+    if article.like_users.filter(id=request.user.id).exists():
+        article.like_users.remove(request.user)
+        is_liked = False
+    else:
+        article.like_users.add(request.user)
+        is_liked = True
+    context = {
+        'isLiked': is_liked,
+        'likeCount': article.like_users.count()
+    }
+    return JsonResponse(context)
 
 
 def review_index(request):
