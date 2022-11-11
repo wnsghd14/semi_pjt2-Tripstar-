@@ -6,11 +6,13 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 
+region = {"1":'경기도', "2":'강원도', '3':'제주도', '4':'경상도', '5':'전라도', '6':'충청도', '7':'서울', '8':'부산', '9':'인천', '10':'대전', '11':'대구', '12':'광주'}
 # Create your views here.
 def index(request):
-    context = {"articles": Article.objects.all()}
+    
+    context = {"articles": Article.objects.all(), 'region':region,}
     return render(request, "articles/index.html", context)
-
+print(CategorySelect)
 
 @login_required
 def create(request):
@@ -61,7 +63,7 @@ def update(request, article_pk):
         article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
         if article_form.is_valid() and article_photo_form.is_valid():
-            article = article_form.save()(commit=False)
+            article = article_form.save(commit=False)
             if len(images):
                 for image in images:
                     image_instance = ArticlePhoto(article=article, image=image)
@@ -81,7 +83,9 @@ def update(request, article_pk):
     }
     return render(request, "articles/update.html", context)
     # 작성자가 아닐 경우
-
+    # else:
+    #     return redirect('articles:detail', articles_pk)
+    
 
 # @login_required
 def delete(request, article_pk):
@@ -91,6 +95,22 @@ def delete(request, article_pk):
             article.delete()
 
     return redirect("articles:index")
+
+
+@login_required
+def like(request, pk):
+    article = Article.objects.get(pk=pk)
+    if article.like_users.filter(id=request.user.id).exists():
+        article.like_users.remove(request.user)
+        is_liked = False
+    else:
+        article.like_users.add(request.user)
+        is_liked = True
+    context = {
+        'isLiked': is_liked,
+        'likeCount': article.like_users.count()
+    }
+    return JsonResponse(context)
 
 
 def review_index(request):
