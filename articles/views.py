@@ -6,11 +6,13 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 
+region = {"1":'경기도', "2":'강원도', '3':'제주도', '4':'경상도', '5':'전라도', '6':'충청도', '7':'서울', '8':'부산', '9':'인천', '10':'대전', '11':'대구', '12':'광주'}
 # Create your views here.
 def index(request):
-    context = {"articles": Article.objects.all()}
+    
+    context = {"articles": Article.objects.all(), 'region':region,}
     return render(request, "articles/index.html", context)
-
+print(CategorySelect)
 
 @login_required
 def create(request):
