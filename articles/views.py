@@ -14,7 +14,7 @@ def index(request):
     return render(request, 'articles/index.html', context)
 
 
-# @login_required
+@login_required
 def create(request):
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES)
@@ -52,7 +52,7 @@ def detail(request, article_pk):
     return render(request, 'articles/detail.html', context)
 
 
-# @login_required
+@login_required
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     photos = ArticlePhoto.objects.filter(article_id=article_pk)
@@ -83,8 +83,8 @@ def update(request, article_pk):
     }
     return render(request, 'articles/update.html', context)
     # 작성자가 아닐 경우
-    # else:
-    #     return redirect('articles:detail', articles_pk)
+    else:
+        return redirect('articles:detail', articles_pk)
     
 
 # @login_required
@@ -93,6 +93,7 @@ def delete(request, article_pk):
         article = get_object_or_404(Article, pk=article_pk)
         if request.user == article.user:
             article.delete()
+
     return redirect('articles:index')
 
 
