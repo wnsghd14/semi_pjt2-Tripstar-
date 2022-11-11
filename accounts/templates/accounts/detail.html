@@ -25,7 +25,7 @@
                     <span><b>팔로워</b></span>
                     <span><a href=""></a>{{ user.followers.count }}</span>
                     <span><b>팔로잉</b></span>
-                    <span><a href=""></a>{{ user.followings.count }}</span>
+                    <span><a href=""></a>{{ user.followings.all|length }}</span>
                 </div>
                 <div>
                     <p class="mx-2">{{ user.content }}</p>
