@@ -58,6 +58,11 @@ class Review(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='review_like')
 
 
+class Photo(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to="images/reviews", blank=True, null=True)
+
+
 class Comment(models.Model):
     content = models.TextField()
     review = models.ForeignKey(Review,on_delete=models.CASCADE)
