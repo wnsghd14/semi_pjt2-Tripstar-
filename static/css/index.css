@@ -1,11 +1,10 @@
 html,
 body {
   position: relative;
-  height: 100%;
+  height: 3000px;
 }
 
 body {
-  background: #eee;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #000;
@@ -19,9 +18,7 @@ body {
 }
 
 .swiper-slide {
-  text-align: center;
   font-size: 18px;
-  background: #fff;
 
   /* Center slide text vertically */
   display: -webkit-box;
@@ -45,14 +42,26 @@ body {
   object-fit: cover;
 }
 
-.main_image {
-  position: relative;
-}
-
 .main_image_text {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate( -50%, -50% );
+  top: 10%;
+  left: 1.5rem;
   color: white;
+}
+
+.main_image_btn {
+  position: absolute;
+  bottom: 2rem;
+  left: 1.5rem;
+  color: black;
+  background-color: white;
+}
+
+.main_image_btn:hover {
+  position: absolute;
+  bottom: 2rem;
+  left: 1.5rem;
+  color: white;
+  background-color: black;
+  border: 1px solid black;
 }

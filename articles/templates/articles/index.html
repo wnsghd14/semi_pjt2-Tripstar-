@@ -9,99 +9,144 @@
 {% block body %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
 
-  <div class="container">
-    <!-- Swiper -->
-    <div class="my-5 swiper mySwiper" style="height:400px;">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <div class="main_image">
-            <img src="{% static 'images/경기도.jpg' %}">
-            <h4 class="main_image_text">경기도</h4>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/강원도.jpg' %}">
-          <h4 class="main_image_text">강원도</h4>
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/제주도.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/경상도.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/전라도.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/충청도.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/서울.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/부산.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/인천.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/대전.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/대구.jpg' %}">
-        </div>
-        <div class="swiper-slide">
-          <img src="{% static 'images/광주.jpg' %}">
-        </div>
+<div class="container">
+  <!-- Swiper -->
+  <div class="my-5 swiper mySwiper" style="height:380px;">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">  
+        <img src="{% static 'images/경기도.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">경기도</h3>
+        <a class="main_image_btn btn">둘러보기</a>      
       </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
-    </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/강원도.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">강원도</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/제주도.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">제주도</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/경상도.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">경상도</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/전라도.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">전라도</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/충청도.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">충청도</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/서울.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">서울</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/부산.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">부산</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/인천.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">인천</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/대전.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">대전</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/대구.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">대구</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/광주.jpg' %}" style="border-radius: 20px;">
+        <h3 class="main_image_text">광주</h3>
+        <a class="main_image_btn btn">둘러보기</a> 
+      </div>
 
-    <!-- slide -->
-    <div class="mb-5">
-      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <!-- slide -->
+  <div class="mb-5">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img style="height:300px; width:100%;" src="{% static 'images/야경.jpg' %}" class="d-block">
         </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img style="height:300px; width:100%;" src="{% static 'images/롯데월드.jpg' %}" class="d-block">
-          </div>
-          <div class="carousel-item">
-            <img style="height:300px; width:100%;" src="{% static 'images/해운대.jpg' %}" class="d-block">
-          </div>
-          <div class="carousel-item">
-            <img style="height:300px; width:100%;" src="https://dummyimage.com/1060X280/000/fff" class="d-block">
-          </div>
+        <div class="carousel-item">
+          <img style="height:300px; width:100%;" src="{% static 'images/해운대.jpg' %}" class="d-block">
+        </div>
+        <div class="carousel-item">
+          <img style="height:300px; width:100%;" src="{% static 'images/일몰.jpg' %}" class="d-block">
         </div>
       </div>
     </div>
   </div>
 
+  <!-- card slide -->
+  <div class="my-5 swiper mySwiper">
+    <div class="swiper-wrapper">
+      {% for article in articles %}
+      <div class="swiper-slide">
+        <div class="row">
+          <div class="p-0 col lg-4">
+            <div class="card">
+              <div class="card-img">
+                {% if article.photo_set.all.0.image %}
+                <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
+                {% else %}
+                <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
+                {% endif %}
+              </div>
+              <div class="card-body">
+                <span>{{ article.title }}</span>
+                <h4 class="pt-1 pb-2">[{{ article.title }}]{{ article.content }}</h4>
+                <span>{{ article.price }}</span>       
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Initialize Swiper -->
-  <script>
-    var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 4,
-      spaceBetween: 30,
-      slidesPerGroup: 3,
-      loop: true,
-      loopFillGroupWithBlank: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
-    });
-  </script>
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 4,
+    spaceBetween: 28,
+    slidesPerGroup: 4,
+    loop: true,
+    loopFillGroupWithBlank: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script>
 
 {% endblock body %}
