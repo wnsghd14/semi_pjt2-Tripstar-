@@ -122,7 +122,9 @@
 {% endfor %}
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% endblock body %}
+
+{% block script %}
 <script>
   // 리뷰 좋아요
   const btnReviewLike = document.querySelector('#btn-review-like')
@@ -131,7 +133,7 @@
 
     axios({
       method: 'get',
-      url: `/articles/review/${reviewId}/like` 
+      url: `/articles/review/${reviewId}/like/` 
     })
     .then(response => {
       if (response.data.isLiked === true) {
@@ -146,5 +148,4 @@
     })
   })
 </script>
-
-{% endblock body %}
+{% endblock script %}
