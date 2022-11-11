@@ -91,8 +91,8 @@
         <div class="swiper-wrapper" style="height: 370px;">
           {% for article in articles %}
           <div class="swiper-slide">         
-            {% if article.image %}
-            <img src="{{ article.image.url }}"> 
+            {% if article.articlephoto_set.all.0.image %}
+            <img src="{{ article.articlephoto_set.all.0.image.url }}"> 
             {% endif %}
             <div class="card-img-overlay p-3">
               <h4 class="fw-bold" style="color:white; line-height:90px; font-size:30px;">{{ article.title }}</h4>
