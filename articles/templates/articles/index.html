@@ -126,7 +126,7 @@
             <div class="swiper-slide">
               <div class="row">
                 <div class="p-0 col lg-4">
-                  <div class="card">
+                  <div class="card" style="overflow: hidden;">
                     <div class="card-img">
                       {% if article.photo_set.all.0.image%}
                         <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
@@ -135,9 +135,11 @@
                       {% endif %}
                     </div>
                     <div class="card-body">
-                      <span>{{ article.title }}</span>
-                      <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
-                      <span>{{ article.price }}</span>
+                        <div class="card-text">
+                        <span>{{ article.title }}</span>
+                        <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
+                        <span>{{ article.price }}</span>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -157,9 +159,6 @@
 <!-- Initialize Swiper -->
 <script>
   var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 4,
-    spaceBetween: 28,
-    slidesPerGroup: 4,
     loop: true,
     loopFillGroupWithBlank: true,
     pagination: {
@@ -170,6 +169,28 @@
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
+    breakpoints: {
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        780:{
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        994: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+        1400: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+        }
+      },
   });
 </script>
     
