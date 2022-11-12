@@ -33,27 +33,27 @@
         </div>
       </div>
 
-      <!-- slide -->
-      <div class="mb-5">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img style="height:300px; width:100%;" src="{% static 'images/야경.jpg' %}" class="d-block">
-            </div>
-            <div class="carousel-item">
-              <img style="height:300px; width:100%;" src="{% static 'images/해운대.jpg' %}" class="d-block">
-            </div>
-            <div class="carousel-item">
-              <img style="height:300px; width:100%;" src="{% static 'images/일몰.jpg' %}" class="d-block">
-            </div>
-          </div>
+  <!-- slide -->
+  <div class="mb-5">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img style="height:300px; width:100%;" src="{% static 'images/야경.jpg' %}" class="d-block">
+        </div>
+        <div class="carousel-item">
+          <img style="height:300px; width:100%;" src="{% static 'images/해운대.jpg' %}" class="d-block">
+        </div>
+        <div class="carousel-item">
+          <img style="height:300px; width:100%;" src="{% static 'images/일몰.jpg' %}" class="d-block">
         </div>
       </div>
+    </div>
+  </div>
 
       <!-- card slide -->
       <div class="my-5 swiper mySwiper">
@@ -75,48 +75,21 @@
                         <span>{{ article.title }}</span>
                         <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
                         <span>{{ article.price }}</span>
-                        </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- card slide -->
-          <div class="my-5 swiper mySwiper">
-            <div class="swiper-wrapper">
-              {% for article in articles %}
-                <div class="swiper-slide">
-                  <div class="row">
-                    <div class="p-0 col lg-4">
-                      <div class="card">
-                        <div class="card-img">
-                          {% if article.photo_set.all.0.image%}
-                            <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
-                          {% else %}
-                            <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
-                          {% endif %}
-                        </div>
-                        <div class="card-body">
-                          <span>{{ article.title }}</span>
-                          <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
-                          <span>{{ article.price }}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
-          </div>
+            {% endfor %}
+           </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
         </div>
+      </div>
 
-        <!-- Swiper JS -->
-        <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 <!-- Initialize Swiper -->
 <script>
