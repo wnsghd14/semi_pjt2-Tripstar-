@@ -5,7 +5,13 @@
 {% load static %}
 
 {% block body %}
-  <h1>articles/detail</h1>
+<div class="d-flex">
+  <!-- 제목, 사진 -->
+  <!-- <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12"> -->
+  <article style="width: 70%;">
+    <div class="my-4">
+      <h1 style="font-size: 30px"><h3>{{ article.title }}</h3></h1>
+    </div>
     <!-- carousel 사진 영역 -->
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-indicators">
@@ -29,16 +35,112 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  <h3>{{ article.title }}</h3>
-  <a href="{% url 'articles:update' article.pk %}">수정</a>
-  <a href="{% url 'articles:delete' article.pk %}">삭제</a>
+    <div class="my-5">
+      {{ article.content }}
+    </div>
+    <div class="my-3 d-flex justify-content-between">
+      <h3>여행 후기</h3>
+      <a href="{% url 'articles:review_create' article.pk %}" class="btn btn-outline-secondary">후기 작성</a>
+    </div>
+    <div class="row pb-5">
+      {% for review in reviews %}
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 p-3">
+          <a href="{% url 'articles:review_detail' review.pk %}">
+            <div class="card">
+              <!-- 첫 번째 이미지를 썸네일로 -->
+              {% if review.reviewphoto_set.all.0.image %}
+                <img src="{{ review.reviewphoto_set.all.0.image.url }}" class="card-img-top" alt="..." width="200px">
+              {% else %}
+                <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" class="card-img-top" width="200px">
+              {% endif %}
+  
+              <div class="card-body d-flex flex-column justify-content-between p-2" style="height: 8rem">
+                <!-- 유저 -->
+                <div class="mb-2">
+                  <a href="{% url 'accounts:detail' review.user.pk %}" class="text-dark">
+                    {% if review.user.profile.image %}
+                      <img src="{{ review.user.profile.image.url }}" alt="{{ review.user.profile.image }}" class="rounded-2 border border-1" width="40px">
+                    {% else %}
+                      <img src="{% static 'images/dummy-image-square.jpg' %}" alt="" class="rounded-2 border border-1" width="40px">
+                    {% endif %}
+                    <span class="ms-2">{{ review.user.username }}</span>
+                  </a>
+                </div>
+  
+                <a href="{% url 'articles:review_detail' review.pk %}"><h5 class="card-title card-title-text mb-2">{{ review.title }}</h5></a>
+  
+                <!-- 좋아요, 댓글 -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="text-muted fs-6">
+                    <i class="bi bi-heart"></i>
+                      <span>{{ review.like_users.count }}</span>
+                    <span class="bi bi-chat-dots-fill mx-3"> 
+                      <span>{{ review.comment_set.all.count }}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+    
+  <!-- 상세 정보 -->
+  <!-- <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12"> -->
+  <aside class="ms-4" style="width: 30%;">
+    <div style="position: sticky; top: 30px;">
+      <div class="p-4 my-4 d-flex flex-column aside-box">
+        <h3 class="mb-3" style="font-size: 22px">{{ article.price }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
+        <button type="button" class="btn btn-primary mb-2">예약하기</button>
+        {% if request.user.is_authenticated %}
+          {% if request.user in article.like_users.all %}
+           <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart-fill btn btn-outline-primary mb-2 " style="font-style: normal;"> 위시리스트</i>
+          {% else %}
+            <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart btn btn-outline-primary mb-2" style="font-style: normal;"> 위시리스트</i>
+          {% endif %}
+        {% else %}
+        <a href="#" class="btn btn-outline-primary mb-2"><i class="bi bi-heart"><span id="like-count"> {{ article.like_users.count }}</span></i></a>
+        {% endif %}
+        <p class="text-muted text-center" style="font-size: 15px"><span class="ms-1" id="like-count">{{ article.like_users.count }}</span><span>명이 위시리스트에 담은 상품</span></p>
+      </div>
+      <div class="d-flex justify-content-end">
+        <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary me-2">수정</a>
+        <a href="{% url 'articles:delete' article.pk %}" class="btn btn-outline-danger">삭제</a>
+      </div>
+    </div>
+  </aside> 
+</div>
 
-  <a href="{% url 'articles:review_create' article.pk %}">리뷰작성</a>
-  {% for review in reviews %}
-  <div>
-    <h5>{{review.tit }}</h5>
-    <a href="{% url 'articles:review_detail' review.pk %}">리뷰디테일</a>
-  </div>
-  {% endfor %}
+
 
 {% endblock body %}
+
+{% block script %}
+<script>
+  // 좋아요 버튼
+  const likeBtn = document.querySelector('#like-btn')
+  // 좋아요 버튼을 누르면 함수 실행
+  likeBtn.addEventListener('click', function(event) {
+    // 서버로 비동기 요청
+    axios({
+      method: 'get',
+      url: `/articles/${event.target.dataset.articleId}/like/`
+    })
+    .then(response => {
+      // event.target.classList.toggle('bi-heart')
+      // event.target.classList.toggle('bi-heart-fill')
+      if (response.data.isLiked === true) {
+        event.target.classList.add('bi-heart-fill')
+        event.target.classList.remove('bi-heart')
+      } else {
+        event.target.classList.add('bi-heart')
+        event.target.classList.remove('bi-heart-fill')
+      }
+      const likeCount = document.querySelector('#like-count')
+      likeCount.innerText = response.data.likeCount
+    })
+  })
+</script>
+{% endblock script %}
