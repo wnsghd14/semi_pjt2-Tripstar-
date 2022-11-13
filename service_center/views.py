@@ -3,6 +3,7 @@ from .forms import ServiceCenterForm, CommentForm
 from .models import ServiceCenter, ServiceComment
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
 # Create your views here.
 def index(request):
     return render(request, 'service_center/index.html')
@@ -39,6 +40,7 @@ def detail(request, service_pk):
         messages.warning(request, '작성자만 접근할 수 있습니다.')
         return redirect('service_center:index') 
 
+
 @login_required
 def create_comment(request, service_pk):
     question = get_object_or_404(ServiceCenter, pk=service_pk)
@@ -49,7 +51,11 @@ def create_comment(request, service_pk):
             comment.service = question
             comment.user = question.user
             comment.save()
-        return redirect('service_center:detail', question.pk)
+
+            context = {
+                'content' : comment.content,
+            }
+            return JsonResponse(context)
     
 @login_required
 def update(request, service_pk):
