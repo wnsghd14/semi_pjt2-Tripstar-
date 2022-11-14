@@ -62,6 +62,7 @@
             <div class="swiper-slide">
               <div class="row">
                 <div class="p-0 col lg-4">
+                    <a href="{% url 'articles:detail' article.pk %}">
                   <div class="card" style="overflow: hidden;">
                     <div class="card-img">
                       {% if article.photo_set.all.0.image%}
@@ -75,6 +76,7 @@
                         <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
                         <span>{{ article.price }}</span>
                     </div>
+                    </a>
                   </div>
                 </div>
               </div>

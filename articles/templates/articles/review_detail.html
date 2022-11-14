@@ -93,9 +93,7 @@
       {% endif %}
     </div>
   </div>
-</div> 
-
-<!-- 코멘트 폼 -->
+  <!-- 코멘트 폼 -->
 <h4 class="my-3">댓글</h4>
 <form action="{% url 'articles:comment_create' review.pk %}" id="comment-form" data-article-id="{{ review.pk }}" method="POST">
   {% csrf_token %}
@@ -125,6 +123,9 @@
 {% endblock body %}
 
 {% block script %}
+</div> 
+
+
 <script>
   // 리뷰 좋아요
   const btnReviewLike = document.querySelector('#btn-review-like')
