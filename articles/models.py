@@ -55,8 +55,8 @@ class Review(models.Model):
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
-    created_at = models.DateTimeField(auto_now_add=True),
-    updated_at = models.DateTimeField(auto_now=True),
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     grade = models.IntegerField(default=GradeSelector.five,choices=GradeSelector.choices)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     article = models.ForeignKey(Article,on_delete=models.CASCADE,related_name='review')
