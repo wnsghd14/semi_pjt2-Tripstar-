@@ -63,8 +63,19 @@
         </div>
       </div>
     </div>
-    <hr>
-    <div class="container">
+    <hr class='mb-0'>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block banner %}
+    {% endblock banner %}
+
+    <div class="container my-5">
       {% block body %}{% endblock body %}
     </div>
     {% bootstrap_javascript %}
