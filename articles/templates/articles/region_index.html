@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
 
-{% block body %}
-  <h1>지역별 카테고리 인덱스 페이지</h1>
-  <div class="text-center">
-    {{ region.title }}
+{% block banner %}
+  <div class='h-25 position-relative'>
+    <img class='w-100' src="{{ region.detail_image.url }}" alt="{{ region.detail_image }}">
+    <h1 class='position-absolute top-50 start-50 translate-middle text-white'>{{ region.title }}</h1>
   </div>
+{% endblock banner %}
+
+{% block body %}
+  <div class="row my-5">
+    {% for theme in themes %}
+      <div class="col-2 my-1">
+        <a class='btn btn-outline-dark w-100' href="{% url 'articles:region_theme_articles' region.pk theme.pk %}">{{ theme.title }}</a>
+      </div>
+    {% endfor %}
+  </div>
+  <h3>총 {{ articles|length }}개의 상품이 있습니다.</h3>
   <div class="row">
     {% for article in articles %}
       <div class="col-3">
-        <div class="card" style="width: 18rem;">
-          <img src="{{ article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ article.image }}" style="height: 18rem;">
+        <div class="card">
+          <img src="{{ article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ article.image }}" >
           <div class="card-body">
             <h5 class="card-title">{{ article.title }}</h5>
             <p>{{ article.price }}원</p>

@@ -11,27 +11,27 @@
 
   <div class="container">
 
-    {%if request.user.is_seller%}
+    {% if request.user.is_seller %}
       <div class="d-flex justify-content-end">
         <a href="{% url 'articles:create' %}" class="btn btn-outline-success">상품 등록</a>
       </div>
-      {%endif%}
-      <!-- Swiper -->
-      <div class="my-5 swiper mySwiper" style="height:380px;">
-        <div class="swiper-wrapper">
-          {% for region in regions %}
-            <div class="swiper-slide">
-              <img src="{{ region.index_image.url }}" style="border-radius: 20px;">
-              <h3 class="main_image_text">{{ region.title }}</h3>
-              <a class="main_image_btn btn " href="{% url 'articles:region_index' region.pk %}">둘러보기</a>
-            </div>
-            {%endfor%}
+    {% endif %}
+    <!-- Swiper -->
+    <div class="my-5 swiper mySwiper" style="height:380px;">
+      <div class="swiper-wrapper">
+        {% for region in regions %}
+          <div class="swiper-slide">
+            <img src="{{ region.index_image.url }}" style="border-radius: 20px;">
+            <h3 class="main_image_text">{{ region.title }}</h3>
+            <a class="main_image_btn btn " href="{% url 'articles:region_index' region.pk %}">둘러보기</a>
           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-pagination"></div>
-        </div>
+        {% endfor %}
       </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
 
   <!-- slide -->
   <div class="mb-5">
@@ -55,39 +55,39 @@
     </div>
   </div>
 
-      <!-- card slide -->
-      <div class="my-5 swiper mySwiper">
-        <div class="swiper-wrapper">
-          {% for article in articles %}
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="p-0 col lg-4">
-                    <a href="{% url 'articles:detail' article.pk %}">
-                  <div class="card" style="overflow: hidden;">
-                    <div class="card-img">
-                      {% if article.photo_set.all.0.image%}
-                        <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
-                      {% else %}
-                        <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
-                      {% endif %}
-                    </div>
-                    <div class="card-body">                     
-                        <span>{{ article.title }}</span>
-                        <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
-                        <span>{{ article.price }}</span>
-                    </div>
-                    </a>
+  <!-- card slide -->
+  <div class="my-5 swiper mySwiper">
+    <div class="swiper-wrapper">
+      {% for article in articles %}
+        <div class="swiper-slide">
+          <div class="row">
+            <div class="p-0 col lg-4">
+              <a href="{% url 'articles:detail' article.pk %}">
+                <div class="card" style="overflow: hidden;">
+                  <div class="card-img">
+                    {% if article.photo_set.all.0.image%}
+                      <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
+                    {% else %}
+                      <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
+                    {% endif %}
                   </div>
-                </div>
+                  <div class="card-body">
+                    <span>{{ article.title }}</span>
+                    <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
+                    <span>{{ article.price }}</span>
+                  </div>
+                </a>
               </div>
             </div>
-            {% endfor %}
-           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-pagination"></div>
+          </div>
         </div>
-      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -99,35 +99,35 @@
     loopFillGroupWithBlank: true,
     pagination: {
       el: ".swiper-pagination",
-      clickable: true,
+      clickable: true
     },
     navigation: {
       nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
+      prevEl: ".swiper-button-prev"
     },
     breakpoints: {
-        640: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        780:{
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        994: {
-          slidesPerView: 3,
-          spaceBetween: 20,
-        },
-        1200: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-        },
-        1400: {
-            slidesPerView: 4,
-            spaceBetween: 30,
-        }
+      640: {
+        slidesPerView: 1,
+        spaceBetween: 20
       },
+      780: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      994: {
+        slidesPerView: 3,
+        spaceBetween: 20
+      },
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      },
+      1400: {
+        slidesPerView: 4,
+        spaceBetween: 30
+      }
+    }
   });
 </script>
-    
+
 {% endblock body %}

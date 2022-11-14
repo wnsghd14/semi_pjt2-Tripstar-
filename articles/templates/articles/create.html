@@ -13,14 +13,18 @@
         <option value="{{ region.pk }}">{{ region.title }}</option>
       {% endfor %}
     </select>
-    {% for theme in themes %}
-      <div class="form-check">
+    <br>
+    <label for="theme">테마선택(복수선택가능)</label>
+    <div class='d-flex my-1'>
+      {% for theme in themes %}
+      <div class="form-check me-3" id='theme'>
         <input class="form-check-input" name="theme" type="checkbox" value="{{ theme.pk }}" id="{{ theme.title }}">
         <label class="form-check-label" for="{{ theme.title }}">
           {{ theme.title }}
         </label>
       </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
     {% bootstrap_button button_type="submit" content="OK" button_class="btn btn-outline-primary"%}
   </form>
 {% endblock body %}

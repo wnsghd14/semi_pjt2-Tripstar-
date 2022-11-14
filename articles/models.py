@@ -11,8 +11,8 @@ class Theme(models.Model):
 
 class Region(models.Model):
     title = models.CharField(max_length=20)
-    index_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 300)], format='JPEG', options={'quality':100})
-    detail_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 100)], format='JPEG', options={'quality':100})
+    index_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(800, 600)], format='JPEG', options={'quality':100})
+    detail_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(1600, 300)], format='JPEG', options={'quality':100})
 
 class Article(models.Model):
     title = models.CharField(max_length=100)
