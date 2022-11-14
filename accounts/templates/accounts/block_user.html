@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+<h1 class="d-flex justify-content-center">차단 목록</h1>
+{% for block_user in block_users %}
+<div class="my-4" style="height:50px;">
+  <div class="d-inline-flex">
+    <div class="vertical-align: middle;">
+      <span class="material-symbols-outlined" style="margin-right:1rem; color:red; vertical-align: middle; line-height: 50px;">
+        do_not_disturb_on
+      </span>
+    </div>
+    <img src="{{ block_user.image.url }}" style="margin-right:1rem; border-radius:100%; width:50px; height:50px;">
+    <div class="vertical-align: middle;">
+      <span style="margin-right:1rem; vertical-align:middle; line-height:50px;">{{ block_user.username }}</span>
+    </div>
+    <div class="vertical-align: middle;">
+      <a href="{% url 'accounts:block_user_block' block_user.pk %}" style="color:red; vertical-align:middle; line-height:50px;">차단 취소</a>
+    </div>
+  </div>
+</div>
+
+{% empty %}
+<p class="d-flex justify-content-center">차단한 유저가 없습니다.</p>
+
+{% endfor %}
+
+{% endblock body %}

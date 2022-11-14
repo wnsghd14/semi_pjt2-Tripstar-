@@ -9,14 +9,13 @@ class ArticleForm(forms.ModelForm):
             'title',
             'price',
             'content',
-            'category',
         )
         labels = {
             'title': '제목',
             'price': '가격',
             'content': '내용',
-            'category' : '카테고리',
         }
+
 class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
@@ -25,7 +24,25 @@ class LocationForm(forms.ModelForm):
             'y',
             'location',
         )
-        
+       
+
+class RegionForm(forms.ModelForm):
+    class Meta:
+        model = Region
+        fields = [
+            'title', 
+            'index_image', 
+            'detail_image'
+        ]
+
+class ThemeForm(forms.ModelForm):
+    class Meta:
+        model = Theme
+        fields = [
+            'title', 'image'
+        ]
+
+
 
 class ArticlePhotoForm(forms.ModelForm):
     class Meta:

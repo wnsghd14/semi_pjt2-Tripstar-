@@ -3,16 +3,94 @@ from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
-from django.db.models import Q
+from django.db.models import Q, Avg, Count
 from django.contrib.auth import get_user_model
 import json
 
-region = {"1":'경기도', "2":'강원도', '3':'제주도', '4':'경상도', '5':'전라도', '6':'충청도', '7':'서울', '8':'부산', '9':'인천', '10':'대전', '11':'대구', '12':'광주'}
 # Create your views here.
 def index(request):
-    
-    context = {"articles": Article.objects.all(), 'region':region,}
+    context = {
+        "articles": Article.objects.all(),
+        "regions": Region.objects.all(),
+        "themes": Theme.objects.all(),
+    }
     return render(request, "articles/index.html", context)
+
+
+# 지역(region), 테마(theme)에 대해서 생성, 수정, 삭제할 수 있는 권한은 관리자(superuser)에게만 있음
+def region_create(request):
+    if request.method == "POST":
+        form = RegionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = RegionForm()
+    context = {
+        'form':form
+    }
+    return render(request, 'articles/form.html', context)
+
+def region_update(request, region_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    if request.method == "POST":
+        form = RegionForm(request.POST, request.FILES, instance=region)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:theme_region_list')
+    else:
+        form = RegionForm(instance=region)
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
+
+def region_delete(request, region_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    if request.method == "POST":
+        region.delete()
+        return redirect('articles:theme_region_list')
+
+def theme_create(request):
+    if request.method == "POST":
+        form = ThemeForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = ThemeForm()
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
+
+def theme_update(request, theme_pk):
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    if request.method == "POST":
+        form = ThemeForm(request.POST, request.FILES, instance=theme)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:theme_region_list')
+    else:
+        form = ThemeForm(instance=theme)
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
+
+def theme_delete(request, theme_pk):
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    if request.method == "POST":
+        theme.delete()
+        return redirect('articles:theme_region_list')
+
+def theme_region_list(request):
+    context = {
+        'regions':Region.objects.all(),
+        'themes':Theme.objects.all(),
+    }
+    return render(request, 'articles/theme_region_list.html', context)
+
 
 @login_required
 def create(request):
@@ -32,6 +110,9 @@ def create(request):
             article.user = request.user
             location = locationform.save(commit=False)
             location.article = article
+
+            article.region = get_object_or_404(Region, pk=request.POST.get("region"))
+
             if len(images):
                 for image in images:
                     image_instance = ArticlePhoto(article=article, image=image)
@@ -40,6 +121,10 @@ def create(request):
             location.save()
             article.save()
 
+            for theme_pk in request.POST.getlist("theme"):
+                theme = get_object_or_404(Theme, pk=theme_pk)
+                article.theme.add(theme)
+
             return redirect("articles:index")
     else:
         article_form = ArticleForm()
@@ -47,6 +132,8 @@ def create(request):
     context = {
         "article_form": article_form,
         "article_photo_form": article_photo_form,
+        "regions": Region.objects.all(),
+        "themes": Theme.objects.all(),
     }
     return render(request, "articles/create.html", context)
 
@@ -124,6 +211,67 @@ def like(request, pk):
     }
     return JsonResponse(context)
 
+def region_theme_articles(request, region_pk, theme_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    context = {
+        'region': region,
+        'theme': theme,
+        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme))
+    }
+    return render(request, 'articles/region_theme_articles.html', context)
+
+def region_theme_articles_grade(request, region_pk, theme_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    articles = Article.objects.filter(Q(region=region) & Q(theme=theme)).annotate(grade_avg=Avg('review__grade'))
+    context = {
+        'region': region,
+        'theme': theme,
+        'articles': articles.order_by('-grade_avg')
+    }
+    return render(request, 'articles/region_theme_articles.html', context)
+
+def region_theme_articles_review(request, region_pk, theme_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    articles = Article.objects.filter(Q(region=region) & Q(theme=theme)).annotate(review_count=Count('review'))
+    context = {
+        'region': region,
+        'theme': theme,
+        'articles': articles.order_by('-review_count')
+    }
+    return render(request, 'articles/region_theme_articles.html', context)
+
+def region_theme_articles_low(request, region_pk, theme_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    context = {
+        'region': region,
+        'theme': theme,
+        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme)).order_by('price')
+    }
+    return render(request, 'articles/region_theme_articles.html', context)
+
+def region_theme_articles_high(request, region_pk, theme_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    context = {
+        'region': region,
+        'theme': theme,
+        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme)).order_by('-price')
+    }
+    return render(request, 'articles/region_theme_articles.html', context)
+
+def region_theme_articles_recent(request, region_pk, theme_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    context = {
+        'region': region,
+        'theme': theme,
+        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme)).order_by('-created_at')
+    }
+    return render(request, 'articles/region_theme_articles.html', context)
 
 def review_index(request):
     reviews = Review.objects.order_by("-pk")
@@ -279,12 +427,14 @@ def search(request):
     }
     return render(request, "articles/search.html", context)
 
-def region_index(request,article_category):
-    region_articles = Article.objects.filter(category=article_category)
-    
+def region_index(request, region_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    articles = region.article_set.all()
+
     context = {
-        'region_articles':region_articles,
-        'article_category':article_category,
+        'articles':articles,
+        'region':region,
+        'themes':Theme.objects.all(),
     }
     return render(request, 'articles/region_index.html', context)
 
