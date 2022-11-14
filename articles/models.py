@@ -29,6 +29,14 @@ class Article(models.Model):
     theme = models.ManyToManyField(Theme, symmetrical=False, related_name='article_themes')
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
+    
+class Location(models.Model):
+    location = models.CharField(max_length=300, blank=True)
+    x = models.CharField(max_length=100, blank=True, null=True)
+    y = models.CharField(max_length=100, blank=True, null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    
+
 class ArticlePhoto(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="images/articles", blank=True, null=True)

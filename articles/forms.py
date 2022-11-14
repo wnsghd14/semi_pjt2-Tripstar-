@@ -16,6 +16,16 @@ class ArticleForm(forms.ModelForm):
             'content': '내용',
         }
 
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = (
+            'x',
+            'y',
+            'location',
+        )
+       
+
 class RegionForm(forms.ModelForm):
     class Meta:
         model = Region
@@ -31,6 +41,7 @@ class ThemeForm(forms.ModelForm):
         fields = [
             'title', 'image'
         ]
+
 
 
 class ArticlePhotoForm(forms.ModelForm):

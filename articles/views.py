@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Q, Avg, Count
 from django.contrib.auth import get_user_model
+import json
 
 # Create your views here.
 def index(request):
@@ -90,26 +91,40 @@ def theme_region_list(request):
     }
     return render(request, 'articles/theme_region_list.html', context)
 
+
 @login_required
 def create(request):
+    locationform = LocationForm()
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES)
         article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
-        if article_form.is_valid():
+        locationform = LocationForm(request.POST)
+        x = request.POST.getlist('x')
+        y = request.POST.getlist('y')
+        location = request.POST.getlist('location')
+        
+        if article_form.is_valid() and locationform.is_valid():
             # accounts 연결 후에
             article = article_form.save(commit=False)
             article.user = request.user
+            location = locationform.save(commit=False)
+            location.article = article
+
             article.region = get_object_or_404(Region, pk=request.POST.get("region"))
+
             if len(images):
                 for image in images:
                     image_instance = ArticlePhoto(article=article, image=image)
                     article.save()
                     image_instance.save()
+            location.save()
             article.save()
+
             for theme_pk in request.POST.getlist("theme"):
                 theme = get_object_or_404(Theme, pk=theme_pk)
                 article.theme.add(theme)
+
             return redirect("articles:index")
     else:
         article_form = ArticleForm()
@@ -126,10 +141,12 @@ def create(request):
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     reviews = Review.objects.filter(article=article)
+    location = get_object_or_404(Location, article_id=article_pk)
     context = {
         "article": article,
         "reviews": reviews,
         "photo_cnt": article.articlephoto_set.count(),
+        'location':location,
     }
     return render(request, "articles/detail.html", context)
 
@@ -420,3 +437,6 @@ def region_index(request, region_pk):
         'themes':Theme.objects.all(),
     }
     return render(request, 'articles/region_index.html', context)
+
+def map(request):
+    return render(request, 'articles/map.html')
