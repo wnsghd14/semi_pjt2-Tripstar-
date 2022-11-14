@@ -6,13 +6,89 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 
-region = {"1":'경기도', "2":'강원도', '3':'제주도', '4':'경상도', '5':'전라도', '6':'충청도', '7':'서울', '8':'부산', '9':'인천', '10':'대전', '11':'대구', '12':'광주'}
 # Create your views here.
 def index(request):
-    
-    context = {"articles": Article.objects.all(), 'region':region,}
+    context = {
+        "articles": Article.objects.all(),
+        "regions": Region.objects.all(),
+        "themes": Theme.objects.all(),
+    }
     return render(request, "articles/index.html", context)
-print(CategorySelect)
+
+
+# 지역(region), 테마(theme)에 대해서 생성, 수정, 삭제할 수 있는 권한은 관리자(superuser)에게만 있음
+def region_create(request):
+    if request.method == "POST":
+        form = RegionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = RegionForm()
+    context = {
+        'form':form
+    }
+    return render(request, 'articles/form.html', context)
+
+def region_update(request, region_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    if request.method == "POST":
+        form = RegionForm(request.POST, request.FILES, instance=region)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:theme_region_list')
+    else:
+        form = RegionForm(instance=region)
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
+
+def region_delete(request, region_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    if request.method == "POST":
+        region.delete()
+        return redirect('articles:theme_region_list')
+
+def theme_create(request):
+    if request.method == "POST":
+        form = ThemeForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = ThemeForm()
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
+
+def theme_update(request, theme_pk):
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    if request.method == "POST":
+        form = ThemeForm(request.POST, request.FILES, instance=theme)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:theme_region_list')
+    else:
+        form = ThemeForm(instance=theme)
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
+
+def theme_delete(request, theme_pk):
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    if request.method == "POST":
+        theme.delete()
+        return redirect('articles:theme_region_list')
+
+def theme_region_list(request):
+    context = {
+        'regions':Region.objects.all(),
+        'themes':Theme.objects.all(),
+    }
+    return render(request, 'articles/theme_region_list.html', context)
 
 @login_required
 def create(request):
@@ -24,12 +100,17 @@ def create(request):
             # accounts 연결 후에
             article = article_form.save(commit=False)
             article.user = request.user
+            region = get_object_or_404(Region, pk=request.POST.get("region"))
+            article.region = region
             if len(images):
                 for image in images:
                     image_instance = ArticlePhoto(article=article, image=image)
                     article.save()
                     image_instance.save()
             article.save()
+            for theme_pk in request.POST.getlist("theme"):
+                theme = get_object_or_404(Theme, pk=theme_pk)
+                article.theme.add(theme)
             return redirect("articles:index")
     else:
         article_form = ArticleForm()
@@ -37,6 +118,8 @@ def create(request):
     context = {
         "article_form": article_form,
         "article_photo_form": article_photo_form,
+        "regions": Region.objects.all(),
+        "themes": Theme.objects.all(),
     }
     return render(request, "articles/create.html", context)
 
@@ -267,11 +350,12 @@ def search(request):
     }
     return render(request, "articles/search.html", context)
 
-def region_index(request,article_category):
-    region_articles = Article.objects.filter(category=article_category)
-    
+def region_index(request, region_pk):
+    region = get_object_or_404(Region, pk=region_pk)
+    articles = region.article_set.all()
+
     context = {
-        'region_articles':region_articles,
-        'article_category':article_category,
+        'articles':articles,
+        'region':region,
     }
     return render(request, 'articles/region_index.html', context)

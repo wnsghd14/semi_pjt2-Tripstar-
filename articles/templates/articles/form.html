@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block body %}
+  <form action="" method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit">
+  </form>
+{% endblock body %}
