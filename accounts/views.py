@@ -84,8 +84,42 @@ def follow(request, user_pk):
             user.followers.add(request.user)
             is_followed = True
         context = {
-            'is_followed': is_followed,
+            "is_followed": is_followed,
         }
         return JsonResponse(context)
-    return redirect('accounts:detail', user_pk)
+    return redirect("accounts:detail", user_pk)
 
+
+@login_required
+def block(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    if user != request.user:
+        if user.blockers.filter(pk=request.user.pk).exists():
+            user.blockers.remove(request.user)
+            user.save()
+        else:
+            user.blockers.add(request.user)
+            user.save()
+    return redirect("accounts:detail", user.pk)
+
+
+@login_required
+def block_user(request):
+    block_users = request.user.blocking.all()
+    context = {
+        "block_users": block_users,
+    }
+    return render(request, "accounts/block_user.html", context)
+
+
+@login_required
+def block_user_block(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    if user != request.user:
+        if user.blockers.filter(pk=request.user.pk).exists():
+            user.blockers.remove(request.user)
+            user.save()
+        else:
+            user.blockers.add(request.user)
+            user.save()
+    return redirect("accounts:block_user")

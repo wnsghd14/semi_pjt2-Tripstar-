@@ -10,5 +10,8 @@ urlpatterns = [
     path("<int:pk>/", views.detail, name="detail"),
     path("<int:pk>/update/", views.update, name="update"),
     path("<int:pk>/delete/", views.delete, name="delete"),
-    path('<int:user_pk>/follow/', views.follow, name='follow')
+    path("<int:user_pk>/follow/", views.follow, name="follow"),
+    path("<int:pk>/block/", views.block, name="block"),
+    path("block_user/", views.block_user, name="block_user"),
+    path("<int:pk>/block_user_block/", views.block_user_block, name="block_user_block"),
 ]
