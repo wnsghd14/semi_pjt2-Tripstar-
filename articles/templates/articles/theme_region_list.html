@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block body %}
+  <div class="row">
+    <div class="col-6">
+      <h3>테마</h3>
+      {% for theme in themes %}
+        <div class='d-flex'>
+          {{ theme.pk }}
+          |
+          {{ theme.title }}
+          <a href="{% url 'articles:theme_update' theme.pk %}">수정</a>
+          <form action="{% url 'articles:theme_delete' theme.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value='삭제'>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col-6">
+      <h3>지역</h3>
+      {% for region in regions %}
+        <div class='d-flex'>
+          {{ region.pk }}
+          |
+          {{ region.title }}
+          <a href="{% url 'articles:region_update' region.pk %}">수정</a>
+          <form action="{% url 'articles:region_delete' region.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value='삭제'>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock body %}

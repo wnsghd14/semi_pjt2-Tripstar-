@@ -7,6 +7,20 @@
     {% csrf_token %}
     {% bootstrap_form article_form %}
     {% bootstrap_form article_photo_form %}
+    <select class="form-select my-2" aria-label="Default select example" name='region'>
+      <option selected="selected">지역 선택</option>
+      {% for region in regions %}
+        <option value="{{ region.pk }}">{{ region.title }}</option>
+      {% endfor %}
+    </select>
+    {% for theme in themes %}
+      <div class="form-check">
+        <input class="form-check-input" name="theme" type="checkbox" value="{{ theme.pk }}" id="{{ theme.title }}">
+        <label class="form-check-label" for="{{ theme.title }}">
+          {{ theme.title }}
+        </label>
+      </div>
+    {% endfor %}
     {% bootstrap_button button_type="submit" content="OK" button_class="btn btn-outline-primary"%}
   </form>
 {% endblock body %}

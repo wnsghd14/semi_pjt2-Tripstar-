@@ -19,11 +19,11 @@
       <!-- Swiper -->
       <div class="my-5 swiper mySwiper" style="height:380px;">
         <div class="swiper-wrapper">
-          {% for k, v in region.items %}
+          {% for region in regions %}
             <div class="swiper-slide">
-              <img src='{% get_static_prefix %}images/{{v}}.jpg' style="border-radius: 20px;">
-              <h3 class="main_image_text">{{ v }}</h3>
-              <a class="main_image_btn btn " href="{% url 'articles:region_index' k %}">둘러보기</a>
+              <img src="{{ region.index_image.url }}" style="border-radius: 20px;">
+              <h3 class="main_image_text">{{ region.title }}</h3>
+              <a class="main_image_btn btn " href="{% url 'articles:region_index' region.pk %}">둘러보기</a>
             </div>
             {%endfor%}
           </div>
