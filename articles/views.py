@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Q
 from django.contrib.auth import get_user_model
+import json
 
 region = {"1":'경기도', "2":'강원도', '3':'제주도', '4':'경상도', '5':'전라도', '6':'충청도', '7':'서울', '8':'부산', '9':'인천', '10':'대전', '11':'대구', '12':'광주'}
 # Create your views here.
@@ -12,24 +13,33 @@ def index(request):
     
     context = {"articles": Article.objects.all(), 'region':region,}
     return render(request, "articles/index.html", context)
-print(CategorySelect)
 
 @login_required
 def create(request):
+    locationform = LocationForm()
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES)
         article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
-        if article_form.is_valid():
+        locationform = LocationForm(request.POST)
+        x = request.POST.getlist('x')
+        y = request.POST.getlist('y')
+        location = request.POST.getlist('location')
+        
+        if article_form.is_valid() and locationform.is_valid():
             # accounts 연결 후에
             article = article_form.save(commit=False)
             article.user = request.user
+            location = locationform.save(commit=False)
+            location.article = article
             if len(images):
                 for image in images:
                     image_instance = ArticlePhoto(article=article, image=image)
                     article.save()
                     image_instance.save()
+            location.save()
             article.save()
+
             return redirect("articles:index")
     else:
         article_form = ArticleForm()
@@ -44,10 +54,12 @@ def create(request):
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     reviews = Review.objects.filter(article=article)
+    location = get_object_or_404(Location, article_id=article_pk)
     context = {
         "article": article,
         "reviews": reviews,
         "photo_cnt": article.articlephoto_set.count(),
+        'location':location,
     }
     return render(request, "articles/detail.html", context)
 
@@ -275,3 +287,6 @@ def region_index(request,article_category):
         'article_category':article_category,
     }
     return render(request, 'articles/region_index.html', context)
+
+def map(request):
+    return render(request, 'articles/map.html')

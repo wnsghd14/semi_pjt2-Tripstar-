@@ -17,7 +17,15 @@ class ArticleForm(forms.ModelForm):
             'content': '내용',
             'category' : '카테고리',
         }
-
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = (
+            'x',
+            'y',
+            'location',
+        )
+        
 
 class ArticlePhotoForm(forms.ModelForm):
     class Meta:

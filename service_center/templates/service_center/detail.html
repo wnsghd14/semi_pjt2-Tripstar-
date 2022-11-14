@@ -19,6 +19,7 @@
     </form>
   {% endif %}
   <hr>
+
   <!-- 답변 출력-->
   <div class="my-4" id="comments">
     <h4 class="my-3">문의 답변</h3>
@@ -34,16 +35,14 @@
     {% endfor %}
   </div>
 
+
   <!-- 답변 비동기 처리 -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     const commentForm = document.querySelector('#comment-form')
 
-    const csrftoken = document
-      .querySelector('[name=csrfmiddlewaretoken]')
-      .value
-      commentForm
-      .addEventListener('submit', function (event) {
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      commentForm.addEventListener('submit', function (event) {
         event.preventDefault();
         axios({
           method: 'post',
@@ -57,13 +56,11 @@
 
           const comments = document.querySelector('#comments')
           const p = document.createElement('p')
-          p.innerText = `${response
-            .data
-            .content}`
-            comments
-            .append(p)
+          p.innerText = `${response.data.content}`
+          comments.append(p)
           commentForm.reset()
         })
       })
   </script>
+
 {% endblock body %}

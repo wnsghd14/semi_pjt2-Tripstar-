@@ -38,6 +38,15 @@
     <div class="my-5">
       {{ article.content }}
     </div>
+    <!-- 지도 -->
+    <h3>숙소 위치</h3>
+    <div id="map" style="width:700px;height:350px;"></div>
+
+    <div id="x" style="display: none;">{{location.x}}</div>
+    <div id="y" style="display: none;">{{location.y}}</div>
+    <div id="loc" style="display: none;">{{ location.location }}</div>
+
+
     <div class="my-3 d-flex justify-content-between">
       <h3>여행 후기</h3>
       <a href="{% url 'articles:review_create' article.pk %}" class="btn btn-outline-secondary">후기 작성</a>
@@ -142,5 +151,37 @@
       likeCount.innerText = response.data.likeCount
     })
   })
+</script>
+
+<!-- jquery 사용 -->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<!-- kakao API 키 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3144d0c758dd4362c375eb78f6763f63&libraries=services"></script>
+<script>
+  const x = document.querySelector('#x').innerText
+  const y = document.querySelector('#y').innerText
+  const loc =document.querySelector('#loc').innerText
+  console.log(x, y)
+
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+      center: new kakao.maps.LatLng(y, x), // 지도의 중심좌표
+      level: 3 // 지도의 확대 레벨
+    };
+  var map = new kakao.maps.Map(mapContainer, mapOption);
+  var markerPosition = new kakao.maps.LatLng(y, x);
+
+  // 마커를 생성합니다
+  var marker = new kakao.maps.Marker({position: markerPosition});
+
+  // 인포윈도우로 장소에 대한 설명을 표시합니다
+  var infowindow = new kakao.maps.InfoWindow({
+      content: `<div style="width:300px; text-align:center;padding:6px 0;">${loc}</div>`
+  });
+  infowindow.open(map, marker);
+
+  // 마커가 지도 위에 표시되도록 설정합니다
+  marker.setMap(map);
 </script>
 {% endblock script %}

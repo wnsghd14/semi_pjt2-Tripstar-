@@ -33,7 +33,13 @@ class Article(models.Model):
                                 options={'quality': 80})
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='article_like')
-
+    
+class Location(models.Model):
+    location = models.CharField(max_length=300, blank=True)
+    x = models.CharField(max_length=100, blank=True, null=True)
+    y = models.CharField(max_length=100, blank=True, null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    
 
 class ArticlePhoto(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
