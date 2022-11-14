@@ -31,6 +31,13 @@
                     {% endif %}
                     </form>
                     </span>
+                    <a href="{% url 'accounts:block' user.pk %}">
+                        {% if request.user in user.blockers.all %}
+                        <button type='submit' class='btn btn-sm btn-outline-danger rounded-pill' style="margin-left:0.8rem;">차단 취소</button>
+                        {% else %}
+                        <button type='submit' class='btn btn-sm btn-outline-danger rounded-pill' style="margin-left:0.8rem;">차단</button>
+                    </a>
+                        {% endif %}
                     {% endif %}
                     </h5>             
                     <br>
@@ -152,11 +159,13 @@
                     </div>
                 </div>
                 </a>
+                <a href="{% url 'accounts:block_user' %}">
                 <div class="card text-center">
-                    <div class="card-body">
-                        ???!!!
+                    <div class="card-body" style="color:red;">
+                        차단목록
                     </div>
                 </div>
+                </a>
             </div>
         </div>
     </div>

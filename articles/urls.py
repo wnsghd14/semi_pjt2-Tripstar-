@@ -5,6 +5,13 @@ app_name = 'articles'
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('region_create/', views.region_create, name='region_create'),
+    path('<int:region_pk>/region_update/', views.region_update, name='region_update'),
+    path('<int:region_pk>/region_delete/', views.region_delete, name='region_delete'),
+    path('theme_create/', views.theme_create, name='theme_create'),
+    path('<int:theme_pk>/theme_update/', views.theme_update, name='theme_update'),
+    path('<int:theme_pk>/theme_delete/', views.theme_delete, name='theme_delete'),
+    path('theme_region_list/', views.theme_region_list, name='theme_region_list'),
     path('create/', views.create, name="create"),
     path('<int:article_pk>/', views.detail, name="detail"),
     path('<int:article_pk>/update', views.update, name="update"),
@@ -18,5 +25,5 @@ urlpatterns = [
     path('review/<int:review_pk>/comments/', views.comment_create, name='comment_create'),
     path("review/<int:review_pk>/comments/<int:comment_pk>/delete/",views.comment_delete, name="comment_delete"),
     path("search/", views.search, name='search'),
-    path('<int:article_category>/region_index/', views.region_index, name="region_index"),
+    path('<int:region_pk>/region_index/', views.region_index, name="region_index"),
 ]
