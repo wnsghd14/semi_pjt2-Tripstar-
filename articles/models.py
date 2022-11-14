@@ -7,12 +7,12 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Theme(models.Model):
     title = models.CharField(max_length=20)
-    image = ProcessedImageField(blank=True, upload_to='images/', processors=[Thumbnail(200, 100)], format='JPEG', options={'quality':90})
+    image = ProcessedImageField(blank=True, upload_to='images/', processors=[Thumbnail(200, 100)], format='JPEG', options={'quality':100})
 
 class Region(models.Model):
     title = models.CharField(max_length=20)
-    index_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 300)], format='JPEG', options={'quality':90})
-    detail_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 100)], format='JPEG', options={'quality':90})
+    index_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 300)], format='JPEG', options={'quality':100})
+    detail_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 100)], format='JPEG', options={'quality':100})
 
 class Article(models.Model):
     title = models.CharField(max_length=100)
@@ -49,8 +49,8 @@ class Review(models.Model):
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
-    created_at = models.DateTimeField(auto_now_add=True),
-    updated_at = models.DateTimeField(auto_now=True),
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     grade = models.IntegerField(default=GradeSelector.five,choices=GradeSelector.choices)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     article = models.ForeignKey(Article,on_delete=models.CASCADE,related_name='review')
