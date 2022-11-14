@@ -19,7 +19,7 @@
                     <h5 class="d-flex mt-2 mx-2"><b> {{ user.username }} </b>
                     {% if request.user == user %}
                     <span>
-                        <a class="ms-3 text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class=" bi bi-gear-wide"></i></a>
+                        <a class="ms-3 text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-gear-wide"></i></a>
                     </span>
                     {% else %}
                     <span><form class="d-flex ms-3" id='follow-form' data-user-id="{{ user.pk }}">
@@ -141,16 +141,23 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">프로필수정</h5>
+                <h5 class="modal-title">프로필 수정</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <a href="{% url 'accounts:update' user.pk %}">
                     <div class="card text-center">
                         <div class="card-body">
-                            프로필수정
+                            프로필 수정
                         </div>
                     </div>
+                </a>
+                <a href="{% url 'accounts:password' %}">
+                  <div class="card text-center">
+                    <div class="card-body">
+                      비밀번호 변경
+                    </div>
+                  </div>
                 </a>
                 <a href="{% url 'accounts:delete' user.pk %}">
                 <div class="card text-center">
