@@ -9,6 +9,9 @@ from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect("articles:index")
+    
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -24,6 +27,9 @@ def signup(request):
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect("articles:index")
+    
     if request.method == "POST":
         form = AuthenticationForm(request.POST, data=request.POST)
         if form.is_valid():
@@ -45,9 +51,11 @@ def logout(request):
 
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
+
     context = {
         "user": user,
     }
+
     return render(request, "accounts/detail.html", context)
 
 
