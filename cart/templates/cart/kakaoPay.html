@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2>카카오 페이</h2>
+<form action="/cart/kakaoPayLogic" method="GET">
+  <div>
+    <p>초코파이</p>
+    <p>2,200원 (부가세 200원) / 1개</p>
+  </div>
+  <input type="submit" value="결제">
+</form>
+{% endblock body %}
