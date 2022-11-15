@@ -6,6 +6,7 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/calender.css' %}">
 {% endblock css %}
+
 {% block body %}
 <div class="d-flex">
   <!-- 제목, 사진 -->
@@ -104,7 +105,7 @@
     <div style="position: sticky; top: 30px;">
       <div class="p-4 my-4 d-flex flex-column aside-box">
         <h3 class="mb-3" style="font-size: 22px">{{ article.price }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
-        <button type="button" class="btn btn-primary mb-2">예약하기</button>
+        <a href="{% url 'articles:reservation_create' article.pk %}"><button type="button" class="btn btn-primary mb-2">예약하기</button></a>
         {% if request.user.is_authenticated %}
           {% if request.user in article.like_users.all %}
            <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart-fill btn btn-outline-primary mb-2 " style="font-style: normal;"> 위시리스트</i>

@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    
+
     # allauth
     'allauth',
     'allauth.account', # 소셜로그인 계정 관리

@@ -90,3 +90,17 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content',]
 
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = [
+            "name",
+            "check_in",
+            "check_out",
+        ]
+        labels = {
+            'name': '이름',
+            'check_in': '체크인',
+            'check_out' : '체크아웃',
+        }
