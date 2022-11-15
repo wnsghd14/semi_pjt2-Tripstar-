@@ -6,11 +6,12 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Q, Avg, Count
 from django.contrib.auth import get_user_model
 import json
+import math
 
 # Create your views here.
 def index(request):
     context = {
-        "articles": Article.objects.all(),
+        "articles": Article.objects.all().annotate(grade_avg=Avg('review__grade')),
         "regions": Region.objects.all(),
         "themes": Theme.objects.all(),
     }
@@ -142,11 +143,53 @@ def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     reviews = Review.objects.filter(article=article)
     location = get_object_or_404(Location, article_id=article_pk)
+    
+    # 평균 별점
+    grades = article.review.aggregate(grade_avg=Avg('grade'))
+    quotient_list = []
+    rest_list = []
+    half_list = []
+    if grades['grade_avg']:
+        reviews_avg = grades['grade_avg']
+        quotient = int(reviews_avg // 1)
+        rest = round(reviews_avg % 1, 1)
+        if 0.7 >= rest >= 0.3:
+            half_list.append(1)
+        elif rest > 0.7:
+            quotient_list.append(1)
+        for a in range(quotient):
+            quotient_list.append(a)
+        for a in range(5 - (len(quotient_list) + len(half_list))):
+            rest_list.append(1)
+    else:
+        reviews_avg = 0
+    
+    # 각 별당 갯수
+    one = article.review.filter(grade=1).count()
+    two = article.review.filter(grade=2).count()
+    three = article.review.filter(grade=3).count()
+    four = article.review.filter(grade=4).count()
+    five = article.review.filter(grade=5).count()
+    total = article.review.all().count()
+    one_star = round((one / total) * 100)
+    two_star = round((two / total) * 100)
+    three_star = round((three / total) * 100)
+    four_star = round((four / total) * 100)
+    five_star = round((five / total) * 100)
     context = {
         "article": article,
         "reviews": reviews,
         "photo_cnt": article.articlephoto_set.count(),
-        'location':location,
+        'location': location,
+        'reviews_avg': reviews_avg,
+        'quotient_list': quotient_list,
+        'half_list': half_list,
+        'rest_list': rest_list,
+        'one_star': one_star,
+        'two_star': two_star,
+        'three_star': three_star,
+        'four_star': four_star,
+        'five_star': five_star,
     }
     return render(request, "articles/detail.html", context)
 
@@ -430,11 +473,13 @@ def search(request):
 def region_index(request, region_pk):
     region = get_object_or_404(Region, pk=region_pk)
     articles = region.article_set.all()
+    regions = Region.objects.all()
 
     context = {
         'articles':articles,
         'region':region,
         'themes':Theme.objects.all(),
+        'regions':regions,
     }
     return render(request, 'articles/region_index.html', context)
 
