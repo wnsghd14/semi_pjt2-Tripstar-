@@ -1,20 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
 
 {% block banner %}
-  <div class='h-25 position-relative'>
+  <div class='position-relative'>
     <img class='w-100' src="{{ region.detail_image.url }}" alt="{{ region.detail_image }}">
     <h1 class='position-absolute top-50 start-50 translate-middle text-white'>{{ region.title }}</h1>
   </div>
 {% endblock banner %}
 
 {% block body %}
-  <div class="row my-5">
+
+<!-- 지역별 페이지 드롭다운 -->
+  <div class="dropdown ms-1">
+    <button class="btn btn-white dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{ region.title }}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-white">
+      {% for region in regions %}
+      <li>
+        <a class="dropdown-item" href="{% url 'articles:region_index' region.pk %}">{{ region.title }}</a>
+      </li>
+      {% endfor %}
+      <li>
+    </ul>
+  </div>
+
+  <!-- 카테고리 버튼 -->
+  <div class="row my-5 justify-content-center">
     {% for theme in themes %}
       <div class="col-2 my-1">
         <a class='btn btn-outline-dark w-100' href="{% url 'articles:region_theme_articles' region.pk theme.pk %}">{{ theme.title }}</a>
       </div>
     {% endfor %}
   </div>
+
+  <!-- 총 상품 -->
   <h3>총 {{ articles|length }}개의 상품이 있습니다.</h3>
   <div class="row">
     {% for article in articles %}
@@ -30,4 +51,5 @@
       </div>
     {% endfor %}
   </div>
+
 {% endblock body %}
