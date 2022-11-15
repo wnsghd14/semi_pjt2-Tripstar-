@@ -440,3 +440,21 @@ def region_index(request, region_pk):
 
 def map(request):
     return render(request, 'articles/map.html')
+
+
+def reservation_create(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    if request.method == "POST":
+        reservation_form = ReviewForm(request.POST, request.FILES)
+        if reservation_form.is_valid():
+            reservation = reservation_form.save(commit=False)
+            reservation.user = request.user
+            reservation.article = article
+            reservation.save()
+            return redirect("articles:detail")
+    else:
+        reservation_form = ReservationForm()
+    context = {
+        "reservation_form": reservation_form,
+    }
+    return render(request, "articles/reservation_create.html", context)

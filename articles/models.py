@@ -9,10 +9,12 @@ class Theme(models.Model):
     title = models.CharField(max_length=20)
     image = ProcessedImageField(blank=True, upload_to='images/theme/', processors=[Thumbnail(200, 100)], format='JPEG', options={'quality':100})
 
+
 class Region(models.Model):
     title = models.CharField(max_length=20)
     index_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(800, 600)], format='JPEG', options={'quality':100})
     detail_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(1600, 300)], format='JPEG', options={'quality':100})
+
 
 class Article(models.Model):
     title = models.CharField(max_length=100)
@@ -74,3 +76,13 @@ class Comment(models.Model):
     content = models.TextField()
     review = models.ForeignKey(Review,on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+class Reservation(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=50)
+    check_in = models.DateField()
+    check_out = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
