@@ -165,17 +165,16 @@ def detail(request, article_pk):
         reviews_avg = 0
     
     # 각 별당 갯수
-    one = article.review.filter(grade=1).count()
-    two = article.review.filter(grade=2).count()
-    three = article.review.filter(grade=3).count()
-    four = article.review.filter(grade=4).count()
-    five = article.review.filter(grade=5).count()
+    grade_list = []
     total = article.review.all().count()
-    one_star = round((one / total) * 100)
-    two_star = round((two / total) * 100)
-    three_star = round((three / total) * 100)
-    four_star = round((four / total) * 100)
-    five_star = round((five / total) * 100)
+    if total:
+      for cnt in range(5, 0, -1):
+        grade_count = article.review.filter(grade=cnt).count()
+        if grade_count:
+          grade_list.append(round((grade_count / total) * 100))
+        else:
+          grade_list.append(0)
+
     context = {
         "article": article,
         "reviews": reviews,
@@ -185,11 +184,7 @@ def detail(request, article_pk):
         'quotient_list': quotient_list,
         'half_list': half_list,
         'rest_list': rest_list,
-        'one_star': one_star,
-        'two_star': two_star,
-        'three_star': three_star,
-        'four_star': four_star,
-        'five_star': five_star,
+        'grade_list':grade_list,
     }
     return render(request, "articles/detail.html", context)
 

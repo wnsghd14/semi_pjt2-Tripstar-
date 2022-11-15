@@ -75,7 +75,8 @@
             </div>
           </div>
           <div class='col-8 bg-light container'>
-            <div class='row'>
+            <div class='row h-100'>
+              {% if grade_list %}
               <div class='col-2 d-flex flex-column justify-content-evenly'>
                 <div class="my-2" style="height: 13px;">
                   별 5개
@@ -94,22 +95,17 @@
                 </div>
               </div>
               <div class="col-10 d-flex flex-column justify-content-evenly">
-                <div class="progress my-2" style="height: 13px;">
-                  <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{ five_star }}%;" aria-valuenow="{{ five_star }}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{five_star}}%</span></div>
-                </div>  
-                <div class="progress my-2" style="height: 13px;">
-                  <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{ four_star }}%;" aria-valuenow="{{ four_star }}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{ four_star }}%</span></div>
-                </div>
-                <div class="progress my-2" style="height: 13px;">
-                  <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{ three_star }}%;" aria-valuenow="{{ three_star }}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{ three_star }}%</span></div>
-                </div>
-                <div class="progress my-2" style="height: 13px;">
-                  <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{two_star}}%;" aria-valuenow="{{two_star}}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{two_star}}%</span></div>
-                </div>
-                <div class="progress my-2" style="height: 13px;">
-                  <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{ one_star }}%;" aria-valuenow="{{ one_star }}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{ one_star }}%</span></div>
-                </div>
+                {% for grade in grade_list %}
+                  <div class="progress my-2" style="height: 13px;">
+                    <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{ grade }}%;" aria-valuenow="{{ grade }}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{ grade }}%</span></div>
+                  </div>  
+                {% endfor %}
               </div>
+              {% else %}
+                <div class="d-flex justify-content-center align-items-center h-100">
+                  <h5>평점이 없습니다.</h5>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
