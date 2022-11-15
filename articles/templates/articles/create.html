@@ -1,26 +1,15 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
+{% block css %}
+{% endblock css %}
 {% block body %}
-  <h1>articles/create</h1>
   <form action="{% url 'articles:create' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form article_form %}
     {% bootstrap_form article_photo_form %}
-
-    <!-- 지도 -->
-     <div>
-      <div class="form-floating mb-3">
-        <input type="text" name="Address" id="address" class="form-control" placeholder="숙소 주소를 입력해주세요.">
-        <label for="address">숙소 주소를 입력해주세요.</label>
-      </div>
-        <button type="button" name="Address_btn" id="searchBtn" class="btn btn-outline-primary">검색</button>
-        <input type="hidden" name="location" id="location">
-        <input type="hidden" name="y" id="lat">
-        <input type="hidden" name="x" id="lng">
-        <div id="map" style="width:700px;height:350px;"></div>
-
-    <select class="form-select my-2" aria-label="Default select example" name='region'>
+		<label class='mt-2' for="region">지역 선택</label>
+    <select class="form-select my-2" aria-label="Default select example" name='region' id='region'>
       <option selected="selected">지역 선택</option>
       {% for region in regions %}
         <option value="{{ region.pk }}">{{ region.title }}</option>
@@ -28,7 +17,7 @@
     </select>
     <br>
     <label for="theme">테마선택(복수선택가능)</label>
-    <div class='d-flex my-1'>
+    <div class='d-flex mt-1 mb-4'>
       {% for theme in themes %}
       <div class="form-check me-3" id='theme'>
         <input class="form-check-input" name="theme" type="checkbox" value="{{ theme.pk }}" id="{{ theme.title }}">
@@ -37,12 +26,19 @@
         </label>
       </div>
       {% endfor %}
-
     </div>
+
+		<!-- 지도 -->
+		<label for="address-label">주소 입력</label>
+		<div class="input-group mb-3 mt-1" id='address-label'>
+			<input type="text" class="form-control" name="Address" id="address" placeholder="숙소 주소를 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
+			<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>
+		</div>
+		<input type="hidden" name="location" id="location">
+		<input type="hidden" name="y" id="lat">
+		<input type="hidden" name="x" id="lng">
+		<div id="map" style="width:100%;height:350px;" class='my-2 rounded'></div>
     {% bootstrap_button button_type="submit" content="OK" button_class="btn btn-outline-primary"%}
-
-
-
   </form>
 
 
@@ -55,15 +51,15 @@
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        center: new kakao.maps.LatLng(37.4883385484241, 127.04114555733), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    };  
-	
+
+	// 지도를 생성합니다   
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
 	
 	$('#searchBtn').click(function(){
 		// 버튼을 click했을때
-		// 지도를 생성합니다    
-		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
@@ -85,6 +81,9 @@
 
             location_x.value = lat
             location_y.value = lng
+
+			console.log(lat)
+			console.log(lng)
 
 		        getAddr(lat,lng);
 		        function getAddr(lat,lng){
@@ -108,7 +107,9 @@
 		            map: map,
 		            position: coords
 		        });
-	
+				
+				console.log(location_x)
+
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new kakao.maps.InfoWindow({
 		            content: `<div style="width:300px; text-align:center;padding:6px 0;">${result[0].road_address.address_name}</div>`
