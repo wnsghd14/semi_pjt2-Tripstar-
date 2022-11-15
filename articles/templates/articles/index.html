@@ -11,27 +11,24 @@
 
   <div class="container">
 
-    {%if request.user.is_seller%}
-      <div class="d-flex justify-content-end">
-        <a href="{% url 'articles:create' %}" class="btn btn-outline-success">상품 등록</a>
-      </div>
-      {%endif%}
-      <!-- Swiper -->
-      <div class="my-5 swiper mySwiper" style="height:380px;">
-        <div class="swiper-wrapper">
-          {% for region in regions %}
-            <div class="swiper-slide">
-              <img src="{{ region.index_image.url }}" style="border-radius: 20px;">
-              <h3 class="main_image_text">{{ region.title }}</h3>
-              <a class="main_image_btn btn " href="{% url 'articles:region_index' region.pk %}">둘러보기</a>
-            </div>
-            {%endfor%}
+    <!-- Swiper -->
+    <div class="my-5 swiper mySwiper" style="height:380px;">
+      <div class="swiper-wrapper">
+        {% for region in regions %}
+          <div class="swiper-slide">
+            <img src="{{ region.index_image.url }}" style="border-radius: 20px;">
+            <h3 class="main_image_text">{{ region.title }}
+              <br><span class='my-1' style='font-size: 1rem;'>{{ region.article_set.all|length }}개의 여행상품</span>
+            </h3>
+            <a class="main_image_btn btn " href="{% url 'articles:region_index' region.pk %}">둘러보기</a>
           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-pagination"></div>
-        </div>
+        {% endfor %}
       </div>
+      <div class="swiper-button-next text-white"></div>
+      <div class="swiper-button-prev text-white"></div>
+      <div class="swiper-pagination text-white"></div>
+    </div>
+  </div>
 
   <!-- slide -->
   <div class="mb-5">
@@ -43,51 +40,54 @@
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img style="height:300px; width:100%;" src="{% static 'images/야경.jpg' %}" class="d-block">
+          <img style="height:300px; width:100%;" src="{% static 'images/야경.jpg' %}" class="d-block rounded">
         </div>
         <div class="carousel-item">
-          <img style="height:300px; width:100%;" src="{% static 'images/해운대.jpg' %}" class="d-block">
+          <img style="height:300px; width:100%;" src="{% static 'images/해운대.jpg' %}" class="d-block rounded">
         </div>
         <div class="carousel-item">
-          <img style="height:300px; width:100%;" src="{% static 'images/일몰.jpg' %}" class="d-block">
+          <img style="height:300px; width:100%;" src="{% static 'images/일몰.jpg' %}" class="d-block rounded">
         </div>
       </div>
     </div>
   </div>
 
-      <!-- card slide -->
-      <div class="my-5 swiper mySwiper">
-        <div class="swiper-wrapper">
-          {% for article in articles %}
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="p-0 col lg-4">
-                    <a href="{% url 'articles:detail' article.pk %}">
-                  <div class="card" style="overflow: hidden;">
-                    <div class="card-img">
-                      {% if article.photo_set.all.0.image%}
-                        <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
-                      {% else %}
-                        <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
-                      {% endif %}
-                    </div>
-                    <div class="card-body">                     
-                        <span>{{ article.title }}</span>
-                        <h4 class="pt-1 pb-2 text-nowrap text-truncate" style="width:16rem">[{{ article.title }}]{{ article.content }}</h4>
-                        <span>{{ article.price }}</span>
-                    </div>
-                    </a>
+  <!-- card slide -->
+  <div class="my-5 swiper mySwiper">
+    <div class="swiper-wrapper">
+      {% for article in articles %}
+        <div class="swiper-slide">
+          <div class="row">
+            <div class="p-0 col lg-4">
+              <a href="{% url 'articles:detail' article.pk %}">
+                <div class="card" style="overflow: hidden;">
+                  <div class="card-img">
+                    {% if article.articlephoto_set.all.0.image %}
+                      <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
+                    {% else %}
+                      <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
+                    {% endif %}
                   </div>
-                </div>
+                  <div class="card-body text-dark">
+                      {{ article.title }}
+                      <span style='font-size:0.8rem;'>
+                        <i class="bi bi-star-fill"></i>{{ article.grade_avg|floatformat }}
+                      </span>
+                    <h4 class="pt-1 text-nowrap text-truncate" >[{{ article.title }}]{{ article.content }}</h4>
+                    <p style='font-size:0.8rem;' class='text-secondary m-0'>{{ article.price }}원 <br>{{ article.review_set.all|length }}개의 후기<p>
+                  </div>
+                </a>
               </div>
             </div>
-            {% endfor %}
-           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-pagination"></div>
+          </div>
         </div>
-      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-next text-white"></div>
+    <div class="swiper-button-prev text-white"></div>
+    <div class="swiper-pagination text-white"></div>
+  </div>
+</div>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -99,35 +99,35 @@
     loopFillGroupWithBlank: true,
     pagination: {
       el: ".swiper-pagination",
-      clickable: true,
+      clickable: true
     },
     navigation: {
       nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
+      prevEl: ".swiper-button-prev"
     },
     breakpoints: {
-        640: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        780:{
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        994: {
-          slidesPerView: 3,
-          spaceBetween: 20,
-        },
-        1200: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-        },
-        1400: {
-            slidesPerView: 4,
-            spaceBetween: 30,
-        }
+      640: {
+        slidesPerView: 1,
+        spaceBetween: 20
       },
+      780: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      994: {
+        slidesPerView: 3,
+        spaceBetween: 20
+      },
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      },
+      1400: {
+        slidesPerView: 4,
+        spaceBetween: 30
+      }
+    }
   });
 </script>
-    
+
 {% endblock body %}

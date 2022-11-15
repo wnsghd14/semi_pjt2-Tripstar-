@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block body %}
+<div class="d-flex justify-content-center">
+  <div class="col-6">
+    <h1 class="text-center">예약하기</h1>
+    <form action="" method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {% bootstrap_form reservation_form %}
+        <input type="submit">
+      </form>
+  </div>
+<div>
+{% endblock body %}

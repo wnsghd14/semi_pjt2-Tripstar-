@@ -7,12 +7,14 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Theme(models.Model):
     title = models.CharField(max_length=20)
-    image = ProcessedImageField(blank=True, upload_to='images/', processors=[Thumbnail(200, 100)], format='JPEG', options={'quality':100})
+    image = ProcessedImageField(blank=True, upload_to='images/theme/', processors=[Thumbnail(200, 100)], format='JPEG', options={'quality':100})
+
 
 class Region(models.Model):
     title = models.CharField(max_length=20)
-    index_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 300)], format='JPEG', options={'quality':100})
-    detail_image = ProcessedImageField(blank=False, upload_to='images/', processors=[ResizeToFill(400, 100)], format='JPEG', options={'quality':100})
+    index_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(800, 600)], format='JPEG', options={'quality':100})
+    detail_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(1600, 300)], format='JPEG', options={'quality':100})
+
 
 class Article(models.Model):
     title = models.CharField(max_length=100)
@@ -20,7 +22,7 @@ class Article(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = ProcessedImageField(upload_to='images/',null=True,
+    image = ProcessedImageField(upload_to='images/articles/',null=True,
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
@@ -28,6 +30,14 @@ class Article(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_articles')
     theme = models.ManyToManyField(Theme, symmetrical=False, related_name='article_themes')
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
+
+    
+class Location(models.Model):
+    location = models.CharField(max_length=300, blank=True)
+    x = models.CharField(max_length=100, blank=True, null=True)
+    y = models.CharField(max_length=100, blank=True, null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    
 
 class ArticlePhoto(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
@@ -45,7 +55,7 @@ class GradeSelector(models.IntegerChoices):
 class Review(models.Model):
     title = models.CharField(max_length=20)
     content = models.TextField()
-    image = ProcessedImageField(upload_to='images/',null=True,
+    image = ProcessedImageField(upload_to='images/reviews/',null=True,
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
@@ -66,3 +76,13 @@ class Comment(models.Model):
     content = models.TextField()
     review = models.ForeignKey(Review,on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+class Reservation(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=50)
+    check_in = models.DateField()
+    check_out = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

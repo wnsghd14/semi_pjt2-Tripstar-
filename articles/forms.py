@@ -16,6 +16,16 @@ class ArticleForm(forms.ModelForm):
             'content': '내용',
         }
 
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = (
+            'x',
+            'y',
+            'location',
+        )
+       
+
 class RegionForm(forms.ModelForm):
     class Meta:
         model = Region
@@ -31,6 +41,7 @@ class ThemeForm(forms.ModelForm):
         fields = [
             'title', 'image'
         ]
+
 
 
 class ArticlePhotoForm(forms.ModelForm):
@@ -79,3 +90,17 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content',]
 
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = [
+            "name",
+            "check_in",
+            "check_out",
+        ]
+        labels = {
+            'name': '이름',
+            'check_in': '체크인',
+            'check_out' : '체크아웃',
+        }

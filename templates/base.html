@@ -38,9 +38,17 @@
             <i class="bi bi-search"></i>
           </button>
         </form>
+
+        
+
         <div class='col-4 d-flex justify-content-end align-items-center'>
+          {% if request.user.is_seller %}
+          <div class='me-1'>
+            <a href="{% url 'articles:create' %}" class="btn btn-white">상품 등록</a>
+          </div>
+          {% endif %}
           {% if request.user.is_authenticated %}
-            <div class="dropdown">
+            <div class="dropdown ms-1">
               <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ request.user.username }}
               </button>
@@ -50,6 +58,9 @@
                 </li>
                 <li>
                   <a class="dropdown-item" href="{% url 'accounts:update' request.user.pk %}">회원정보수정</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'service_center:my_question' %}">나의 문의</a>
                 </li>
                 <li>
                   <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
@@ -63,9 +74,29 @@
         </div>
       </div>
     </div>
-    <hr>
-    <div class="container">
+    <hr class='mb-0'>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+
+    {% block banner %}
+    {% endblock banner %}
+
+    <div class="container my-5 pb-5">
       {% block body %}{% endblock body %}
+    </div>
+
+    <!-- footer-->
+    <div style="width:100%; height:4rem;" class='bg-light fixed-bottom d-flex justify-content-center align-items-center flex-column'>
+      <p class='m-0'>
+        김수빈, 김재형, 김지연, 백동원, 최준홍 Supported by HyperGrowth 
+      </p>
+      <a class='text-decoration-underline' href="{% url 'service_center:index' %}">고객 센터</a>
     </div>
     {% bootstrap_javascript %}
 
@@ -73,5 +104,46 @@
     {% block script %}{% endblock script %}
 
   </body>
-
+<!-- Channel Plugin Scripts -->
+<script>
+    (function() {
+      var w = window;
+      if (w.ChannelIO) {
+        return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+      }
+      var ch = function() {
+        ch.c(arguments);
+      };
+      ch.q = [];
+      ch.c = function(args) {
+        ch.q.push(args);
+      };
+      w.ChannelIO = ch;
+      function l() {
+        if (w.ChannelIOInitialized) {
+          return;
+        }
+        w.ChannelIOInitialized = true;
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+        s.charset = 'UTF-8';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+      }
+      if (document.readyState === 'complete') {
+        l();
+      } else if (window.attachEvent) {
+        window.attachEvent('onload', l);
+      } else {
+        window.addEventListener('DOMContentLoaded', l, false);
+        window.addEventListener('load', l, false);
+      }
+    })();
+    ChannelIO('boot', {
+      "pluginKey": "c18dff1e-3839-4bcd-93e6-51cc509d023d"
+    });
+  </script>
+  <!-- End Channel Plugin -->
 </html>

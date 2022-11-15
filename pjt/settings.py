@@ -46,7 +46,30 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+
+    # allauth
+    'allauth',
+    'allauth.account', # 소셜로그인 계정 관리
+    'allauth.socialaccount', # 소셜 account 정보 관리
+
+    # provider
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.discord',
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', # 기본 장고 유저
+    'allauth.account.auth_backends.AuthenticationBackend', # 소셜로그인 인증 체계
+]
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/articles/'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

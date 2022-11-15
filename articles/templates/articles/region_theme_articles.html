@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block body %}
+  <h1 class='my-5'>{{ region.title }}에서 {{ theme.title }}</h1>
+  <div class="row justify-content-end  my-5" style='font-size:0.9rem;'>
+    <div class="col-1"><a class='text-secondary' href="{% url 'articles:region_theme_articles_grade' region.pk theme.pk %}">•평점 높은 순</a></div>
+    <div class="col-1"><a class='text-secondary' href="{% url 'articles:region_theme_articles_review' region.pk theme.pk %}">•후기 많은 순</a></div>
+    <div class="col-1"><a class='text-secondary' href="{% url 'articles:region_theme_articles_low' region.pk theme.pk %}">•낮은 가격순</a></div>
+    <div class="col-1"><a class='text-secondary' href="{% url 'articles:region_theme_articles_high' region.pk theme.pk %}">•높은 가격순</a></div>
+    <div class="col-1"><a class='text-secondary' href="{% url 'articles:region_theme_articles_recent' region.pk theme.pk %}">•신상품순</a></div>
+  </div>
+  <div class="row">
+    {% for article in articles %}
+      <div class="col-3">
+        <div class="card border-0">
+          <a class='text-dark' href="{% url 'articles:detail' article.pk %}">
+            <div class="">
+              <img class='w-100 rounded' src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}">
+            </div>
+            <p class='m-0 text-secondary' style='font-size:0.8rem;'>
+              {% for theme in article.theme.all %}
+                {{ theme.title }} 
+              {% endfor %}
+            </p>
+            <p class='m-0'>
+              {{ article.title }}
+            </p>
+            <p>{{ article.price }}원</p>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock body %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock script %}
