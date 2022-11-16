@@ -74,7 +74,7 @@
           <p>기준 인원 초과, 바베큐 시설 이용 등은 현장에서 추가 비용이 청구될 수 있습니다.</p>
         </div>
         <!-- 결제하기 -->
-        <form action="/cart/kakaoPayLogic" method="GET">
+        <form action="{% url 'cart:kakaoPayLogic' reservation.pk %}" method="GET">
           <div class="text-center">
             <input type="submit" value="{{ total_price|intcomma }}원 결제하기" class="btn btn-primary btn-lg" style="width:100%">
           </div>
