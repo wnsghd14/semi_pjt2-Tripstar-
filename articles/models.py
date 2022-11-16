@@ -78,11 +78,22 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
+class Age(models.IntegerChoices):
+    zero = 0, '0'
+    one = 1, '1'
+    two = 2 , '2'
+    three = 3 , '3'
+    four = 4 , '4'
+    five = 5 , '5'
+    
+
 class Reservation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=50)
-    check_in = models.DateField()
-    check_out = models.DateField()
+    adult = models.IntegerField(default=Age.zero,choices=Age.choices)
+    kid = models.IntegerField(default=Age.zero,choices=Age.choices)
+    check_in = models.CharField(max_length=30)
+    check_out = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
