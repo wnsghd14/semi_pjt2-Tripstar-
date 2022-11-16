@@ -9,7 +9,7 @@
       {% for article in articles %}
         <div class="col-2">
           <a class='text-decoration-none text-dark' href="{% url 'articles:detail' article.pk %}">
-            <img class='w-100 rounded' src="{{ article.image.url }}" alt="{{ article.image }}">
+            <img class='w-100 rounded' src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}">
             <p>{{ article.title }}</p>
           </a>
         </div>
@@ -21,7 +21,7 @@
       {% for review in reviews %}
         <div class="col-2">
           <a href="{% url 'articles:review_detail' review.pk %}">
-            <img class='w-100 rounded' src="{{ review.image.url }}" alt="{{ review.image }}">
+            <img class='w-100 rounded' src="{{ review.reviewphoto_set.all.0.image.url }}" alt="{{ review.reviewphoto_set.all.0.image }}">
             <p>{{ review.title }}</p>
           </a>
         </div>
