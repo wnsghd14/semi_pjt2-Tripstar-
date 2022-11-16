@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os, json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -170,3 +171,12 @@ AUTH_USER_MODEL = "accounts.User"
 # Message Framework
 # https://docs.djangoproject.com/en/4.1/ref/contrib/messages/
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+# # password reset email
+# EMAIL_BACKEND = 'django.core.email.backends.smtp.EmailBackend'
+# EMAIL_PORT = '587'
+# EMAIL_HOST = 'smtp.naver.com'
+# EMAIL_HOST_USER = 'sbuni111@naver.com'
+# EMAIL_HOST_PASSWORD = 'tn!!!qls'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
