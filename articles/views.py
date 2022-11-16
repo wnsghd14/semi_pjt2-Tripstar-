@@ -485,13 +485,13 @@ def map(request):
 def reservation_create(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == "POST":
-        reservation_form = ReviewForm(request.POST, request.FILES)
+        reservation_form = ReservationForm(request.POST, request.FILES)
         if reservation_form.is_valid():
             reservation = reservation_form.save(commit=False)
             reservation.user = request.user
             reservation.article = article
             reservation.save()
-            return redirect("articles:detail")
+            return redirect("articles:detail",article_pk)
     else:
         reservation_form = ReservationForm()
     context = {
