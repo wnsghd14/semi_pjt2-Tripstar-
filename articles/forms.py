@@ -96,11 +96,13 @@ class ReservationForm(forms.ModelForm):
         model = Reservation
         fields = [
             "name",
-            "check_in",
-            "check_out",
+            "date",
+            "adult",
+            'kid',
         ]
         labels = {
             'name': '이름',
-            'check_in': '체크인',
-            'check_out' : '체크아웃',
+            'date': '날짜',
+            'adult': '성인',
+            'kid':'아이',
         }

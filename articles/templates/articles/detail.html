@@ -174,34 +174,6 @@
         <a href="{% url 'articles:delete' article.pk %}" class="btn btn-outline-danger">삭제</a>
       </div>
       <hr>
-      <!-- 달력 -->
-      <div class="calendar">
-        <div class="header">
-          <div class="year-month"></div>
-          <div class="nav">
-            <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
-            <button class="nav-btn go-today" onclick="goToday()">Today</button>
-            <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
-          </div>
-        </div>
-        <div class="main">
-          <div class="days">
-            <div class="day">일</div>
-            <div class="day">월</div>
-            <div class="day">화</div>
-            <div class="day">수</div>
-            <div class="day">목</div>
-            <div class="day">금</div>
-            <div class="day">토</div>
-          </div>
-          <div class="dates"></div>
-        </div>
-      </div>
-    </div>
-  </aside> 
-</div>
-
-
 
 {% endblock body %}
 
@@ -263,81 +235,5 @@
 
   // 마커가 지도 위에 표시되도록 설정합니다
   marker.setMap(map);
-</script>
-
-<!--달력 자바스크립트-->
-<script>
-    let date = new Date();
-
-const renderCalender = () => {
-  const viewYear = date.getFullYear();
-  const viewMonth = date.getMonth();
-
-  document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 2}월`;
-
-  const prevLast = new Date(viewYear, viewMonth, 0);
-  const thisLast = new Date(viewYear, viewMonth + 2, 0);
-
-  const PLDate = prevLast.getDate();
-  const PLDay = prevLast.getDay();
-
-  const TLDate = thisLast.getDate();
-  const TLDay = thisLast.getDay();
-
-  const prevDates = [];
-  const thisDates = [...Array(TLDate + 2).keys()].slice(2);
-  const nextDates = [];
-
-  if (PLDay !== 6) {
-    for (let i = 0; i < PLDay + 2; i++) {
-      prevDates.unshift(PLDate - i);
-    }
-  }
-
-  for (let i = 2; i < 7 - TLDay; i++) {
-    nextDates.push(i);
-  }
-
-  const dates = prevDates.concat(thisDates, nextDates);
-  const firstDateIndex = dates.indexOf(2);
-  const lastDateIndex = dates.lastIndexOf(TLDate);
-
-  dates.forEach((date, i) => {
-    const condition = i >= firstDateIndex && i < lastDateIndex + 2
-                      ? 'this'
-                      : 'other';
-    dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
-  });
-
-  document.querySelector('.dates').innerHTML = dates.join('');
-
-  const today = new Date();
-  if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
-    for (let date of document.querySelectorAll('.this')) {
-      if (+date.innerText === today.getDate()) {
-        date.classList.add('today');
-        break;
-      }
-    }
-  }
-};
-
-renderCalender();
-
-const prevMonth = () => {
-  date.setMonth(date.getMonth() - 2);
-  renderCalender();
-};
-
-const nextMonth = () => {
-  date.setMonth(date.getMonth() + 2);
-  renderCalender();
-};
-
-const goToday = () => {
-  date = new Date();
-  renderCalender();
-};
-
 </script>
 {% endblock script %}

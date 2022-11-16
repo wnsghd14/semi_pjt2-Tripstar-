@@ -92,7 +92,6 @@ class Reservation(models.Model):
     name = models.CharField(max_length=50)
     adult = models.IntegerField(default=Age.zero,choices=Age.choices)
     kid = models.IntegerField(default=Age.zero,choices=Age.choices)
-    check_in = models.CharField(max_length=30)
-    check_out = models.CharField(max_length=30)
+    date = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
