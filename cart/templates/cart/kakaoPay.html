@@ -5,35 +5,77 @@
 {% endblock css %}
 
 {% block body %}
-<h2>예약하기</h2>
-<div class="d-flex">
+<h2 class="mb-4">예약하기</h2>
+<div class="d-flex mt-3">
 
   <!-- 상품 정보 및 예약자 정보 -->
-  <article style="width:70%">
+  <article style="width:65%">
 
     <!-- 상품 정보 -->
-    <div class="my-3">
-      <h4>상품정보</h4>
-      <p>{{ reservation.article.title }}</p>
-      <p>{{ reservation.user.username }}</p>
+    <h4>상품정보</h4>
+    <div class="my-3 border-top pb-3">
+      
+      {% if reservation.article.image %}
+        <img src="{{ reservation.article.image.url }}" alt="{{ reservation.article.image }}">
+      {% endif %}
+      <div>
+        <h3 class="mt-3">{{ reservation.article.title }}</h3>
+        <p>{{ reservation.date }}</p>
+      </div>
+      <p>어른 : {{ reservation.adult }}명</p>
+      {% if reservation.kid %}
+        <p>어린이 : {{ reservation.kid }}명</p>
+      {% endif %}
+      <div class="d-flex justify-content-between">
+        <p>상품 금액 </p>
+        <p>{{ reservation.article.price }}원</p>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p>총 상품 금액 </p>
+        <p> {{ total_price }}원</p>
+      </div>
     </div>
-
+      
     <!-- 예약자 정보-->
-    <div>
-      <h4>예약자 정보</h4>
+    <h4>예약자 정보</h4>
+    <div class="my-3 border-top">
+      <p class="mt-3"> 예약자 이름<span class="ms-4">{{ reservation.user.username }}</span></p>
+      <p>예약자 이메일<span class="ms-4">{{ reservation.user.email }}</span></p>
     </div>
   </article>
 
   <!-- 결제 정보 및 결제하기 -->
-  <aside class="ps-5" style="width: 30%;">
+  <aside class="ps-5" style="width: 35%;">
     <div style="position: sticky; top: 30px;">
       <div class="p-4 my-4 d-flex flex-column aside-box">
         <!-- 결제 정보 -->
-        <h4>결제 정보</h4>
-        
+        <h4 class="mb-2">결제 정보</h4>
+        <div class="d-flex justify-content-between my-3 border-top">
+          <p class="mt-4">주문 금액</p>
+          <p class="mt-4">{{ total_price }}원</p>
+        </div>
+        <div class="d-flex justify-content-between my-3">
+          <h5>총 결제 금액 </h5>
+          <h5>{{ total_price }}원</h5>
+        </div>
+        <!-- 약관 안내 -->
+        <h4 class="mt-3">약관 안내</h4>
+        <div class="border-top my-3">
+          <div class="border mt-4">
+            <p class="mt-4 ms-3">개인정보 제공 동의(필수)</p>
+            <p class="ms-3">개인정보 수집 및 이용 동의(필수)</p>
+          </div>
+        </div>
+        <p>위 약관을 확인하였으며, 회원 본인은 약관 및 결제에 동의합니다.</p>
+        <div class="my-3 mb-5 bg-light py-4">
+          <p class="fw-bold fs-5">이런 경우 현장 결제가 필요할 수 있어요.</p>
+          <p>기준 인원 초과, 바베큐 시설 이용 등은 현장에서 추가 비용이 청구될 수 있습니다.</p>
+        </div>
         <!-- 결제하기 -->
         <form action="/cart/kakaoPayLogic" method="GET">
-          <input type="submit" value="결제">
+          <div class="text-center">
+            <input type="submit" value="{{ total_price }}원 결제하기" class="btn btn-primary btn-lg" style="width:100%">
+          </div>
         </form>
       </div>
     </div>
