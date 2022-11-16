@@ -10,7 +10,7 @@ class User(AbstractUser):
     image = ProcessedImageField(
         upload_to="images/",
         null=True,
-        processors=[ResizeToFill(100, 100)],
+        processors=[ResizeToFill(400, 400)],
         format="JPEG",
         options={"quality": 80},
     )
