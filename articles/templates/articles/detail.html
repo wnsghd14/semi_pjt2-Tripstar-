@@ -2,6 +2,7 @@
 {% load django_bootstrap5 %}
 {% load widget_tweaks %}
 {% load mathfilters %}
+{% load humanize %}
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/calender.css' %}">
@@ -155,7 +156,7 @@
     <div style="position: sticky; top: 30px;">
       <div class="p-4 my-4 d-flex flex-column aside-box">
 
-        <h3 class="mb-3" style="font-size: 22px">{{ article.price }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
+        <h3 class="mb-3" style="font-size: 22px">{{ article.price|intcomma }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
         <a href="{% url 'articles:reservation_create' article.pk %}" class="btn btn-primary mb-1">예약하기</a>
 
         {% if request.user.is_authenticated %}
