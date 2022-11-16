@@ -491,7 +491,7 @@ def reservation_create(request, article_pk):
             reservation.user = request.user
             reservation.article = article
             reservation.save()
-            return redirect("articles:detail",article_pk)
+            return redirect("cart:kakaoPay", reservation.pk)
     else:
         reservation_form = ReservationForm()
     context = {

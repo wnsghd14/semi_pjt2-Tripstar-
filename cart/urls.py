@@ -4,7 +4,7 @@ from . import views
 app_name = 'cart'
 
 urlpatterns = [
-    path('', views.kakaoPay, name="kakaoPay"),
+    path('<int:reservation_pk>/', views.kakaoPay, name="kakaoPay"),
     path('kakaoPayLogic/', views.kakaoPayLogic, name="kakaoPayLogic"),
     path('paySuccess/', views.paySuccess, name="paySuccess"),
     path('payFail/', views.payFail, name="payFail"),
