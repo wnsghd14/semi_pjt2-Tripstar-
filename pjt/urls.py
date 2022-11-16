@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("", views.base, name="base"),
@@ -27,4 +28,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path("service/", include("service_center.urls")),
     path("cart/", include("cart.urls")),
+    path('password_reset_confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
