@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import requests
 import json
 from django.template import loader
-from articles.models import Reservation
+from articles.models import Reservation, Article
+from django.contrib.auth import get_user_model
 
 
 # Create your views here.
@@ -16,7 +17,11 @@ def kakaoPay(request, reservation_pk):
     }
     return render(request, 'cart/kakaoPay.html', context)
 
-def kakaoPayLogic(request):
+def kakaoPayLogic(request, pk):
+    User = get_user_model()
+    user = get_object_or_404(User, pk=request.user.pk)
+    reservation = Reservation.objects.get(pk=pk)
+    article = Article.objects.get(id=reservation.id)
     _admin_key = 'fc36d9bcf49db100bbe5167e1e0f95b1'
     _url = 'https://kapi.kakao.com/v1/payment/ready'
     _headers = {
@@ -26,16 +31,16 @@ def kakaoPayLogic(request):
         "cid": "TC0ONETIME",    
         "partner_order_id": "partner_order_id",     
         "partner_user_id": "partner_user_id",    
-        "item_name": "초코파이",        
+        "item_name": article.title,        
         "quantity": "1",             
-        "total_amount": "2200",       
-        "vat_amount": "200",
+        "total_amount": article.price, # Integer Field로 맞춰줘야함       
+        "vat_amount": "200", # total_amount = vat_amount 보다 값이 커야 함
         "tax_free_amount": "0",        
         "approval_url": "http://127.0.0.1:8000/cart/paySuccess",
         "fail_url": "http://127.0.0.1:8000/cart/payFail",
         "cancel_url": "http://127.0.0.1:8000/cart/payCancel",
     }
-
+    print(_data)
     _res = requests.post(_url, data=_data, headers=_headers)
     _result = _res.json()  
     request.session['tid'] = _result['tid']     
