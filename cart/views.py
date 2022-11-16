@@ -9,8 +9,11 @@ from django.contrib.auth import get_user_model
 # Create your views here.
 def kakaoPay(request, reservation_pk):
     reservation = Reservation.objects.get(pk=reservation_pk)
+    total_price = int(reservation.adult + reservation.kid) * int(reservation.article.price)
     context = {
         'reservation':reservation,
+        'total_price':total_price,
+        
     }
     return render(request, 'cart/kakaoPay.html', context)
 
