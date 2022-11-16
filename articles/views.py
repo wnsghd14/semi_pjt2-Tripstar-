@@ -7,13 +7,20 @@ from django.db.models import Q, Avg, Count
 from django.contrib.auth import get_user_model
 import json
 import math
+from collections import deque
 
 # Create your views here.
 def index(request):
+    if request.session.get('recent_articles'):
+        recent_articles = request.session.get('recent_articles')
+    else:
+        recent_articles = None
     context = {
         "articles": Article.objects.all().annotate(grade_avg=Avg('review__grade')),
         "regions": Region.objects.all(),
         "themes": Theme.objects.all(),
+        'recent_articles': recent_articles,
+        'best_articles': Article.objects.all().annotate(grade_avg=Avg('review__grade')).order_by('-grade_avg')[:3]
     }
     return render(request, "articles/index.html", context)
 
@@ -174,6 +181,17 @@ def detail(request, article_pk):
           grade_list.append(round((grade_count / total) * 100))
         else:
           grade_list.append(0)
+
+    article_photo = ArticlePhoto.objects.filter(article_id=article_pk)[0].image.url
+    if request.session.get('recent_articles'):
+        recent_articles = request.session.get('recent_articles')
+        if len(recent_articles) >= 4:
+            recent_articles.pop()
+        deq_recent_articles = deque(recent_articles)
+        deq_recent_articles.appendleft([article_pk, article_photo])
+        request.session['recent_articles'] = list(deq_recent_articles)
+    else:
+        request.session['recent_articles'] = [[article_pk, article_photo]]
 
     context = {
         "article": article,
