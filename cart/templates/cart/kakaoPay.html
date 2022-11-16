@@ -1,12 +1,44 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/calender.css' %}">
+{% endblock css %}
 
 {% block body %}
-<h2>카카오 페이</h2>
-<form action="/cart/kakaoPayLogic" method="GET">
-  <div>
-    <p>초코파이</p>
-    <p>2,200원 (부가세 200원) / 1개</p>
-  </div>
-  <input type="submit" value="결제">
-</form>
+<h2>예약하기</h2>
+<div class="d-flex">
+
+  <!-- 상품 정보 및 예약자 정보 -->
+  <article style="width:70%">
+
+    <!-- 상품 정보 -->
+    <div class="my-3">
+      <h4>상품정보</h4>
+      <p>{{ reservation.article.title }}</p>
+      <p>{{ reservation.user.username }}</p>
+    </div>
+
+    <!-- 예약자 정보-->
+    <div>
+      <h4>예약자 정보</h4>
+    </div>
+  </article>
+
+  <!-- 결제 정보 및 결제하기 -->
+  <aside class="ps-5" style="width: 30%;">
+    <div style="position: sticky; top: 30px;">
+      <div class="p-4 my-4 d-flex flex-column aside-box">
+        <!-- 결제 정보 -->
+        <h4>결제 정보</h4>
+        
+        <!-- 결제하기 -->
+        <form action="/cart/kakaoPayLogic" method="GET">
+          <input type="submit" value="결제">
+        </form>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
 {% endblock body %}

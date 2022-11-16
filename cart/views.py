@@ -2,10 +2,16 @@ from django.shortcuts import render, redirect
 import requests
 import json
 from django.template import loader
+from articles.models import Reservation
+
 
 # Create your views here.
-def kakaoPay(request):
-    return render(request, 'cart/kakaoPay.html')
+def kakaoPay(request, reservation_pk):
+    reservation = Reservation.objects.get(pk=reservation_pk)
+    context = {
+        'reservation':reservation,
+    }
+    return render(request, 'cart/kakaoPay.html', context)
 
 def kakaoPayLogic(request):
     _admin_key = 'fc36d9bcf49db100bbe5167e1e0f95b1'
