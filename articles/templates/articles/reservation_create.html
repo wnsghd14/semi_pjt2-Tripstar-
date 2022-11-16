@@ -58,5 +58,33 @@
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
           });
         });
-        </script>
+    </script>
+    <script>
+      const getDateDiff = (d1, d2) => {
+        const date1 = new Date(d1);
+        const date2 = new Date(d2);
+
+        const diffDate = date1.getTime() - date2.getTime();
+        
+        return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
+      }
+      
+      getDateDiff("2021-09-01", "2021-10-01");
+      console.log(getDateDiff);
+    </script>
+    <script>
+      var now = new Date();
+ 
+      var year = now.getFullYear();   // 연도
+      var month = now.getMonth()+1;   // 월    
+      var day = now.getDate();        // 일
+       
+      var stDate = new Date(2021, 03, 21);
+      var endDate = new Date(year, month, day);
+       
+      var btMs = endDate.getTime() - stDate.getTime() ;
+      var btDay = btMs / (1000*60*60*24) ;
+       
+      console.log("일수 차이는?? " + btDay);
+    </script>
 {% endblock body %}
