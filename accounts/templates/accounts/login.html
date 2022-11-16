@@ -19,7 +19,7 @@
         class="form-control" placeholder="비밀번호" required="" id="id_password">
       </div>
       <div class="d-flex justify-content-end">
-        <a href="#" style="font-size: 14px;">비밀번호 찾기</a>
+        <a href="{% url 'accounts:password_reset' %}" style="font-size: 14px;">비밀번호 찾기</a>
       </div>
       <input type="submit" class="btn py-2 form-control btn-outline-info w-100 my-2" style="height: 45px;" value="로그인">
     </form>

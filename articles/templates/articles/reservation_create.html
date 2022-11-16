@@ -19,7 +19,7 @@
         <div class="form-group">
             <label for="name">사용자 이름 입력</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="이름">
-        </div> 
+        </div>
         <div class="form-group">
             <label for="kid">어린이</label>
             <select name="kid" class="form-select" id="id_kid">
@@ -49,16 +49,45 @@
         <input type="submit">
     </form>
   </div>
+  <h1>{{ article.title }}</h1>
 <div>
-    <script>
-        $(function() {
-          $('input[id="daterange"]').daterangepicker({
-            opens: 'left'
-          }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-          });
+
+
+  <script>
+      $(function() {
+        $('input[id="daterange"]').daterangepicker({
+          opens: 'left'
+        }, function(start, end, label) {
+          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
-    </script>
+      });
+  </script>
+
+  {% comment %} <script>
+    $(function() {
+      $('input[id="daterange"]').daterangepicker({
+        opens: 'left'
+      }, function(start, end, label) {
+        console.log(start.format('YYYY-MM-DD'));
+        console.log(end.format('YYYY-MM-DD'));
+
+        const date1 = start.format('YYYY-MM-DD');
+        const date2 = end.format('YYYY-MM-DD');
+
+        console.log(date1);
+        console.log(date2);
+        const diffDate = date1.getTime() - date2.getTime();
+        const days = Math.abs(diffDate / (1000 * 60 * 60 * 24));
+        console.log(days);
+        
+      });
+    });
+    const articleId = event.target.dataset.articleId
+    const Price = document.querySelector(`#${articleId}-price`)
+    Price.innerText = response.data.price
+  </script> {% endcomment %}
+
+
     <script>
       const getDateDiff = (d1, d2) => {
         const date1 = new Date(d1);
@@ -86,5 +115,6 @@
       var btDay = btMs / (1000*60*60*24) ;
        
       console.log("일수 차이는?? " + btDay);
+
     </script>
 {% endblock body %}

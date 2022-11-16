@@ -173,10 +173,11 @@ AUTH_USER_MODEL = "accounts.User"
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 # # password reset email
-# EMAIL_BACKEND = 'django.core.email.backends.smtp.EmailBackend'
-# EMAIL_PORT = '587'
-# EMAIL_HOST = 'smtp.naver.com'
-# EMAIL_HOST_USER = 'sbuni111@naver.com'
-# EMAIL_HOST_PASSWORD = 'tn!!!qls'
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT = '587'
+EMAIL_HOST = 'smtp.naver.com'
+EMAIL_HOST_USER = 'sbuni111@naver.com'
+EMAIL_HOST_PASSWORD = 'tn!!!qls'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
