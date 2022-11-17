@@ -130,7 +130,7 @@
                     {% if review.user.image %}
                     <img src="{{ review.user.image.url }}" alt="{{ review.user.image }}" class="rounded-circle border border-2" style="width:50px; height:50px;">
                     {% else %}
-                    <img src="{% static 'images/no-avatar.jpg' %}" alt="" class="rounded-circle border border-2" >
+                    <img src="{% static 'images/no-avatar.jpg' %}" alt="no-avatar" class="rounded-circle border border-2" style="width:50px; height:50px;" >
                     {% endif %}
                     <div class="d-flex flex-column ms-3">  
                       <span>{{ review.user.username }}</span>
