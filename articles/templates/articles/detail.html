@@ -61,10 +61,10 @@
       <h3>후기 <span class='text-secondary fs-5' style="color:#3CA0FF;">{{ reviews|length }}</span> </h3>
       <div class='container'>
         <div class='row'>
-          <div class="col-4 ps-0">
-            <div class="d-flex flex-column align-items-center bg-light me-2 py-5">
+          <div class="col-4 ps-0 rounded">
+            <div class="d-flex flex-column align-items-center bg-light me-2 py-4">
               {% if reviews_avg %}
-              <h1>{{ reviews_avg|floatformat }}</h1>
+              <h1 style='font-size:3.5rem;' class='fw-bold'>{{ reviews_avg|floatformat }}</h1>
               <div class="d-flex">
                 {% for a in quotient_list %}<span class="fs-5"><i class="bi bi-star-fill"></i></span>{% endfor %}
                 {% for a in half_list %}<span class="fs-5"><i class="bi bi-star-half"></i></span>{% endfor %}
@@ -75,62 +75,67 @@
               {% endif %}
             </div>
           </div>
-          <div class='col-8 bg-light container'>
+          <div class='col-8 bg-light rounded'>
             <div class='row h-100'>
-              {% if grade_list %}
-              <div class='col-2 d-flex flex-column justify-content-evenly'>
-                <div class="my-2" style="height: 13px;">
-                  별 5개
-                </div>
-                <div class="my-2" style="height: 13px;">
-                  별 4개
-                </div>
-                <div class="my-2" style="height: 13px;">
-                  별 3개
-                </div>
-                <div class="my-2" style="height: 13px;">
-                  별 2개
-                </div>
-                <div class="my-2" style="height: 13px;">
-                  별 1개
-                </div>
+              <div class="d-flex flex-column justify-content-center container ">
+                {% if grade_list %}
+                  {% for grade in grade_list %}
+                    <div class="row pe-3" >
+                      <div style='font-size:0.6rem;' class="col-2 d-flex justify-content-end align-items-center px-1">
+                        {% if forloop.counter == 1 %}
+                          <i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i>
+                        {% elif forloop.counter == 2 %}
+                          <i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i>
+                        {% elif forloop.counter == 3 %}
+                          <i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i>
+                        {% elif forloop.counter == 4 %}
+                          <i class="bi bi-star-fill d-flex align-itmes-center"></i><i class="bi bi-star-fill d-flex align-itmes-center"></i>
+                        {% elif forloop.counter == 5 %}
+                          <i class="bi bi-star-fill d-flex align-itmes-center"></i>
+                        {% endif %}  
+                      </div>
+                      <div class="progress my-2 col-10 p-0" style="height: 12px;">
+                        <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{ grade }}%;" aria-valuenow="{{ grade }}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{ grade }}%</span></div>
+                      </div>  
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <div class="d-flex justify-content-center align-items-center h-100 rounded">
+                    <h5>평점이 없습니다.</h5>
+                  </div>
+                {% endif %}
               </div>
-              <div class="col-10 d-flex flex-column justify-content-evenly">
-                {% for grade in grade_list %}
-                  <div class="progress my-2" style="height: 13px;">
-                    <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{ grade }}%;" aria-valuenow="{{ grade }}" aria-valuemin="0" aria-valuemax="100"><span style='font-size:.5rem;'>{{ grade }}%</span></div>
-                  </div>  
-                {% endfor %}
-              </div>
-              {% else %}
-                <div class="d-flex justify-content-center align-items-center h-100">
-                  <h5>평점이 없습니다.</h5>
-                </div>
-              {% endif %}
             </div>
           </div>
         </div>
       </div>
     </div>
-    <a href="{% url 'articles:review_create' article.pk %}" class="btn btn-outline-secondary">후기 작성</a>
+    {% if not request.user.is_seller %}
+      <a href="{% url 'articles:review_create' article.pk %}" class="btn btn-outline-secondary">후기 작성</a>
+    {% endif %}
     <div class="row pb-5">
       {% for review in reviews %}
-        <div class="">
+        <div class="col-6">
           <a href="{% url 'articles:review_detail' review.pk %}">
-            <div class="card-body d-flex flex-column justify-content-between p-2 border border-2 my-3" style="height: 8rem">
+            <div class="card-body d-flex flex-column justify-content-between p-2 border border-2 my-3 rounded">
               <!-- 유저 -->
               <div class="my-2">
                 <a href="{% url 'accounts:detail' review.user.pk %}" class="text-dark">
-                  {% if review.user.image %}
+                  <div class='d-flex ms-2'>
+                    {% if review.user.image %}
                     <img src="{{ review.user.image.url }}" alt="{{ review.user.image }}" class="rounded-circle border border-2" style="width:50px; height:50px;">
-                  {% else %}
-                    <img src="{% static 'images/dummy-image-square.jpg' %}" alt="" class="rounded-circle border border-2" >
-                  {% endif %}
-                  <span class="">{{ review.user.username }}<span class="fs-6">{{ review.get_grade_display }}</span></span>
+                    {% else %}
+                    <img src="{% static 'images/no-avatar.jpg' %}" alt="" class="rounded-circle border border-2" >
+                    {% endif %}
+                    <div class="d-flex flex-column ms-3">  
+                      <span>{{ review.user.username }}</span>
+                      <span style='font-size:.8rem;'>{{ review.get_grade_display }}</span>
+                    </div>
+                  </div>
                 </a>
               </div>
               <!-- 리뷰 타이틀 -->
-              <a href="{% url 'articles:review_detail' review.pk %}"><h5 class="card-title card-title-text my-2 ms-2">{{ review.title }}</h5></a>
+              <a href="{% url 'articles:review_detail' review.pk %}"><h5 class="card-title card-title-text my-2 ms-2 text-dark">{{ review.title }}</h5></a>
 
               <!-- 좋아요, 댓글 -->
               <div class="d-flex justify-content-between align-items-center">
@@ -157,24 +162,34 @@
       <div class="p-4 my-4 d-flex flex-column aside-box">
 
         <h3 class="mb-3" style="font-size: 22px">{{ article.price|intcomma }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
-        <a href="{% url 'articles:reservation_create' article.pk %}" class="btn btn-primary mb-1">예약하기</a>
+        <a href="{% url 'articles:reservation_create' article.pk %}">
+          <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #4567d7; color: white;" value="예약하기">
+        </a>
 
         {% if request.user.is_authenticated %}
           {% if request.user in article.like_users.all %}
-           <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart-fill btn btn-outline-primary my-2 " style="font-style: normal;"> 위시리스트</i>
+           <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart-fill btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"> 위시리스트</i>
           {% else %}
-            <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart btn btn-outline-primary my-2" style="font-style: normal;"> 위시리스트</i>
+            <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"> 위시리스트</i>
           {% endif %}
         {% else %}
-        <a href="#" class="btn btn-outline-primary my-2"><i class="bi bi-heart"><span id="like-count"> {{ article.like_users.count }}</span></i></a>
+          <a href="#" class="btn btn-outline-primary my-2"><i class="bi bi-heart"><span id="like-count"> {{ article.like_users.count }}</span></i></a>
         {% endif %}
-        <p class="text-muted text-center" style="font-size: 15px"><span class="ms-2" id="like-count">{{ article.like_users.count }}</span><span>명이 위시리스트에 담은 상품</span></p>
+        <p class="text-muted text-center m-0" style="font-size: 15px"><span class="ms-2" id="like-count">{{ article.like_users.count }}</span><span>명이 위시리스트에 담은 상품</span></p>
+        <hr>
+        <a class='text-dark' href="{% url 'accounts:detail' article.user.pk %}">
+          <div class="d-flex align-items-center">
+            <img style='width:10%;' class="rounded" src="{{ article.user.image.url }}" alt="{{ article.user.image }}"> 
+            <h5 class='mx-1 my-0 text-center'>{{ article.user.username }}</hh>
+          </div>
+        </a>
+        <hr>
+        <p>등록 일자 : {{ article.created_at.year }}년 {{ article.created_at.month}}월 {{ article.created_at.day }}일</p>
       </div>
       <div class="d-flex justify-content-end">
         <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary me-2">수정</a>
         <a href="{% url 'articles:delete' article.pk %}" class="btn btn-outline-danger">삭제</a>
       </div>
-      <hr>
 
 {% endblock body %}
 
