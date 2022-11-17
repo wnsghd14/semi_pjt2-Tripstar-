@@ -5,15 +5,15 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 {% block body %}
-    <div class="container">
+  <div class="container">
     <div class="row">
       <div class="col-12 d-flex justify-content-around py-5" style="height:270px;">
         <div class="rounded-circle col-2 border border-4 border-opacity-25" style="width: 200px; height: 200px;">
-        {% if user.image %}
-            <img class="rounded-circle w-100 h-100" src="{{ user.image.url }}" alt="">
-        {% else %}
-            <img class="rounded-circle w-100 h-100" src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" alt="">
-        {% endif %}
+          {% if user.image %}
+              <img class="rounded-circle w-100 h-100" src="{{ user.image.url }}" alt="{{ user.image }}">
+          {% else %}
+              <img class="rounded-circle w-100 h-100" src="{% static 'images/no-avatar.jpg' %}" alt="no-avatar">
+          {% endif %}
         </div>
         <div class="col-7 gx-1 text-start">
           <h5 class="d-flex mt-2 mx-2"><b> {{ user.username }} </b>
@@ -59,28 +59,31 @@
       </div>
     </div>
 
-
-        <div class="mylist_contents contents_container active mt-3">
-          {% for review in request.user.review_set.all %}
-            <div class="pic">
-                <a href="{% url 'articles:review_detail' review.pk %}"><img src="{{ review.reviewphoto_set.all.0.image.url }}" alt="{{ review.reviewphoto_set.all.0.image }}"></a>
-            </div>
-          {% endfor %}
+    <div class="mylist_contents contents_container active mt-3">
+      {% for review in user.review_set.all %}
+        <div class="pic">
+          <a href="{% url 'articles:review_detail' review.pk %}">
+            {% if review.reviewphoto_set.all %}
+              <img class="rounded" src="{{ review.reviewphoto_set.all.0.image.url }}" alt="{{ review.reviewphoto_set.all.0.image }}">
+            {% else %}
+              <img class="rounded" src="{% static 'images/dummy.jpg'%}" alt="">
+            {% endif %}
+          </a>
         </div>
+      {% endfor %}
+    </div>
 
-
-        <div class="bookmark_contents contents_container mt-3">
-          {% for article in request.user.like_articles.all %}
-            <div class="pic">
-                <a href="{% url 'articles:detail' article.pk %}"><img src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}"></a>
-            </div>
-          {% endfor %}
+    <div class="bookmark_contents contents_container mt-3">
+      {% for article in user.like_articles.all %}
+        <div class="pic">
+          <a href="{% url 'articles:detail' article.pk %}"><img class="rounded" src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}"></a>
         </div>
-    </section>
-</div>
-</div>
+      {% endfor %}
+    </div>
+  </div>
+
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -119,7 +122,7 @@
             </div>
         </div>
     </div>
-</div>
+  </div>
 {% endblock body %}
 
 {% block script %}
