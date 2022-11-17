@@ -65,3 +65,10 @@ body {
   background-color: black;
   border: 1px solid black;
 }
+
+.card-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
