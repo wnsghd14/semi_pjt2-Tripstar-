@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load humanize %}
 
 {% block banner %}
   <div class='position-relative'>
@@ -44,7 +45,7 @@
           <img src="{{ article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ article.image }}" >
           <div class="card-body">
             <h5 class="card-title">{{ article.title }}</h5>
-            <p>{{ article.price }}원</p>
+            <p>{{ article.price|intcomma }}원</p>
             <a href="{% url 'articles:detail' article.pk %}" class="btn btn-primary">더 보기</a>
           </div>
         </div>
