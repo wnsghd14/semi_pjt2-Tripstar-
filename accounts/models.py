@@ -9,7 +9,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=100)
     image = ProcessedImageField(
         upload_to="images/",
-        null=True,
+        blank=True,
         processors=[ResizeToFill(400, 400)],
         format="JPEG",
         options={"quality": 80},
