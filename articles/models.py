@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Theme(models.Model):
     title = models.CharField(max_length=20)
-    image = ProcessedImageField(blank=True, upload_to='images/theme/', processors=[Thumbnail(200, 100)], format='JPEG', options={'quality':100})
+    image = ProcessedImageField(blank=True, upload_to='images/theme/', processors=[ResizeToFill(1600, 300)], format='JPEG', options={'quality':100})
 
 
 class Region(models.Model):
