@@ -9,10 +9,10 @@
 {% block body %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
 
-  <div class="container">
-
+  <h3 class='mb-3'>여행하고 싶은 지역을 골라보세요!</h3>
+  <div class="container px-0">
     <!-- Swiper -->
-    <div class="my-5 swiper mySwiper" style="height:380px;">
+    <div class="mb-5 mt-2 swiper mySwiper" style="height:380px;">
       <div class="swiper-wrapper">
         {% for region in regions %}
           <div class="swiper-slide">
@@ -24,13 +24,14 @@
           </div>
         {% endfor %}
       </div>
-      <div class="swiper-button-next text-white"></div>
-      <div class="swiper-button-prev text-white"></div>
+      <div class="swiper-button-next text-light"></div>
+      <div class="swiper-button-prev text-light"></div>
       <div class="swiper-pagination text-white"></div>
     </div>
   </div>
 
   <!-- slide -->
+  <h3 class='mb-3'>이벤트</h3>
   <div class="mb-5">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-indicators">
@@ -53,7 +54,8 @@
   </div>
 
   <!-- card slide -->
-  <div class="my-5 swiper mySwiper">
+  <h3 class='mb-3'>이런 상품 어떠세요?</h3>
+  <div class=" swiper mySwiper">
     <div class="swiper-wrapper">
       {% for article in articles %}
         <div class="swiper-slide">
@@ -87,18 +89,20 @@
     <div class="swiper-button-prev text-light"></div>
     <div class="swiper-pagination"></div>
   </div>
-  <h3 class='mt-3'>최근 본 상품</h3>
-  <div class='my-5 row'>
-    {% if recent_articles %}
-      {% for recent_article in recent_articles %}
-        <div class="col-3">
-          <a href="{% url 'articles:detail' recent_article.0 %}"><img class='w-100 h-100 rounded' src="{{ recent_article.1 }}/" alt="{{ recent_article.1 }}"></a>
-        </div>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <h3>베스트 상품</h3>
-  <div class='my-5 row'>
+  {% if recent_articles %}
+    <h3 class='my-3'>최근 본 상품</h3>
+    <div class='mb-5 row'>
+        {% for recent_article in recent_articles %}
+          <div class="col-3">
+            <a href="{% url 'articles:detail' recent_article.0 %}"><img class='w-100 h-100 rounded' src="{{ recent_article.1 }}/" alt="{{ recent_article.1 }}"></a>
+          </div>
+        {% empty %}
+          <h5>최근에 본 상품이 없습니다.</h5>
+        {% endfor %}
+    </div>
+  {% endif %}
+  <h3 class='my-3'>베스트 상품</h3>
+  <div class='mb-5 row'>
     {% for best_article in best_articles %}
       <div class="col-4 position-relative">
         <a href="{% url 'articles:detail' best_article.pk %}">

@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
+from articles.models import Reservation
+from django.contrib import messages
+
 
 # Create your views here.
 def signup(request):
@@ -14,11 +18,20 @@ def signup(request):
         return redirect("articles:index")
     
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST, request.FILES)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect("articles:index")
+
+        username = request.POST['username'].lower()
+        password = request.POST['password1']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            auth_login(request, user)
+            return redirect(request.GET.get("next") or "articles:index")
     else:
         form = CustomUserCreationForm()
     context = {
@@ -32,17 +45,26 @@ def login(request):
         return redirect("articles:index")
     
     if request.method == "POST":
-        form = AuthenticationForm(request.POST, data=request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            auth_login(request, form.get_user())
+            user = form.save()
+            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect("articles:index")
+
+        username = request.POST['username'].lower()
+        password = request.POST['password1']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            auth_login(request, user)
             return redirect(request.GET.get("next") or "articles:index")
     else:
-        form = AuthenticationForm()
+        form = CustomUserCreationForm()
     context = {
         "form": form,
     }
     return render(request, "accounts/login.html", context)
-
 
 @login_required
 def logout(request):
@@ -149,3 +171,11 @@ def block_user_block(request, pk):
             user.blockers.add(request.user)
             user.save()
     return redirect("accounts:block_user")
+
+def pay_history(request, user_pk):
+    reservations = Reservation.objects.filter(user=user_pk)
+    context = {
+        'reservations':reservations,
+        
+    }
+    return render(request, 'accounts/pay_history.html', context)

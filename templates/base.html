@@ -25,17 +25,79 @@
   </head>
 
   <body>
-    <div class="container mt-3">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg py-4">
+        <div class="container-fluid container">
+        <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:3rem;' src="{% static 'images/Logo.png' %}" alt=""></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="col-3 d-flex align-items-center ms-2">
+                    <a href="{% url 'articles:region_create' %}">지역생성</a>
+                    /
+                    <a href="{% url 'articles:theme_create' %}">테마생성</a>
+                    /
+                    <a href="{% url 'articles:theme_region_list' %}">지역, 테마 목록</a>
+                </div>
+                <div class="col-4 d-flex align-items-center justify-content-start">
+                <form action="{% url 'articles:search' %}" class="d-flex w-100" role="search">
+                    <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search" name='q'>
+                    <button class="btn btn-outline-dark btn-sm" type="submit">
+                    <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                </div>
+                <div class='col-4 d-flex justify-content-end align-items-center'>
+                {% if request.user.is_seller %}
+                <div class='me-1'>
+                    <a href="{% url 'articles:create' %}" class="btn btn-white">상품 등록</a>
+                </div>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <div class="dropdown ms-1">
+                    <button class="btn btn-white dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if request.user.image %}
+                        <img style='height:1.6rem;' class='rounded-circle border' src="{{ request.user.image.url }}" alt="{{ request.user.image }}">
+                        {% else %}
+                        <img style='height:1.6rem;' class='rounded-circle border' src="{% static 'images/no-avatar.jpg'%}" alt="no-avatar">
+                        {% endif %}
+                        <span class='mx-1'>{{ request.user.username }}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-white">
+                        <li>
+                        <a class="dropdown-item active" href="{% url 'accounts:detail' request.user.pk %}">회원정보</a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="{% url 'accounts:pay_history' request.user.pk %}">구매 내역</a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="{% url 'service_center:my_question' %}">나의 문의</a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
+                        </li>
+                    </ul>
+                    </div>
+                {% else %}
+                    <a class='mx-2 btn btn-sm btn-white' href="{% url 'accounts:signup' %}">회원가입</a>
+                    <a class='btn btn-sm btn-white' href="{% url 'accounts:login' %}">로그인</a>
+                {% endif %}
+                </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    {% comment %} <div class="container mt-3">
       <div class="row">
-        <div class="col-4">
-          <a class="navbar-brand" style="font-size:30px;" href="{% url 'articles:index' %}">LOGO</a>
-          {% if requset.user.is_superuser %}
+        <div class="col-4 d-flex align-items-center">
+          <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:3rem;' src="{% static 'images/Logo.png' %}" alt=""></a>
+
           <a href="{% url 'articles:region_create' %}">지역생성</a>
           /
           <a href="{% url 'articles:theme_create' %}">테마생성</a>
           /
           <a href="{% url 'articles:theme_region_list' %}">지역, 테마 목록</a>
-          {% endif %}
         </div>
 
         <form action="{% url 'articles:search' %}" class="d-flex col-4" role="search">
@@ -51,15 +113,20 @@
           {% endif %}
           {% if request.user.is_authenticated %}
             <div class="dropdown ms-1">
-              <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ request.user.username }}
+              <button class="btn btn-white dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if request.user.image %}
+                  <img style='height:1.6rem;' class='rounded-circle border' src="{{ request.user.image.url }}" alt="{{ request.user.image }}">
+                {% else %}
+                  <img style='height:1.6rem;' class='rounded-circle border' src="{% static 'images/no-avatar.jpg'%}" alt="no-avatar">
+                {% endif %}
+                <span class='mx-1'>{{ request.user.username }}</span>
               </button>
               <ul class="dropdown-menu dropdown-menu-white">
                 <li>
                   <a class="dropdown-item active" href="{% url 'accounts:detail' request.user.pk %}">회원정보</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'accounts:update' request.user.pk %}">회원정보수정</a>
+                  <a class="dropdown-item" href="{% url 'accounts:pay_history' request.user.pk %}">구매 내역</a>
                 </li>
                 <li>
                   <a class="dropdown-item" href="{% url 'service_center:my_question' %}">나의 문의</a>
@@ -75,6 +142,7 @@
           {% endif %}
         </div>
       </div>
+    </div> {% endcomment %}
       
       <!-- 메뉴 바 -->
       <div id="menu" class="mt-3">
@@ -106,6 +174,7 @@
       </div>
     </div>
     <hr class='my-0'>
+
     {% if messages %}
       {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">

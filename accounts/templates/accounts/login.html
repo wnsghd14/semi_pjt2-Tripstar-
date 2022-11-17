@@ -1,38 +1,73 @@
-{% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% load static %}
 {% load socialaccount %}
 {% providers_media_js %}
 
-{% block body %}
-<div class="row d-flex justify-content-center m-5">
-  <div class="py-4" style="width: 320px;">
-    <h1 class="text-center mb-4" style="font-size: 25px;">로그인</h1>
-    <form action="{% url 'accounts:login' %}" method="POST">
-    {% csrf_token %}
-      <div class="my-3">
-        <input type="text" style="height: 45px; border: 1px solid #dee2e6;" name="username" autofocus="" autocapitalize="none" 
-        autocomplete="username" maxlength="150" class="form-control" placeholder="아이디" required="" id="id_username">
-      </div>
-      <div class="my-3">
-        <input type="password" style="height: 45px; border: 1px solid #dee2e6;" name="password" autocomplete="current-password" 
-        class="form-control" placeholder="비밀번호" required="" id="id_password">
-      </div>
-      <div class="d-flex justify-content-end">
-        <a href="{% url 'accounts:password_reset' %}" style="font-size: 14px;">비밀번호 찾기</a>
-      </div>
-      <input type="submit" class="btn py-2 form-control btn-outline-info w-100 my-2" style="height: 45px;" value="로그인">
-    </form>
-    <a href="{% url 'accounts:signup' %}"><input type="submit" class="btn btn-outline-secondary w-100 mt-1 mb-2" style="height: 45px;" value="회원가입"></a>
-    <div class="mt-3 mx-3 d-flex justify-content-between">
-      <a href="{% provider_login_url 'kakao' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/kakao.png' %}"></a>
-      <a href="{% provider_login_url 'google' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/google.png' %}"></a>
-      <a href="{% provider_login_url 'github' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/github.png' %}"></a>
-      <a href="{% provider_login_url 'naver' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/naver.png' %}"></a>
+
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+
+
+<div class="container left-panel-active">
+    <!-- Sign Up -->
+    <div class="container__form container--signup">
+      <form action="" class="form" id="form1" method="POST">
+        {% csrf_token %}
+        <h2 class="form__title">Sign Up</h2>
+        <input type="text" placeholder="User" class="input" name="username"/>
+        <input type="email" placeholder="Email" class="input" name="email"/>
+        <input type="password" placeholder="Password" class="input" name="password1"/>
+        <input type="password" placeholder="Password Confirmation" class="input" name="password2"/>
+        <div class="d-flex justify-content-start">
+            <input type="checkbox" name="is_seller" id="agree" value="yes agree"/>
+            <label for="agree">Is_seller</label>
+        </div>
+        <button class="btn" type="submit">Sign Up</button>
+      </form>
     </div>
-    <p class="hr-sect">소셜 로그인</p>
+  
+    <!-- Sign In -->
+    <div class="container__form container--signin">
+      <form action="" class="form" id="form2" method="POST">
+        {% csrf_token %}
+        <h2 class="form__title">Sign In</h2>
+        <input type="text" placeholder="User" class="input" name="username"/>
+        <input type="password" placeholder="Password" class="input" name="password1"/>
+        <a href="" class="link">Forgot your password?</a>
+        <div class="mt-3 mx-3 d-flex justify-content-between">
+          <a href="{% provider_login_url 'kakao' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/kakao.png' %}"></a>
+          <a href="{% provider_login_url 'google' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/google.png' %}"></a>
+          <a href="{% provider_login_url 'github' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/github.png' %}"></a>
+          <a href="{% provider_login_url 'naver' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/naver.png' %}"></a>
+        </div>
+        <button class="btn" type="submit">Sign In</button>
+      </form>
+    </div>
+  
+    <!-- Overlay -->
+    <div class="container__overlay">
+      <div class="overlay">
+        <div class="overlay__panel overlay--left">
+          <button class="btn" id="signIn" type="submit">Sign In</button>
+        </div>
+        <div class="overlay__panel overlay--right">
+          <button class="btn" id="signUp" type="submit">Sign Up</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-{% endblock body %}
+  <script>
+    const signInBtn = document.getElementById("signIn");
+    const signUpBtn = document.getElementById("signUp");
+    const fistForm = document.getElementById("form1");
+    const secondForm = document.getElementById("form2");
+    const container = document.querySelector(".container");
 
+    signInBtn.addEventListener("click", () => {
+    container.classList.remove("right-panel-active");
+    });
+
+    signUpBtn.addEventListener("click", () => {
+    container.classList.add("right-panel-active");
+    });
+  </script>
