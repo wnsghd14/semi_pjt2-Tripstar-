@@ -1,6 +1,5 @@
 a {
     text-decoration: none;
-    color: rgb(8, 96, 168);
 }
 
 .contents_container{
@@ -102,3 +101,96 @@ a {
 }
 
 
+
+/* navbar */
+
+*{
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+    color: #585858;
+  }
+  
+  #menu{
+    position:relative; 
+    z-index: 99; 
+    height: 43px;
+    text-align: center;
+  }
+  
+  /* [class*="main"] {
+    background-color: white;
+    border-radius: 5px 5px 5px 5px;
+  } */
+  
+  /* [class*="main"] ul {
+    border-radius: 5px 5px 5px 5px;
+    border: 1px solid #57523E;
+  } */
+  
+  .main1{
+    padding-left: 0px;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    display: inline-block;
+    font-size: 17px;
+  }
+  
+  .main1>li {
+    float: left;
+    width: 13%;
+    line-height: 40px;
+    position: relative;
+  }
+  
+  .main1>li:hover .main2 {
+    left: 0;
+  }
+  .main1>li a {
+    display: block;
+  }
+  .main1>li a:hover {
+  }
+  .main2 {
+    width:110%;
+    position: absolute;
+    top: 40px;
+    left: -9999px;
+    width: 100%;
+    padding: 0px;
+    font-size: 17px;
+  }
+  .main1>li:hover {
+    border-bottom: 3px solid #4567d7;
+  }
+  .main2 li:hover {
+    border-left: 3px solid #4567d7;
+  }
+  
+  .main2>li {
+    position: relative;
+  }
+
+
+  .search {
+    position: relative;
+    width: 300px;
+  }
+  
+  .search-box {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+.search-img {
+    position : absolute;
+    width: 17px;
+    top: 10px;
+    right: 12px;
+    margin: 0;
+  }

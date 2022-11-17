@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="static/favicon/favicon.ico" type="image/x-icon">
     <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon">
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     {% bootstrap_css %}
     {% block css %}{% endblock css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -36,14 +37,11 @@
           <a href="{% url 'articles:theme_region_list' %}">지역, 테마 목록</a>
           {% endif %}
         </div>
-        <form action="{% url 'articles:search' %}" class="d-flex col-4" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='q'>
-          <button class="btn btn-outline-dark btn-sm" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
 
-        
+        <form action="{% url 'articles:search' %}" class="d-flex col-4" role="search">
+          <input class="form-control me-2" style="border-radius: 20px; border: 2px solid #69b7f0;" type="search" placeholder="      가고싶은 도시나 숙소를 검색해보세요!" aria-label="Search" name='q'>
+          <i class="fas fa-search text-muted" style="font-size: 18px; margin-top: 14px; margin-left: 15px; position: absolute;"></i>
+        </form>
 
         <div class='col-4 d-flex justify-content-end align-items-center'>
           {% if request.user.is_seller %}
@@ -77,8 +75,37 @@
           {% endif %}
         </div>
       </div>
+      
+      <!-- 메뉴 바 -->
+      <div id="menu" class="mt-3">
+        <ul class="main1">
+          <li style="border: none;"><a href="#">지역별</a>
+            <ul class="main2" style="background-color: rgba(256, 256, 256, 0.9); border-radius: 5px; box-shadow: 0px 5px 10px 1px rgb(169 169 169 / 50%);">
+              <li><a href="#">서울</a></li>
+              <li><a href="#">경기</a></li>
+              <li><a href="#">부산</a></li>
+              <li><a href="#">제주도</a></li>
+              <li><a href="#">강원도</a></li>
+            </ul>
+          </li>
+          <li style="border: none;"><a href="#">테마별</a>
+            <ul class="main2" style="background-color: rgba(256, 256, 256, 0.9); border-radius: 5px; box-shadow: 0px 5px 10px 1px rgb(169 169 169 / 50%);">
+              <li><a href="#">호텔</a></li>
+              <li><a href="#">펜션</a></li>
+              <li><a href="#">스키장</a></li>
+              <li><a href="#">캠핑장</a></li>
+              <li><a href="#">오션뷰</a></li>
+            </ul>
+          </li>
+          <li><a href="#">리뷰 모음</a></li>
+          <li><a href="#">오션뷰🌊</a></li>
+          <li><a href="#">글램핑</a></li>
+          <li><a href="#">이벤트</a></li>
+          <li><a href="#">고객센터</a></li>
+          </ul>
+      </div>
     </div>
-    <hr class='mb-0'>
+    <hr class='my-0'>
     {% if messages %}
       {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">
