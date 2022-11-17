@@ -510,9 +510,9 @@ def reservation_create(request, article_pk):
             reservation.article = article
             reservation.save()
             return redirect("cart:kakaoPay", reservation.pk)
-    else:
-        reservation_form = ReservationForm()
-    context = {
-        "reservation_form": reservation_form,
-    }
-    return render(request, "articles/reservation_create.html", context)
+    # else:
+    #     reservation_form = ReservationForm()
+    # context = {
+    #     "reservation_form": reservation_form,
+    # }
+    # return render(request, "articles/reservation_create.html", context)

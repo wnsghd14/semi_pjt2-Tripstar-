@@ -33,8 +33,10 @@
       {% for user in users %}
         <div class="col-2">
           <a href="{% url 'accounts:detail' user.pk %}">
-            <img class='w-100 rounded' src="{{ user.image.url }}" alt="{{ user.image }}">
-            <p>{{ user.usernmae }}</p>
+            {% if user.image %}
+              <img class='w-100 rounded' src="{{ user.image.url }}" alt="{{ user.image }}">
+            {% endif %}
+            <p>{{ user.username }}</p>
           </a>
         </div>
       {% endfor %}

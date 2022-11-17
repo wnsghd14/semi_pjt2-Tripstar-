@@ -26,22 +26,23 @@
   <body>
     <div class="container mt-3">
       <div class="row">
-        <div class="col-4">
-          <a class="navbar-brand" style="font-size:30px;" href="{% url 'articles:index' %}">LOGO</a>
+        <div class="col-4 d-flex align-items-center">
+          <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:3rem;' src="{% static 'images/Logo.png' %}" alt=""></a>
+
           <a href="{% url 'articles:region_create' %}">지역생성</a>
           /
           <a href="{% url 'articles:theme_create' %}">테마생성</a>
           /
           <a href="{% url 'articles:theme_region_list' %}">지역, 테마 목록</a>
         </div>
-        <form action="{% url 'articles:search' %}" class="d-flex col-4" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='q'>
-          <button class="btn btn-outline-dark btn-sm" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
-
-        
+        <div class="col-4 d-flex align-items-center justify-content-center">
+          <form action="{% url 'articles:search' %}" class="d-flex w-100" role="search">
+            <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search" name='q'>
+            <button class="btn btn-outline-dark btn-sm" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+        </div>
 
         <div class='col-4 d-flex justify-content-end align-items-center'>
           {% if request.user.is_seller %}
@@ -51,8 +52,13 @@
           {% endif %}
           {% if request.user.is_authenticated %}
             <div class="dropdown ms-1">
-              <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ request.user.username }}
+              <button class="btn btn-white dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if request.user.image %}
+                  <img style='height:1.6rem;' class='rounded-circle border' src="{{ request.user.image.url }}" alt="{{ request.user.image }}">
+                {% else %}
+                  <img style='height:1.6rem;' class='rounded-circle border' src="{% static 'images/no-avatar.jpg'%}" alt="no-avatar">
+                {% endif %}
+                <span class='mx-1'>{{ request.user.username }}</span>
               </button>
               <ul class="dropdown-menu dropdown-menu-white">
                 <li>
