@@ -183,8 +183,12 @@ def detail(request, article_pk):
           grade_list.append(0)
 
     article_photo = ArticlePhoto.objects.filter(article_id=article_pk)[0].image.url
+    present_article = [article_pk, article_photo]
     if request.session.get('recent_articles'):
         recent_articles = request.session.get('recent_articles')
+        if [article_pk, article_photo] in recent_articles:
+            article_index = recent_articles.index(present_article)
+            recent_articles.pop(article_index)
         if len(recent_articles) >= 4:
             recent_articles.pop()
         deq_recent_articles = deque(recent_articles)
@@ -495,6 +499,14 @@ def region_index(request, region_pk):
         'regions':regions,
     }
     return render(request, 'articles/region_index.html', context)
+
+def theme_index(request, theme_pk):
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    context = {
+        'theme': theme,
+        'articles': Article.objects.filter(theme=theme)
+    }
+    return render(request, 'articles/theme_index.html', context)
 
 def map(request):
     return render(request, 'articles/map.html')
