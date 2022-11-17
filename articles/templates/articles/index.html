@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
-
+{% load humanize %}
 {% block css %}
   <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css %}
@@ -76,7 +76,7 @@
                       <i class="bi bi-star-fill"></i>{{ article.grade_avg|floatformat }}
                     </span>
                     <h4 class="pt-1 card-ellipsis">[{{ article.title }}]{{ article.content }}</h4>
-                    <p style='font-size:0.8rem;' class='text-secondary m-0'>{{ article.price }}원 <br>{{ article.review.all|length }}개의 후기<p>
+                    <p style='font-size:0.8rem;' class='text-secondary m-0'>{{ article.price|intcomma }}원 <br>{{ article.review.all|length }}개의 후기<p>
                   </div>
                 </a>
               </div>

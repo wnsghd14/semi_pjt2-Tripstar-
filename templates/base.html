@@ -87,26 +87,23 @@
         </div>
       </div>
     </nav>
+    <hr class='mb-0'>
       
     <!-- 메뉴 바 -->
     <div id="menu" class="container-fluid container">
-      <ul class="main1">
+      <ul class="main1 justify-content-between">
         <li style="border: none;"><a href="#">지역별</a>
           <ul class="main2" style="background-color: rgba(256, 256, 256, 0.9); border-radius: 5px; box-shadow: 0px 5px 10px 1px rgb(169 169 169 / 50%);">
-            <li><a href="#">서울</a></li>
-            <li><a href="#">경기</a></li>
-            <li><a href="#">부산</a></li>
-            <li><a href="#">제주도</a></li>
-            <li><a href="#">강원도</a></li>
+            {% for region in regions %}
+              <li><a href="{% url 'articles:region_index' region.pk %}">{{ region.title }}</a></li>
+            {% endfor %}
           </ul>
         </li>
         <li style="border: none;"><a href="#">테마별</a>
           <ul class="main2" style="background-color: rgba(256, 256, 256, 0.9); border-radius: 5px; box-shadow: 0px 5px 10px 1px rgb(169 169 169 / 50%);">
-            <li><a href="#">호텔</a></li>
-            <li><a href="#">펜션</a></li>
-            <li><a href="#">스키장</a></li>
-            <li><a href="#">캠핑장</a></li>
-            <li><a href="#">오션뷰</a></li>
+            {% for theme in themes %}
+              <li><a href="{% url 'articles:theme_index' theme.pk %}">{{ theme.title }}</a></li>
+            {% endfor %}
           </ul>
         </li>
         <li><a href="#">리뷰 모음</a></li>

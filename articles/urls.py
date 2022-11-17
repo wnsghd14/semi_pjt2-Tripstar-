@@ -32,5 +32,6 @@ urlpatterns = [
     path("review/<int:review_pk>/comments/<int:comment_pk>/delete/",views.comment_delete, name="comment_delete"),
     path("search/", views.search, name='search'),
     path('<int:region_pk>/region_index/', views.region_index, name="region_index"),
-    path("<int:article_pk>/reservation/create/", views.reservation_create, name="reservation_create"),    
+    path("<int:article_pk>/reservation/create/", views.reservation_create, name="reservation_create"),
+    path('<int:theme_pk>/theme_index/', views.theme_index, name='theme_index'),    
 ]

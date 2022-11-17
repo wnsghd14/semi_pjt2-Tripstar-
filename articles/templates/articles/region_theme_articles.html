@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load humanize %}
 {% block body %}
   <h1 class='my-5'>{{ region.title }}에서 {{ theme.title }}</h1>
   <div class="row justify-content-end  my-5" style='font-size:0.9rem;'>
@@ -26,7 +27,7 @@
             <p class='m-0'>
               {{ article.title }}
             </p>
-            <p>{{ article.price }}원</p>
+            <p>{{ article.price|intcomma }}원</p>
           </a>
         </div>
       </div>
