@@ -8,7 +8,12 @@
 <link rel="stylesheet" href="{% static 'css/calender.css' %}">
 {% endblock css %}
 
+
 {% block body %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <div class="d-flex">
 
   
@@ -162,9 +167,51 @@
       <div class="p-4 my-4 d-flex flex-column aside-box">
 
         <h3 class="mb-3" style="font-size: 22px">{{ article.price|intcomma }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
-        <a href="{% url 'articles:reservation_create' article.pk %}">
+        {% comment %} <a href="{% url 'articles:reservation_create' article.pk %}"> {% endcomment %}
+        <a href="#reservationBox{{ article.pk }}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
           <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #4567d7; color: white;" value="예약하기">
         </a>
+        <!-- 예약 창 펼치기 -->
+        <div class="collapse" id="reservationBox{{ article.pk }}">
+          <div class="mt-2">
+              <form action="{% url 'articles:reservation_create' article.pk %}" method="POST">
+                {% csrf_token %}
+                    <div class="form-group mb-1">
+                        <label for="name" class="mb-1">예약자명</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="이름">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <div class="form-group w-100 me-2 mb-1">
+                        <label for="adult" class="mb-1">어른</label>
+                        <select name="adult" class="form-select" id="id_adult">
+                            <option value="0" selected="">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                      </div>
+                      <div class="form-group w-100 mb-1">
+                          <label for="kid" class="mb-1">어린이</label>
+                          <select name="kid" class="form-select" id="id_kid">
+                              <option value="0" selected="">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="form-group  mb-1">
+                        <label for="date" class="my-1">날짜</label>
+                        <input class="form-control" type="text" name="date" id="daterange" value="" />
+                    </div>
+                    <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #45c6d7; color: white;" value="예약 완료하러 가기">
+              </form>
+          </div>
+        </div>
 
         {% if request.user.is_authenticated %}
           {% if request.user in article.like_users.all %}
@@ -191,9 +238,21 @@
         <a href="{% url 'articles:delete' article.pk %}" class="btn btn-outline-danger">삭제</a>
       </div>
 
+      <script>
+        $(function() {
+          $('input[id="daterange"]').daterangepicker({
+            opens: 'left'
+          }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          });
+        });
+      </script>
 {% endblock body %}
 
 {% block script %}
+
+
+
 <script>
   // 좋아요 버튼
   const likeBtn = document.querySelector('#like-btn')
@@ -221,8 +280,8 @@
 </script>
 
 
-<!-- jquery 사용 -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<!-- jquery 사용
+<script src="http://code.jquery.com/jquery-latest.js"></script> -->
 
 <!-- kakao API 키 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3144d0c758dd4362c375eb78f6763f63&libraries=services"></script>
@@ -252,4 +311,7 @@
   // 마커가 지도 위에 표시되도록 설정합니다
   marker.setMap(map);
 </script>
+
+
+
 {% endblock script %}
