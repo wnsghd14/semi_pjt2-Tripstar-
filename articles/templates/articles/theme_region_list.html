@@ -4,6 +4,9 @@
 {% block body %}
   <div class="row">
     <div class="col-6">
+      <a class='btn btn-dark btn-sm' href="{% url 'articles:theme_create' %}">테마생성</a>
+
+      
       <h3>테마</h3>
       {% for theme in themes %}
         <div class='d-flex'>
@@ -19,6 +22,7 @@
       {% endfor %}
     </div>
     <div class="col-6">
+      <a class='btn btn-dark btn-sm' href="{% url 'articles:region_create' %}">지역생성</a>
       <h3>지역</h3>
       {% for region in regions %}
         <div class='d-flex'>
