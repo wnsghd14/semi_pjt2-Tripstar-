@@ -86,39 +86,30 @@
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">프로필 수정</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
             <div class="modal-body">
-                <a href="{% url 'accounts:update' user.pk %}">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            프로필 수정
-                        </div>
-                    </div>
-                </a>
-                <a href="{% url 'accounts:password' %}">
-                  <div class="card text-center">
-                    <div class="card-body">
-                      비밀번호 변경
-                    </div>
-                  </div>
-                </a>
-                <a href="{% url 'accounts:delete' user.pk %}">
-                <div class="card text-center">
-                    <div class="card-body">
-                        회원탈퇴
-                    </div>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <a  href="{% url 'accounts:update' user.pk %}">
+                <div class="d-flex justify-content-center p-3 rounded border my-2 text-dark">
+                  프로필 수정
                 </div>
-                </a>
-                <a href="{% url 'accounts:block_user' %}">
-                <div class="card text-center">
-                    <div class="card-body" style="color:red;">
-                        차단목록
-                    </div>
+              </a>
+              <a  href="{% url 'accounts:password' %}">
+                <div class="d-flex justify-content-center p-3 rounded border my-2 text-dark">
+                  비밀번호 변경
                 </div>
-                </a>
+              </a>
+              <a  href="{% url 'accounts:block_user' %}">
+                <div class="d-flex justify-content-center p-3 rounded border my-2 text-dark">
+                  차단목록
+                </div>
+              </a>
+              <a  href="{% url 'accounts:delete' user.pk %}">
+                <div class="d-flex justify-content-center p-3 rounded border my-2 text-danger">
+                  회원탈퇴
+                </div>
+              </a>  
             </div>
         </div>
     </div>
