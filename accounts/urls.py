@@ -17,4 +17,5 @@ urlpatterns = [
     path("<int:pk>/block_user_block/", views.block_user_block, name="block_user_block"),
     path("password/", views.password, name='password'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('<int:user_pk>/pay_history', views.pay_history, name="pay_history"),
 ]

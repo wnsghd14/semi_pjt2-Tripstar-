@@ -3,5 +3,6 @@
 {% block body %}
 
 <h2>결제가 완료되었습니다.</h2>
-
+<h5>구매 내역 확인하기</h5>
+<a href="{% url 'accounts:pay_history' user.pk %}" class="btn btn-outline-primary">구매 내역</a>
 {% endblock body %}

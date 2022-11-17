@@ -8,7 +8,9 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
+from articles.models import Reservation
 from django.contrib import messages
+
 
 # Create your views here.
 def signup(request):
@@ -169,3 +171,11 @@ def block_user_block(request, pk):
             user.blockers.add(request.user)
             user.save()
     return redirect("accounts:block_user")
+
+def pay_history(request, user_pk):
+    reservations = Reservation.objects.filter(user=user_pk)
+    context = {
+        'reservations':reservations,
+        
+    }
+    return render(request, 'accounts/pay_history.html', context)
