@@ -4,15 +4,16 @@ import json
 from django.template import loader
 from articles.models import Reservation, Article
 from django.contrib.auth import get_user_model
+import math
 
 
 # Create your views here.
 def kakaoPay(request, reservation_pk):
     reservation = Reservation.objects.get(pk=reservation_pk)
-    total_price = int(reservation.adult + reservation.kid) * int(reservation.article.price)
+    total_price = reservation.adult * int(reservation.article.price) + (reservation.kid * int(reservation.article.price))/2
     context = {
         'reservation':reservation,
-        'total_price':total_price,
+        'total_price':math.trunc(total_price),
         
     }
     return render(request, 'cart/kakaoPay.html', context)
