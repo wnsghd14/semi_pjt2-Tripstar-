@@ -11,17 +11,28 @@ import math
 def kakaoPay(request, reservation_pk):
     reservation = Reservation.objects.get(pk=reservation_pk)
     total_price = reservation.adult * int(reservation.article.price) + (reservation.kid * int(reservation.article.price))/2
+    s_year = reservation.date[6:10]
+    s_month = reservation.date[0:2]
+    s_day = reservation.date[3:5]
+    e_year = reservation.date[19::]
+    e_month =reservation.date[13:15]
+    e_day = reservation.date[16:18]
     context = {
         'reservation':reservation,
         'total_price':math.trunc(total_price),
-        
+        's_year': s_year,
+        's_month':s_month,
+        's_day': s_day,
+        'e_year':e_year,
+        'e_month':e_month,
+        'e_day':e_day,      
     }
     return render(request, 'cart/kakaoPay.html', context)
 
 def kakaoPayLogic(request, pk):
     User = get_user_model()
     user = get_object_or_404(User, pk=request.user.pk)
-    print(pk)
+
     reservation = Reservation.objects.get(pk=pk)
     article = Article.objects.get(pk=reservation.article.pk)
     total_price = int(reservation.adult + reservation.kid) * int(reservation.article.price)
@@ -43,7 +54,7 @@ def kakaoPayLogic(request, pk):
         "fail_url": "http://127.0.0.1:8000/cart/payFail",
         "cancel_url": "http://127.0.0.1:8000/cart/payCancel",
     }
-    print(_data)
+
     _res = requests.post(_url, data=_data, headers=_headers)
     _result = _res.json()  
     request.session['tid'] = _result['tid']     

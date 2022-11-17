@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<div class="d-flex justify-content-between">
   <h1>나의 문의</h1>
+  <a href="{% url 'service_center:question' %}" class="btn btn-outline-warning" style="height: 40px;">문의하기</a>
+</div>
   <h3>{{ user.reverse_service.count }}개의 문의가 있습니다.</h3>
   {% for question in user.reverse_service.all %}
     <a href="{% url 'service_center:detail' question.pk %}" class="text-decoration-none text-dark">

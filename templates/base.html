@@ -59,7 +59,7 @@
                   <a class="dropdown-item active" href="{% url 'accounts:detail' request.user.pk %}">회원정보</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'accounts:update' request.user.pk %}">회원정보수정</a>
+                  <a class="dropdown-item" href="{% url 'accounts:pay_history' request.user.pk %}">구매 내역</a>
                 </li>
                 <li>
                   <a class="dropdown-item" href="{% url 'service_center:my_question' %}">나의 문의</a>
