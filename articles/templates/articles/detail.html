@@ -220,7 +220,7 @@
             <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"> 위시리스트</i>
           {% endif %}
         {% else %}
-          <a href="#" class="btn btn-outline-primary my-2"><i class="bi bi-heart"><span id="like-count"> {{ article.like_users.count }}</span></i></a>
+          <a href="{% url 'accounts:login' %}" class="btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"><i class="bi bi-heart" style="font-style: normal;"> 위시리스트</i></a>
         {% endif %}
         <p class="text-muted text-center m-0" style="font-size: 15px"><span class="ms-2" id="like-count">{{ article.like_users.count }}</span><span>명이 위시리스트에 담은 상품</span></p>
         <hr>
