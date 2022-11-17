@@ -28,11 +28,13 @@
       <div class="row">
         <div class="col-4">
           <a class="navbar-brand" style="font-size:30px;" href="{% url 'articles:index' %}">LOGO</a>
+          {% if requset.user.is_superuser %}
           <a href="{% url 'articles:region_create' %}">지역생성</a>
           /
           <a href="{% url 'articles:theme_create' %}">테마생성</a>
           /
           <a href="{% url 'articles:theme_region_list' %}">지역, 테마 목록</a>
+          {% endif %}
         </div>
         <form action="{% url 'articles:search' %}" class="d-flex col-4" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='q'>
