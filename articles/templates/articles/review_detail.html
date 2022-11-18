@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="row justify-content-center">
-  <div class="col-6">
+  <div class="col-lg-6 col-md-8 col-sm-10">
     <!-- 본문 & 댓글 -->
 
     <div class="p-3 mb-4" style="border-radius: 0rem; border: 0px solid #b9b9b9; background-color: white;">
@@ -79,9 +79,9 @@
       <div class="mt-3">
         <form action="{% url 'articles:comment_create' review.pk %}" id="comment-form" data-article-id="{{ review.pk }}" method="POST">
           {% csrf_token %}
-          <div class="d-flex justify-content-end" style="height: 30px;" >
+          <div class="d-flex justify-content-end" style="height: 35px;" >
             {{ comment_form.content|add_class:'form-control' }}
-            <input class="btn btn-sm btn-outline-primary ms-3" style="height: 30px;" type="submit" value="작성">
+            <input class="btn btn-sm btn-outline-primary ms-3" style="height: 38px;" type="submit" value="작성">
           </div>
         </form>
       </div>

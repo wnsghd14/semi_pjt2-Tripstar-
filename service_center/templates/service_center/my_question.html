@@ -1,34 +1,36 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="d-flex justify-content-between">
-  <h1>나의 문의</h1>
-  <a href="{% url 'service_center:question' %}" class="btn btn-outline-warning" style="height: 40px;">문의하기</a>
-</div>
-  <h3 class="my-4">{{ user.reverse_service.count }}개의 문의가 있습니다.</h3>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">문의</th>
-          <th scope="col">답변</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for question in user.reverse_service.all %}
-        <tr>
-          <th scope="row">{{ forloop.counter }}</th>
-          <td><a href="{% url 'service_center:detail' question.pk %}" class="text-decoration-none text-dark">
-            {{ question.title }}
-          </a></td>
-            {% if not question.center.count %}
-              <td><span class="text-danger fw-bold">(아직 답변이 없습니다)</span></td>
-            {% else %}
-              <td>답변이 있습니다</td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <div class="container my-5 col-sm-10">
+    <div class="d-flex justify-content-between">
+      <h1>나의 문의</h1>
+      <a href="{% url 'service_center:question' %}" class="btn btn-outline-warning" style="height: 40px;">문의하기</a>
+    </div>
+      <h4 class="mt-1 mb-3">{{ user.reverse_service.count }}개의 문의가 있습니다.</h4>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">문의</th>
+              <th scope="col">답변</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for question in user.reverse_service.all %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td><a href="{% url 'service_center:detail' question.pk %}" class="text-decoration-none text-dark">
+                {{ question.title }}
+              </a></td>
+                {% if not question.center.count %}
+                  <td><span class="text-danger fw-bold">(아직 답변이 없습니다)</span></td>
+                {% else %}
+                  <td>답변이 있습니다</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  </div>
 
 {% endblock body %}

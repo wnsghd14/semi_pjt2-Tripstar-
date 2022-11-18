@@ -12,7 +12,7 @@ class ServiceCenterForm(forms.ModelForm):
         labels = {
             'title': '문의 제목',
             'content': '문의 내용',
-            'image': '이미지 업르드',
+            'image': '이미지 업로드',
         }
 
 class CommentForm(forms.ModelForm):
