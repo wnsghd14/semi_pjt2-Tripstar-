@@ -37,7 +37,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- 검색창 -->
           <form action="{% url 'articles:search' %}" class="d-flex col-12 col-lg-6 p-2" role="search">
-            <input class="form-control" style="border-radius: 20px; border: 2px solid #69b7f0;" type="search" placeholder="      가고싶은 도시나 숙소를 검색해보세요!" aria-label="Search" name='q'>
+            <input class="form-control me-2" style="border-radius: 20px; border: 2px solid #69b7f0; text-align: center;" type="search" placeholder="    가고싶은 도시나 숙소를 검색해보세요!" aria-label="Search" name='q'>
+
             <i class="fas fa-search text-muted" style="font-size: 18px; margin-top: 12px; margin-left: 16px; position: absolute;"></i>
           </form>
           <div class='col-12 col-lg-6 d-flex justify-content-end align-items-center'>
@@ -48,9 +49,9 @@
             {% endif %}
             {% if request.user.is_authenticated %}
               <div class="dropdown ms-1">
-                <button class="btn btn-white dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-white dropdown-toggle d-flex align-items-center border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {% if request.user.image %}
-                    <img style='height:1.6rem;' class='rounded-circle border' src="{{ request.user.image.url }}" alt="{{ request.user.image }}">
+                    <img style='height:1.6rem;' class='rounded-circle border me-1' src="{{ request.user.image.url }}" alt="{{ request.user.image }}">
                   {% else %}
                     <img style='height:1.6rem;' class='rounded-circle border' src="{% static 'images/no-avatar.jpg'%}" alt="no-avatar">
                   {% endif %}

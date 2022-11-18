@@ -8,6 +8,7 @@
 <div class="row justify-content-center">
   <div class="col-md-12 col-lg-8">
     <!-- 본문 & 댓글 -->
+
     <div class="p-3 mb-4" style="border-radius: 0.5rem; box-shadow: 0px 0 10px 1px rgb(169 169 169 / 50%); background-color: white;">
       <div class="d-flex justify-content-between">
         <div>
@@ -25,6 +26,7 @@
           </p>
         </div>
       </div>
+
       <!-- carousel 사진 영역 -->
       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
         <div class="carousel-indicators">
@@ -71,6 +73,7 @@
         </div>
       </div>
       <hr>
+
 
     <!-- 글 수정 & 삭제 & 뒤로가기 -->
     <div class='d-flex justify-content-end'>
@@ -132,17 +135,16 @@
     <p>댓글이 없어요 ㅠ_ㅠ</p>
   {% endfor %}
 </div>
-
 {% endblock body %}
 
-{% block script %}
 
+
+{% block script %}
 <script>
   // 리뷰 좋아요
   const btnReviewLike = document.querySelector('#btn-review-like')
   btnReviewLike.addEventListener('click', event => {
     const reviewId = event.target.dataset.reviewId
-
     axios({
       method: 'get',
       url: `/articles/review/${reviewId}/like/` 
