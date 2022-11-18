@@ -31,7 +31,6 @@
   </div>
 
   <!-- slide -->
-  <h3 class='mb-3'>이벤트</h3>
   <div class="mb-5">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-indicators">
@@ -64,7 +63,7 @@
           <div class="row">
             <div class="p-0 col lg-4">
               <a href="{% url 'articles:detail' article.pk %}">
-                <div class="card" style="overflow: hidden;">
+                <div class="card2" style="overflow: hidden;">
                   <div class="card-img">
                     {% if article.articlephoto_set.all.0.image %}
                       <img src="{{ article.articlephoto_set.all.0.image.url }}" style="height: 200px; width: 292px;" class="card-img-top">
@@ -72,10 +71,10 @@
                       <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
                     {% endif %}
                   </div>
-                  <div class="card-body text-dark">
+                  <div class="card-body text-dark" style="padding:10px;">
                     {{ article.title }}
                     <span style='font-size:0.8rem;'>
-                      <i class="bi bi-star-fill"></i>{{ article.grade_avg|floatformat }}
+                      <i class="bi bi-star-fill" style="margin-right:3px; color:#ebeb07;"></i>{{ article.grade_avg|floatformat }}
                     </span>
                     <h4 class="pt-1 card-ellipsis">[{{ article.title }}]{{ article.content }}</h4>
                     <p style='font-size:0.8rem;' class='text-secondary m-0'>{{ article.price|intcomma }}원 <br>{{ article.review.all|length }}개의 후기<p>
@@ -91,11 +90,13 @@
     <div class="swiper-button-prev text-light"></div>
     <div class="swiper-pagination"></div>
   </div>
+
+  <!-- 최근 본 상품 -->
   {% if recent_articles %}
     <h3 class='my-3'>최근 본 상품</h3>
     <div class='mb-5 row'>
         {% for recent_article in recent_articles %}
-          <div class="col-3">
+          <div class="col-3 lately">
             <a href="{% url 'articles:detail' recent_article.0 %}"><img class='w-100 h-100 rounded' src="{{ recent_article.1 }}/" alt="{{ recent_article.1 }}"></a>
           </div>
         {% empty %}
@@ -103,6 +104,8 @@
         {% endfor %}
     </div>
   {% endif %}
+
+  <!-- 베스트 상품 -->
   <h3 class='my-3'>베스트 상품</h3>
   <div class='mb-5 row'>
     {% for best_article in best_articles %}
