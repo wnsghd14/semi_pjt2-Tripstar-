@@ -4,38 +4,41 @@
 {% block body %}
   <div class="row">
     <div class="col-6">
-      <a class='btn btn-dark btn-sm' href="{% url 'articles:theme_create' %}">테마생성</a>
-
-      
-      <h3>테마</h3>
-      {% for theme in themes %}
-        <div class='d-flex'>
-          {{ theme.pk }}
-          |
-          {{ theme.title }}
-          <a href="{% url 'articles:theme_update' theme.pk %}">수정</a>
-          <form action="{% url 'articles:theme_delete' theme.pk %}" method="POST">
-            {% csrf_token %}
-            <input type="submit" value='삭제'>
-          </form>
+      <h3 class='text-center'>테마</h3>
+      <div class="d-flex justify-content-center">
+        <a class='btn btn-outline-dark btn-sm mb-5' href="{% url 'articles:theme_create' %}">테마생성</a>
+      </div>
+      <div class="container">
+        <div class="row">
+          {% for theme in themes %}
+            <form class='d-flex justify-content-center my-2' action="{% url 'articles:theme_delete' theme.pk %}" method="POST">
+              <span>{{ theme.title }}</span>
+              {% csrf_token %}
+              <a class='btn btn-outline-dark btn-sm mx-2' href="{% url 'articles:theme_update' theme.pk %}">수정</a>
+              <input class='btn btn-outline-dark btn-sm' type="submit" value='삭제'>
+            </form>
+          {% endfor %}
         </div>
-      {% endfor %}
+      </div>
     </div>
+
     <div class="col-6">
-      <a class='btn btn-dark btn-sm' href="{% url 'articles:region_create' %}">지역생성</a>
-      <h3>지역</h3>
-      {% for region in regions %}
-        <div class='d-flex'>
-          {{ region.pk }}
-          |
-          {{ region.title }}
-          <a href="{% url 'articles:region_update' region.pk %}">수정</a>
-          <form action="{% url 'articles:region_delete' region.pk %}" method="POST">
-            {% csrf_token %}
-            <input type="submit" value='삭제'>
-          </form>
+      <h3 class='text-center'>지역</h3>
+      <div class="d-flex justify-content-center">
+        <a class='btn btn-outline-dark btn-sm mb-5' href="{% url 'articles:region_create' %}">지역생성</a>
+      </div>
+      <div class="container">
+        <div class="row">
+          {% for region in regions %}
+            <form class='d-flex justify-content-center my-2' action="{% url 'articles:region_delete' region.pk %}" method="POST">
+              <span>{{ region.title }}</span>
+              {% csrf_token %}
+              <a class='btn btn-outline-dark btn-sm mx-2' href="{% url 'articles:region_update' region.pk %}">수정</a>
+              <input class='btn btn-outline-dark btn-sm' type="submit" value='삭제'>
+            </form>
+          {% endfor %}
         </div>
-      {% endfor %}
+      </div>
     </div>
   </div>
 {% endblock body %}
