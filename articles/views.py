@@ -378,7 +378,7 @@ def review_create(request, article_pk):
     return render(request, "articles/review_create.html", context)
 
 
-def review_detail(request, review_pk, article_pk):
+def review_detail(request, review_pk):
     review = Review.objects.get(pk=review_pk)
     comment_form = CommentForm()
     context = {
