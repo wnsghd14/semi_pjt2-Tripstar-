@@ -452,6 +452,8 @@ def comment_create(request, review_pk):
         comment.save()
     return redirect("articles:review_detail", review_pk)
 
+def game(request):
+    return render(request,'articles/game.html')
 
 def comment_delete(request, review_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
