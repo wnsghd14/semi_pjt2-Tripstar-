@@ -20,15 +20,15 @@
                             <p>{{forloop.counter}}</p>
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex ms-3">
-                                    <img src="{{ reservation.article.articlephoto_set.all.0.image.url }}" alt="{{ reservation.article.articlephoto_set.all.0.image }}" style="width:72px; height: 72px;">
+                                    <a href="{% url 'articles:detail' reservation.article.pk %}"><img src="{{ reservation.article.articlephoto_set.all.0.image.url }}" alt="{{ reservation.article.articlephoto_set.all.0.image }}" style="width:72px; height: 72px;"></a>
                                     <div class="flex-column">
-                                        <h4 class="ms-4 mt-1">{{ reservation.article.title }}</h5>
+                                        <a href="{% url 'articles:detail' reservation.article.pk %}"><h4 class="ms-4 mt-1">{{ reservation.article.title }}</h4></a>
                                         <p class="ms-4 mb-0">예약자 성함 {{ reservation.name }}</p>
                                         </div>
                                 </div>
                                 <div class="d-flex flex-column">
                                     <p><a href="{% url 'articles:review_create' reservation.article.pk %}" class="btn btn-outline-secondary">후기 작성</a></p>
-                                    <p><a href="{% url 'service_center:question' %}" class="btn btn-outline-warning" style="height: 40px;">문의하기</a></p>
+                                    <p><a href="{% url 'service_center:question' %}" class="btn btn-outline-warning pe-3" style="height:40px;">문의하기</a></p>
                                 </div>
                             </div>
                             <div class="bg-light rounded-2 ms-3 mt-2" style="width:730px; height: 110px;">
