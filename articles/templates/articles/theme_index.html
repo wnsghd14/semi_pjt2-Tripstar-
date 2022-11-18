@@ -29,7 +29,7 @@
     {% for article in articles %}
       <div class="col-3">
         <div class="card">
-          <img src="{{ article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ article.image }}" >
+          <img src="{{ article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ article.image }}" style="width:304px; height:200px; object-fit: cover;" >
           <div class="card-body">
             <h5 class="card-title">{{ article.title }}</h5>
             <p>{{ article.price|intcomma }}원</p>

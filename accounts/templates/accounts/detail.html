@@ -40,11 +40,11 @@
           <br>
           <div class="mx-2">
             <span class=""><b>게시물수</b></span>
-            <span class="ms-1"><a href=""></a>{{ user.review.all|length }}</span>
+            <span><a href=""></a>{{ user.review_set.all|length }}</span>
             <span class="ms-2"><b>팔로워</b></span>
-            <span class="ms-1"><a href=""></a>{{ user.followers.count }}</span>
+            <span><a href=""></a>{{ user.followers.count }}</span>
             <span class="ms-2"><b>팔로잉</b></span>
-            <span class="ms-1"><a href=""></a>{{ user.following.all|length }}</span>
+            <span><a href=""></a>{{ user.following.all|length }}</span>
           </div>
           <br>
           <div>
@@ -61,24 +61,40 @@
 
     <div class="mylist_contents contents_container active mt-3">
       {% for review in user.review_set.all %}
+      <div class="border rounded-2 mb-4">
+        <!-- 리뷰 사진 -->
         <div class="pic">
           <a href="{% url 'articles:review_detail' review.pk %}">
             {% if review.reviewphoto_set.all %}
-              <img class="rounded" src="{{ review.reviewphoto_set.all.0.image.url }}" alt="{{ review.reviewphoto_set.all.0.image }}">
+            <img class="rounded" src="{{ review.reviewphoto_set.all.0.image.url }}" alt="{{ review.reviewphoto_set.all.0.image }}" style="width:300px; height:170px; object-fit: cover;">
             {% else %}
-              <img class="rounded" src="{% static 'images/dummy.jpg'%}" alt="">
+            <img class="rounded" src="{% static 'images/dummy.jpg'%}" alt="" style="width:300px; height: 170px;">
             {% endif %}
           </a>
         </div>
+        <!-- 리뷰, 상품 타이틀 -->
+        <div>
+          <h5 class="ms-3">{{ review.article.title }}</h5>
+          <p class="ms-3">{{ review.title }}</p>
+        </div>
+      </div>
       {% endfor %}
     </div>
 
+    <!-- 위시리스트 -->
     <div class="bookmark_contents contents_container mt-3">
-      {% for article in user.like_articles.all %}
+      <!-- 위시리스트 사진 -->
+      <div class="border rounded-2">
+        {% for article in user.like_articles.all %}
         <div class="pic">
           <a href="{% url 'articles:detail' article.pk %}"><img class="rounded" src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}"></a>
         </div>
-      {% endfor %}
+        <!-- 위시리스트 타이틀 -->
+        <div>
+          <h5 class="ms-3 mb-3">{{ article.title }}</h5>
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 
