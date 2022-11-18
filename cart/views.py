@@ -36,7 +36,7 @@ def kakaoPayLogic(request, pk):
     reservation = Reservation.objects.get(pk=pk)
     article = Article.objects.get(pk=reservation.article.pk)
     total_price = int(reservation.adult + reservation.kid) * int(reservation.article.price)
-    _admin_key = 'fc36d9bcf49db100bbe5167e1e0f95b1'
+    _admin_key = '9255c844dd7c602c886da10c915fed09'
     _url = 'https://kapi.kakao.com/v1/payment/ready'
     _headers = {
         "Authorization": f"KakaoAK {_admin_key}"
@@ -62,7 +62,7 @@ def kakaoPayLogic(request, pk):
 
 def paySuccess(request):
     _url = 'https://kapi.kakao.com/v1/payment/approve'
-    _admin_key = 'fc36d9bcf49db100bbe5167e1e0f95b1'
+    _admin_key = '9255c844dd7c602c886da10c915fed09'
     _headers = {
         "Authorization": f"KakaoAK {_admin_key}"  
     }
