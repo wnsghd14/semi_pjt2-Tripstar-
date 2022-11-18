@@ -29,12 +29,7 @@
     <nav class="navbar navbar-expand-lg pt-4">
       <div class="container-fluid container">
         <div class="col-lg-4 col-12 d-flex justify-content-between">
-          <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:3rem;' src="{% static 'images/Logo.png' %}" alt=""></a>
-          <div class="ms-2 d-none d-md-flex align-items-center">
-            {% if request.user.is_authenticated %}
-              
-            {% endif %}
-          </div>
+          <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:3rem;' src="{% static 'images/Logo.png' %}" alt="Logo"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -43,9 +38,10 @@
           <!-- 검색창 -->
           <form action="{% url 'articles:search' %}" class="d-flex col-12 col-lg-6 p-2" role="search">
             <input class="form-control me-2" style="border-radius: 20px; border: 2px solid #69b7f0; text-align: center;" type="search" placeholder="    가고싶은 도시나 숙소를 검색해보세요!" aria-label="Search" name='q'>
+
             <i class="fas fa-search text-muted" style="font-size: 18px; margin-top: 12px; margin-left: 16px; position: absolute;"></i>
           </form>
-          <div class='col-12 col-lg-6 d-flex p-2 justify-content-end align-items-center'>
+          <div class='col-12 col-lg-6 d-flex justify-content-end align-items-center'>
             {% if request.user.is_seller %}
               <div class='me-1'>
                   <a href="{% url 'articles:create' %}" class="btn btn-white">상품 등록</a>
@@ -106,11 +102,11 @@
             {% endfor %}
           </ul>
         </li>
-        <li><a href="#">리뷰 모음</a></li>
-        <li><a href="#">오션뷰🌊</a></li>
-        <li><a href="#">글램핑</a></li>
+        <li><a href="#">리뷰모음</a></li>
+        {% comment %} <li><a href="#">오션뷰🌊</a></li>
+        <li><a href="#">글램핑</a></li> {% endcomment %}
         <li><a href="#">이벤트</a></li>
-        <li><a href="#">고객센터</a></li>
+        <li><a href="{% url 'service_center:index' %}">고객센터</a></li>
         </ul>
     </div>
     <hr class='my-0'>

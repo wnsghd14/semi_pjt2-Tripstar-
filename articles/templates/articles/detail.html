@@ -19,9 +19,19 @@
   
   <!-- 제목, 사진 -->
   <article style="width: 70%;">
-    <div><h5>{{ article.region.title }} > {{ article.theme.title }}</h5></div>
-    <div class="my-4">
-      <h1 style="font-size: 30px"><h3>{{ article.title }}</h3></h1>
+
+    <div class="my-4 d-flex justify-content-between">
+      <h3>{{ article.title }}</h3>
+      <div class='d-flex align-items-end '>
+        <span style='font-size:.8rem;' class='badge rounded-pill mx-1 bg-dark fw-light'>
+          {{ article.region.title }}
+        </span>
+        {% for theme in article.theme.all %}
+          <span style='font-size:.8rem;' class="badge rounded-pill mx-1 fw-light bg-{% if forloop.counter == 1 %} text-bg-warning{% elif forloop.counter == 2 %}secondary{% elif forloop.counter == 3 %}success{% elif forloop.counter == 4 %} text-bg-info{% elif forloop.counter == 5 %}danger{% elif forloop.counter == 6 %}primary{% else %}dark{% endif %}">
+            {{ theme.title }}
+          </span>
+        {% endfor %}
+      </div>
     </div>
 
     <!-- carousel 사진 영역 -->
@@ -33,8 +43,8 @@
       </div>
       <div class="carousel-inner">
         {% for photo in article.articlephoto_set.all %}
-          <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" style="height: 500px;">
-            <img src="{{ photo.image.url }}" class="d-block h-100 mx-auto" alt="{{ photo.image }}">
+          <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %} rounded" style="height: 500px;">
+            <img style='object-fit: cover;' src="{{ photo.image.url }}" class="w-100 mx-auto rounded" alt="{{ photo.image }}">
           </div>
         {% endfor %}
       </div>
@@ -47,6 +57,8 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+    <div class="">
+    </div>
     <div class="my-5 pb-5 border-bottom">
       {{ article.content }}
     </div>
@@ -54,7 +66,7 @@
     <!-- 지도 -->
     <h3>숙소 위치</h3>
     <div class="border-bottom pb-5">
-      <div id="map" style="width:100%;height:350px;"></div>
+      <div id="map" style="width:100%;height:350px;" class='rounded'></div>
       
       <div id="x" style="display: none;">{{location.x}}</div>
       <div id="y" style="display: none;">{{location.y}}</div>
@@ -66,8 +78,8 @@
       <h3>후기 <span class='text-secondary fs-5' style="color:#3CA0FF;">{{ reviews|length }}</span> </h3>
       <div class='container'>
         <div class='row'>
-          <div class="col-4 ps-0 rounded">
-            <div class="d-flex flex-column align-items-center bg-light me-2 py-4">
+          <div class="col-4 ps-0">
+            <div class="d-flex flex-column align-items-center bg-light me-2 py-4 rounded">
               {% if reviews_avg %}
               <h1 style='font-size:3.5rem;' class='fw-bold'>{{ reviews_avg|floatformat }}</h1>
               <div class="d-flex">
@@ -76,7 +88,7 @@
                 {% for a in rest_list %}<span class="fs-5"><i class="bi bi-star"></i></span>{% endfor %}
               </div>
               {% else %}
-              <h5>평점이 없습니다.</h5>
+              <h5 class='m-0'>평점이 없습니다.</h5>
               {% endif %}
             </div>
           </div>
@@ -106,7 +118,7 @@
                   {% endfor %}
                 {% else %}
                   <div class="d-flex justify-content-center align-items-center h-100 rounded">
-                    <h5>평점이 없습니다.</h5>
+                    <h5 class='m-0'>평점이 없습니다.</h5>
                   </div>
                 {% endif %}
 
@@ -117,7 +129,9 @@
       </div>
     </div>
     {% if not request.user.is_seller %}
-      <a href="{% url 'articles:review_create' article.pk %}" class="btn btn-outline-secondary">후기 작성</a>
+      {% if is_reserved %}
+        <a href="{% url 'articles:review_create' article.pk %}" class="btn btn-outline-secondary">후기 작성</a>
+      {% endif %}
     {% endif %}
     <div class="row pb-5">
       {% for review in reviews %}
@@ -175,42 +189,42 @@
         <!-- 예약 창 펼치기 -->
         <div class="collapse" id="reservationBox{{ article.pk }}">
           <div class="mt-2">
-              <form action="{% url 'articles:reservation_create' article.pk %}" method="POST">
-                {% csrf_token %}
-                    <div class="form-group mb-1">
-                        <label for="name" class="mb-1">예약자명</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="이름">
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <div class="form-group w-100 me-2 mb-1">
-                        <label for="adult" class="mb-1">어른</label>
-                        <select name="adult" class="form-select" id="id_adult">
-                            <option value="0" selected="">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                      </div>
-                      <div class="form-group w-100 mb-1">
-                          <label for="kid" class="mb-1">어린이</label>
-                          <select name="kid" class="form-select" id="id_kid">
-                              <option value="0" selected="">0</option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                          </select>
-                      </div>
-                    </div>
-                    <div class="form-group  mb-1">
-                        <label for="date" class="my-1">날짜</label>
-                        <input class="form-control" type="text" name="date" id="daterange" value="" />
-                    </div>
-                    <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #45c6d7; color: white;" value="예약 완료하러 가기">
-              </form>
+            <form action="{% url 'articles:reservation_create' article.pk %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group mb-1">
+                <label for="name" class="mb-1">예약자명</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="이름">
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="form-group w-100 me-2 mb-1">
+                  <label for="adult" class="mb-1">어른</label>
+                  <select name="adult" class="form-select" id="id_adult">
+                    <option value="0" selected="">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <div class="form-group w-100 mb-1">
+                  <label for="kid" class="mb-1">어린이</label>
+                  <select name="kid" class="form-select" id="id_kid">
+                    <option value="0" selected="">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group  mb-1">
+                <label for="date" class="my-1">날짜</label>
+                <input class="form-control" type="text" name="date" id="daterange" value="" />
+              </div>
+              <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #45c6d7; color: white;" value="예약 완료하러 가기">
+            </form>
           </div>
         </div>
 
@@ -233,6 +247,7 @@
                 <h5 class='mx-1 my-0 text-center'>{{ article.user.username }}</hh>
               </div>
             </a>
+            
           </div>
           <div>
             <p class="mb-0 mt-2 text-muted fw-light" style="font-size: 14px">
@@ -241,10 +256,12 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-end">
-        <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary me-2">수정</a>
-        <a href="{% url 'articles:delete' article.pk %}" class="btn btn-outline-danger">삭제</a>
-      </div>
+      {% if article.user == request.user %}
+        <div class="d-flex justify-content-end">
+          <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary me-2">수정</a>
+          <a href="{% url 'articles:delete' article.pk %}" class="btn btn-outline-danger">삭제</a>
+        </div>
+      {% endif %}
 
       <script>
         $(function() {

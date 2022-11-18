@@ -8,7 +8,25 @@
 <div class="row justify-content-center">
   <div class="col-md-12 col-lg-8">
     <!-- 본문 & 댓글 -->
-    <div class="p-3 mb-4" style="border-radius: 0rem; border: 1px solid #b6b6b6; background-color: white;">
+
+    <div class="p-3 mb-4" style="border-radius: 0.5rem; box-shadow: 0px 0 10px 1px rgb(169 169 169 / 50%); background-color: white;">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h2>{{ review.title }}</h2>
+          <p class='fs-6'>평점: {{ review.get_grade_display }}</p>
+        </div>
+        <div class="d-flex flex-column align-items-end">
+          <span style="font-size: 25px;"><a href="{% url 'accounts:detail' review.user.pk %}">{{ review.user.username }}</a></span>
+          <p style="font-size: 13px;">
+            {% if review.created_at == review.updated_at %}
+            작성 {{ review.created_at|date:'Y-m-d H:i' }}
+            {% else %}
+            수정 {{ review.updated_at|date:'Y-m-d H:i' }}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
       <!-- carousel 사진 영역 -->
       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
         <div class="carousel-indicators">
@@ -17,9 +35,9 @@
           {% endfor %}
         </div>
         <div class="carousel-inner">
-          {% for photo in review.reviewphoto_set.all %}
+          {% for photo in review.reviewphoto_set.all %} 
             <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" style="height: 500px">
-              <img src="{{ photo.image.url }}" class="d-block h-100 mx-auto" alt="{{ photo.image }}">
+              <img src="{{ photo.image.url }}" class="d-block w-100 mx-auto rounded" alt="{{ photo.image }}">
             </div>
           {% endfor %}
         </div>
@@ -35,20 +53,7 @@
 
       <!-- 제목 본문 태그 -->
       <div>
-        <h1 class="mt-3">{{ review.title }}</h1>
-        <p>{{ review.get_grade_display }}</p>
-        <div class="d-flex justify-content-between">
-          <span style="font-size: 25px;"><a href="{% url 'accounts:detail' review.user.pk %}">{{ review.user.username }}</a></span>
-          <p style="font-size: 13px;">
-            {% if review.created_at == review.updated_at %}
-            작성 {{ review.created_at|date:'Y-m-d H:i' }}
-            {% else %}
-            수정 {{ review.updated_at|date:'Y-m-d H:i' }}
-            {% endif %}
-          </p>
-        </div>
-        <p class="mt-3">{{ review.content }} </p>
-
+        <p style="min-height: 200px;" class="mt-5">{{ review.content }} </p>
         <!-- 좋아요 댓글 -->
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex flex-row align-items-center" style="font-size: 20px;">
@@ -69,71 +74,69 @@
       </div>
       <hr>
 
-      <!-- 글 수정 & 삭제 & 뒤로가기 -->
-      <div class='d-flex justify-content-end'>
-        {% if request.user == review.user %}
-        <form action="{% url 'articles:review_delete' review.pk %}" method="POST" class="form">
-          {% csrf_token %}
-          <div class="d-block d-lg-none">
-            <a href="{% url 'articles:review_update' review.pk %}" class="btn btn-outline-primary form-control mb-3">수정</a>
-            <input class="btn btn-outline-danger form-control mb-3" type="submit" value="삭제">
-            <a href="{% url 'articles:detail' review.article.pk %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
-          </div>
-          <div class="d-none d-lg-block">
-            <a href="{% url 'articles:review_update' review.pk %}" class="btn btn-outline-primary">수정</a>
-            <input class="btn btn-outline-danger" type="submit" value="삭제">
-            <a href="{% url 'articles:detail' review.article.pk %}" class="btn btn-outline-secondary">뒤로</a>
-          </div>
-        </form>
-        {% else %}
-        <div class="d-block d-lg-none">
-          <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
-        </div>
-        <div class="d-none d-lg-block">
-          <a href="{% url 'articles:detail' review.article.pk %}" class="btn btn-outline-secondary">뒤로</a>
-        </div>
-        {% endif %}
-      </div>
-      <!-- 코멘트 폼 -->
-      <h4 class="mb-3 mt-5">댓글</h4>
-      <form action="{% url 'articles:comment_create' review.pk %}" id="comment-form" data-article-id="{{ review.pk }}" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form comment_form layout='floating'%}
-        <div class="d-flex justify-content-end">
-          {% bootstrap_button button_type="submit" content="작성" %}
-        </div>
-      </form>
 
-      <!-- 코멘트 목록 -->
-      {% for comment in comments %}
-      <div class="mt-2">
-        {% if request.user.is_authenticated %}
-        <div class="d-flex justify-content-between">
-          <div>{{ comment.user.username }} | {{ comment.content }}
-            <p style="font-size: 12px; margin-bottom: 0px;">작성 | {{ comment.created_at|date:'Y-m-d H:i' }}</p>
-          </div>
+    <!-- 글 수정 & 삭제 & 뒤로가기 -->
+    <div class='d-flex justify-content-end'>
+      {% if request.user == review.user %}
+      <form action="{% url 'articles:review_delete' review.pk %}" method="POST" class="form">
+        {% csrf_token %}
+        <a href="{% url 'articles:review_update' review.pk %}" class="btn btn-outline-primary btn-sm mb-3">수정</a>
+        <input class="btn btn-outline-danger btn-sm mb-3" type="submit" value="삭제">
+      </form>
+      {% endif %}
+      <div class="mx-1">
+        <a href="{% url 'articles:detail' review.article.pk %}" class="btn btn-outline-secondary btn-sm">뒤로</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 코멘트 폼 -->
+  <h4 class="mb-3 mt-5">댓글</h4>
+  <form action="{% url 'articles:comment_create' review.pk %}" id="comment-form" data-article-id="{{ review.pk }}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form comment_form layout='floating'%}
+    <div class="d-flex justify-content-end">
+      {% bootstrap_button button_type="submit" content="작성" %}
+    </div>
+  </form>
+
+  <!-- 코멘트 내용 -->
+  <hr class='my-1'>
+  {% for comment in comments %}
+    <div class="d-flex justify-content-between">
+      {% if request.user.is_authenticated %}
+        <div class="d-flex flex-column">
           <div>
-            {% if request.user == comment.user %}
+            <a href="{% url 'accounts:detail' comment.user.pk %}">{{ comment.user.username }}</a>
+            <span class='text-secondary' style='font-size:.7rem;'>{{ comment.created_at }}</span>
+          </div>
+          <span class="fs-5">{{ comment.content }}</span>
+        </div>
+        {% if request.user == comment.user %}
+          <div class="d-flex align-items-center"></div>
             <form action="{% url 'articles:comment_delete' review.pk comment.pk %}" method="POST">
               {% csrf_token %}
-              <button type="submit" class="btn btn-none border-0 p-0"><img src="{% static 'images/bin.png' %}" style="width: 24px"></button>
+              <button type="submit" class="btn btn-outline-danger btn-sm">삭제</button>
             </form>
-            {% endif %}
           </div>
+        {% endif %} 
+      {% else %}
+        <div class="d-flex flex-column">
+          <div>
+            <span>익명</span>
+            <span class='text-secondary' style='font-size:.7rem;'>{{ comment.created_at }}</span>
+          </div>
+          <span class="fs-5">{{ comment.content }}</span>
         </div>
-        {% else %}
-        <div class="d-flex justify-content-between">
-          <div> 익명 | {{ comment.content }}</div>
-          <div>{{ comment.created_at|date:'Y-m-d H:i' }}</div>
-        </div>
-      </div>
       {% endif %}
-      {% empty %}
-        <p>댓글이 없어요 ㅠ_ㅠ</p>
-      {% endfor %}
-  </div>
+    </div>
+    <hr class="my-1">
+  {% empty %}
+    <p>댓글이 없어요 ㅠ_ㅠ</p>
+  {% endfor %}
 </div>
 {% endblock body %}
+
 
 
 {% block script %}

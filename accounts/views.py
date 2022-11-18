@@ -74,9 +74,13 @@ def logout(request):
 
 def detail(request, pk):
     user = get_object_or_404(get_user_model(), pk=pk)
+    followers = user.followers.all()
+    followings = user.following.all()
 
     context = {
         "user": user,
+        'followers':followers,
+        'followings':followings,
     }
 
     return render(request, "accounts/detail.html", context)
