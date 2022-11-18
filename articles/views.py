@@ -8,7 +8,6 @@ from django.contrib.auth import get_user_model
 import json
 import math
 from collections import deque
-from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -28,159 +27,124 @@ def index(request):
 
 # 지역(region), 테마(theme)에 대해서 생성, 수정, 삭제할 수 있는 권한은 관리자(superuser)에게만 있음
 def region_create(request):
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = RegionForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                return redirect('articles:theme_region_list')
-        else:
-            form = RegionForm()
-        context = {
-            'form':form
-        }
-        return render(request, 'articles/form.html', context)
+    if request.method == "POST":
+        form = RegionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
     else:
-        messages.warning(request, '관리자만 접근가능합니다.')
-        return redirect('articles:index')
+        form = RegionForm()
+    context = {
+        'form':form
+    }
+    return render(request, 'articles/form.html', context)
 
 def region_update(request, region_pk):
     region = get_object_or_404(Region, pk=region_pk)
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = RegionForm(request.POST, request.FILES, instance=region)
-            if form.is_valid():
-                form.save()
-                return redirect('articles:theme_region_list')
-        else:
-            form = RegionForm(instance=region)
-        context = {
-            'form':form,
-        }
-        return render(request, 'articles/form.html', context)
+    if request.method == "POST":
+        form = RegionForm(request.POST, request.FILES, instance=region)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:theme_region_list')
     else:
-        messages.warning(request, '관리자만 접근가능합니다.')
-        return redirect('articles:index')
+        form = RegionForm(instance=region)
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
 
 def region_delete(request, region_pk):
     region = get_object_or_404(Region, pk=region_pk)
-    if request.user.is_superuser:
-        if request.method == "POST":
-            region.delete()
-            return redirect('articles:theme_region_list')
-        else:
-            messages.warning(request, '잘못된 접근입니다.')
-    else:
-        messages.warning(request, '관리자만 접근가능합니다.')
-    return redirect('articles:index')
+    if request.method == "POST":
+        region.delete()
+        return redirect('articles:theme_region_list')
 
 def theme_create(request):
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = ThemeForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                return redirect('articles:theme_region_list')
-        else:
-            form = ThemeForm()
-        context = {
-            'form':form,
-        }
-        return render(request, 'articles/form.html', context)
+    if request.method == "POST":
+        form = ThemeForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
     else:
-        messages.warning(request, '관리자만 접근가능합니다.')
-        return redirect('articles:index')
+        form = ThemeForm()
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
 
 def theme_update(request, theme_pk):
     theme = get_object_or_404(Theme, pk=theme_pk)
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = ThemeForm(request.POST, request.FILES, instance=theme)
-            if form.is_valid():
-                form.save()
-                return redirect('articles:theme_region_list')
-        else:
-            form = ThemeForm(instance=theme)
-        context = {
-            'form':form,
-        }
-        return render(request, 'articles/form.html', context)
+    if request.method == "POST":
+        form = ThemeForm(request.POST, request.FILES, instance=theme)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:theme_region_list')
     else:
-        messages.warning(request, '관리자만 접근가능합니다.')
-        return redirect('articles:index')
+        form = ThemeForm(instance=theme)
+    context = {
+        'form':form,
+    }
+    return render(request, 'articles/form.html', context)
 
 def theme_delete(request, theme_pk):
-    if request.user.is_superuser:
-        theme = get_object_or_404(Theme, pk=theme_pk)
-        if request.method == "POST":
-            theme.delete()
-            return redirect('articles:theme_region_list')
-        else:
-            messages.warning(request, '잘못된 접근입니다.')
-    else:
-        messages.warning(request, '관리자만 접근가능합니다.')
-    return redirect('articles:index')
+    theme = get_object_or_404(Theme, pk=theme_pk)
+    if request.method == "POST":
+        theme.delete()
+        return redirect('articles:theme_region_list')
 
 def theme_region_list(request):
-    if request.user.is_superuser:
-        context = {
-            'regions':Region.objects.all(),
-            'themes':Theme.objects.all(),
-        }
-        return render(request, 'articles/theme_region_list.html', context)
-    else:
-        messages.warning(request, '관리자만 접근가능합니다.')
-        return redirect('articles:index')
+    context = {
+        'regions':Region.objects.all(),
+        'themes':Theme.objects.all(),
+    }
+    return render(request, 'articles/theme_region_list.html', context)
 
 
 @login_required
 def create(request):
     locationform = LocationForm()
-    if request.user.is_seller:
-        if request.method == "POST":
-            article_form = ArticleForm(request.POST, request.FILES)
-            article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
-            images = request.FILES.getlist("image")
-            locationform = LocationForm(request.POST)
-            x = request.POST.getlist('x')
-            y = request.POST.getlist('y')
-            location = request.POST.getlist('location')
-            
-            if article_form.is_valid() and locationform.is_valid():
-                # accounts 연결 후에
-                article = article_form.save(commit=False)
-                article.user = request.user
-                location = locationform.save(commit=False)
-                location.article = article
+    if request.method == "POST":
+        article_form = ArticleForm(request.POST, request.FILES)
+        article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
+        images = request.FILES.getlist("image")
+        locationform = LocationForm(request.POST)
+        x = request.POST.getlist('x')
+        y = request.POST.getlist('y')
+        location = request.POST.getlist('location')
+        
+        if article_form.is_valid() and locationform.is_valid():
+            # accounts 연결 후에
+            article = article_form.save(commit=False)
+            article.user = request.user
+            location = locationform.save(commit=False)
+            location.article = article
 
-                article.region = get_object_or_404(Region, pk=request.POST.get("region"))
+            article.region = get_object_or_404(Region, pk=request.POST.get("region"))
 
-                if len(images):
-                    for image in images:
-                        image_instance = ArticlePhoto(article=article, image=image)
-                        article.save()
-                        image_instance.save()
-                location.save()
-                article.save()
+            if len(images):
+                for image in images:
+                    image_instance = ArticlePhoto(article=article, image=image)
+                    article.save()
+                    image_instance.save()
+            location.save()
+            article.save()
 
-                for theme_pk in request.POST.getlist("theme"):
-                    theme = get_object_or_404(Theme, pk=theme_pk)
-                    article.theme.add(theme)
+            for theme_pk in request.POST.getlist("theme"):
+                theme = get_object_or_404(Theme, pk=theme_pk)
+                article.theme.add(theme)
 
-                return redirect("articles:index")
-        else:
-            article_form = ArticleForm()
-            article_photo_form = ArticlePhotoForm()
-        context = {
-            "article_form": article_form,
-            "article_photo_form": article_photo_form,
-            "regions": Region.objects.all(),
-            "themes": Theme.objects.all(),
-        }
-        return render(request, "articles/create.html", context)
+            return redirect("articles:index")
     else:
-        messages.warning(request, '판매자만 상품을 등록할 수 있습니다.')
-        return redirect('articles:index')
+        article_form = ArticleForm()
+        article_photo_form = ArticlePhotoForm()
+    context = {
+        "article_form": article_form,
+        "article_photo_form": article_photo_form,
+        "regions": Region.objects.all(),
+        "themes": Theme.objects.all(),
+    }
+    return render(request, "articles/create.html", context)
+
 
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
@@ -233,12 +197,6 @@ def detail(request, article_pk):
     else:
         request.session['recent_articles'] = [[article_pk, article_photo]]
 
-    is_reserved = False
-    if request.user.is_authenticated:
-        reservations = Reservation.objects.filter(article=article)
-        if reservations.filter(user=request.user).exists():
-            is_reserved = True
-
     context = {
         "article": article,
         "reviews": reviews,
@@ -248,8 +206,7 @@ def detail(request, article_pk):
         'quotient_list': quotient_list,
         'half_list': half_list,
         'rest_list': rest_list,
-        'grade_list': grade_list,
-        'is_reserved': is_reserved,
+        'grade_list':grade_list,
     }
     return render(request, "articles/detail.html", context)
 
@@ -258,8 +215,6 @@ def detail(request, article_pk):
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     photos = ArticlePhoto.objects.filter(article_id=article_pk)
-    region = get_object_or_404(Region, article_id=article_pk)
-    theme = get_object_or_404(Theme, article_id=article_pk)
     location = get_object_or_404(Location, article_id=article_pk)
     # 로그인한 유저와 작성한 유저가 같다면
     # if request.user == article.user:
@@ -297,16 +252,15 @@ def update(request, article_pk):
         "themes": Theme.objects.all(),
     }
     return render(request, "articles/update.html", context)
+    
 
-
-@login_required
+# @login_required
 def delete(request, article_pk):
     if request.user.is_authenticated:
         article = get_object_or_404(Article, pk=article_pk)
         if request.user == article.user:
             article.delete()
-        else:
-            messages.warning(request, '본인 글만 삭제할 수 있습니다.')
+
     return redirect("articles:index")
 
 
@@ -394,13 +348,14 @@ def review_index(request):
     }
     return render(request, "articles/review_index.html", context)
 
-@login_required
+
 def review_create(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES)
         review_photo_form = ReviewPhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
+
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.user = request.user
@@ -422,8 +377,9 @@ def review_create(request, article_pk):
     }
     return render(request, "articles/review_create.html", context)
 
+
 def review_detail(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
+    review = Review.objects.get(pk=review_pk)
     comment_form = CommentForm()
     context = {
         "review": review,
@@ -433,22 +389,18 @@ def review_detail(request, review_pk):
     }
     return render(request, "articles/review_detail.html", context)
 
-@login_required
+
 def review_delete(request, review_pk):
     # article = Article.objects.get(pk=pk)
-    review = get_object_or_404(Review, pk=review_pk)
+    review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
         if request.user == review.user:
             review.delete()
             return redirect("articles:detail", review.article.pk)
-        else:
-            messages.warning(request, '본인의 후기만 삭제할 수 있습니다.')
     else:
-        messages.warning(request, '잘못된 접근입니다.')
-    return redirect('articles:review_detail', review_pk)
+        return redirect("articles:detail", review.article.pk)
 
 
-@login_required
 def review_update(request, review_pk):
     # article = Article.objects.get(pk=pk)
     review = Review.objects.get(pk=review_pk)
@@ -481,7 +433,7 @@ def review_update(request, review_pk):
     }
     return render(request, "articles/review_create.html", context)
 
-@login_required
+
 def review_like(request, review_pk):
     # article = Article.objects.get(pk=pk)
     review = Review.objects.get(pk=review_pk)
@@ -497,6 +449,7 @@ def review_like(request, review_pk):
     }
     return JsonResponse(data)
 
+
 def comment_create(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     comment_form = CommentForm(request.POST)
@@ -507,21 +460,17 @@ def comment_create(request, review_pk):
         comment.save()
     return redirect("articles:review_detail", review_pk)
 
-def game(request):
-    return render(request,'articles/game.html')
 
 def comment_delete(request, review_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     if comment.user == request.user:
         if request.method == "POST":
             comment.delete()
-        else:
-            messages.warning(request, '잘못된 접근입니다.')
-        return redirect("articles:review_detail", review_pk)    
+            return redirect("articles:review_detail", review_pk)
     else:
         return HttpResponseForbidden()
 
-@login_required
+
 def search(request):
     articles = None
     reviews = None
@@ -550,6 +499,7 @@ def region_index(request, region_pk):
     region = get_object_or_404(Region, pk=region_pk)
     articles = region.article_set.all()
     regions = Region.objects.all()
+
     context = {
         'articles':articles,
         'region':region,
@@ -569,22 +519,23 @@ def theme_index(request, theme_pk):
 def map(request):
     return render(request, 'articles/map.html')
 
+
 def reservation_create(request, article_pk):
-    if request.user.is_authenticated:
-        article = Article.objects.get(pk=article_pk)
-        if request.method == "POST":
-            reservation_form = ReservationForm(request.POST, request.FILES)
-            if reservation_form.is_valid():
-                reservation = reservation_form.save(commit=False)
-                reservation.user = request.user
-                reservation.article = article
-                reservation.save()
-                return redirect("cart:kakaoPay", reservation.pk)
-    else:
-        return redirect('accounts:login')
+    article = Article.objects.get(pk=article_pk)
+    if request.method == "POST":
+        reservation_form = ReservationForm(request.POST, request.FILES)
+        if reservation_form.is_valid():
+            reservation = reservation_form.save(commit=False)
+            reservation.user = request.user
+            reservation.article = article
+            reservation.save()
+            return redirect("cart:kakaoPay", reservation.pk)
     # else:
     #     reservation_form = ReservationForm()
     # context = {
     #     "reservation_form": reservation_form,
     # }
     # return render(request, "articles/reservation_create.html", context)
+
+def game(request):
+    return render(request,'articles/game.html')
