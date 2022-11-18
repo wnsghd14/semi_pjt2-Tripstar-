@@ -7,7 +7,7 @@
 {% endblock css %}
 
 {% block body %}
-<h2 class="mb-4">예약하기</h2>
+<h2 class="mb-4">예약정보</h2>
 <div class="d-flex mt-3">
 
   <!-- 상품 정보 및 예약자 정보 -->
@@ -17,13 +17,15 @@
     <h4>상품정보</h4>
     <div class="my-3 border-top pb-3">
       <div class="d-flex mt-3">
-      {% if reservation.article.articlephoto_set.all.0.image %}
-        <img src="{{ reservation.article.articlephoto_set.all.0.image.url }}" alt="{{ reservation.article.articlephoto.image }}" style="width:72px; height: 72px;" >  
-      {% endif %}
-      <div class="ms-3">
-        <h3 class="">{{ reservation.article.title }}</h3>
-        <span>{{ s_year }}년 {{ s_month }}월 {{s_day}}일 ~ {{ e_year }}년 {{ e_month }}월 {{ e_day }}일</span>
-      </div>
+        {% if reservation.article.articlephoto_set.all.0.image %}
+          <a href="{% url 'articles:detail' reservation.article.pk %}">
+            <img class='rounded' src="{{ reservation.article.articlephoto_set.all.0.image.url }}" alt="{{ reservation.article.articlephoto.image }}" style="height: 72px;" >
+          </a>  
+        {% endif %}
+        <div class="ms-3">
+          <h3>{{ reservation.article.title }}</h3>
+          <span>{{ s_year }}년 {{ s_month }}월 {{s_day}}일 ~ {{ e_year }}년 {{ e_month }}월 {{ e_day }}일</span>
+        </div>
       </div>
       <p>어른 : {{ reservation.adult }}명</p>
       {% if reservation.kid %}
@@ -63,16 +65,15 @@
         </div>
         <!-- 약관 안내 -->
         <h4 class="mt-3">약관 안내</h4>
-        <div class="border-top my-3">
-          <div class="border mt-4">
-            <p class="mt-4 ms-3">개인정보 제공 동의(필수)</p>
-            <p class="ms-3">개인정보 수집 및 이용 동의(필수)</p>
-          </div>
+        <hr>
+        <div class="border rounded d-flex flex-column justify-content-evenly p-3">
+          <p class="m-0">개인정보 제공 동의(필수)</p>
+          <p class="m-0 mt-2">개인정보 수집 및 이용 동의(필수)</p>
         </div>
-        <p>위 약관을 확인하였으며, 회원 본인은 약관 및 결제에 동의합니다.</p>
-        <div class="my-3 mb-5 bg-light py-4">
-          <p class="fw-bold fs-5">이런 경우 현장 결제가 필요할 수 있어요.</p>
-          <p>기준 인원 초과, 바베큐 시설 이용 등은 현장에서 추가 비용이 청구될 수 있습니다.</p>
+        <p class='p-3 m-0'>위 약관을 확인하였으며, <br>회원 본인은 약관 및 결제에 동의합니다.</p>
+        <div class="my-3 mb-5 bg-light p-3 rounded">
+          <p class="fw-bold fs-5">이런 경우,<br> 현장 결제가 필요할 수 있어요.</p>
+          <p><span class='fw-bold'>기준 인원 초과, 바베큐 시설 이용 </span>등은 <br>현장에서 추가 비용이 청구될 수 있습니다.</p>
         </div>
         <!-- 결제하기 -->
         <form action="{% url 'cart:kakaoPayLogic' reservation.pk %}" method="GET">
