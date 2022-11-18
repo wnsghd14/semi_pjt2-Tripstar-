@@ -3,20 +3,20 @@
 {% load static %}
 
 {% block body %}
-<div class="container my-5">
+<div class="container my-5 col-lg-6 col-md-8 col-sm-10">
   {% if request.resolver_match.url_name == 'review_create' %}
-    <h1> 리뷰 작성하기 </h1>
+    <h3 class="text-center mb-4">리뷰 작성</h3>
   {% else %}
-    <h1> 리뷰 수정하기 </h1>
+    <h3 class="text-center mb-4">리뷰 수정</h3>
   {% endif %}
 
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form review_form %}
     {% bootstrap_form review_photo_form %}
-    <div class="mt-2">
-      {% bootstrap_button button_type="submit" content="OK" %}
+    <div class="mt-2 d-flex justify-content-end">
+      <input class="btn btn-outline-primary btn-sm" type="submit" value="등록">
     </div>
   </form>
 </div>
-{% endblock body %}
+{% endblock body %} 
