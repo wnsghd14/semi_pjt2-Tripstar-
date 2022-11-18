@@ -39,12 +39,13 @@
           </h5>             
           <br>
           <div class="mx-2">
+
             <span class=""><b>게시물수</b></span>
             <span><a href=""></a>{{ user.review_set.all|length }}</span>
             <span class="ms-2"><b>팔로워</b></span>
-            <span><a href=""></a>{{ user.followers.count }}</span>
+            <span><a type="button" data-bs-toggle="modal" data-bs-target="#followModal">{{ user.followers.count }}</a></span>
             <span class="ms-2"><b>팔로잉</b></span>
-            <span><a href=""></a>{{ user.following.all|length }}</span>
+            <span><a type="button" data-bs-toggle="modal" data-bs-target="#followingModal">{{ user.following.all|length }}</a></span>
           </div>
           <br>
           <div>
@@ -84,17 +85,17 @@
     <!-- 위시리스트 -->
     <div class="bookmark_contents contents_container mt-3">
       <!-- 위시리스트 사진 -->
-      <div class="border rounded-2">
-        {% for article in user.like_articles.all %}
+      {% for article in user.like_articles.all %}
+      <div class="border rounded-2 mb-4">
         <div class="pic">
-          <a href="{% url 'articles:detail' article.pk %}"><img class="rounded" src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}"></a>
+          <a href="{% url 'articles:detail' article.pk %}"><img class="rounded" src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}" style="width:300px; height:170px; object-fit: cover;"></a>
         </div>
         <!-- 위시리스트 타이틀 -->
         <div>
           <h5 class="ms-3 mb-3">{{ article.title }}</h5>
         </div>
-        {% endfor %}
       </div>
+      {% endfor %}
     </div>
   </div>
 
@@ -128,6 +129,40 @@
               </a>  
             </div>
         </div>
+    </div>
+  </div>
+
+  <!-- 팔로우 modal -->
+  <div class="modal fade" id="followModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel2">팔로우 목록</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for follower in followers %}
+           <p>{{ follower }}</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 팔로잉 modal -->
+  <div class="modal fade" id="followingModal" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel3">팔로잉 목록</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for following in followings %}
+            <p>{{ following }}</p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
 {% endblock body %}
