@@ -19,6 +19,7 @@
   
   <!-- 제목, 사진 -->
   <article style="width: 70%;">
+    <div><h5>{{ article.region.title }} > {{ article.theme.title }}</h5></div>
     <div class="my-4">
       <h1 style="font-size: 30px"><h3>{{ article.title }}</h3></h1>
     </div>
@@ -224,14 +225,21 @@
         {% endif %}
         <p class="text-muted text-center m-0" style="font-size: 15px"><span class="ms-2" id="like-count">{{ article.like_users.count }}</span><span>명이 위시리스트에 담은 상품</span></p>
         <hr>
-        <a class='text-dark' href="{% url 'accounts:detail' article.user.pk %}">
-          <div class="d-flex align-items-center">
-            <img style='width:10%;' class="rounded" src="{{ article.user.image.url }}" alt="{{ article.user.image }}"> 
-            <h5 class='mx-1 my-0 text-center'>{{ article.user.username }}</hh>
+        <div class="d-flex justify-content-end flex-wrap">
+          <div>
+            <a class='text-dark' href="{% url 'accounts:detail' article.user.pk %}">
+              <div class="d-flex justify-content-end">
+                <img style='width:10%;' class="rounded-circle me-1" src="{{ article.user.image.url }}" alt="{{ article.user.image }}"> 
+                <h5 class='mx-1 my-0 text-center'>{{ article.user.username }}</hh>
+              </div>
+            </a>
           </div>
-        </a>
-        <hr>
-        <p>등록 일자 : {{ article.created_at.year }}년 {{ article.created_at.month}}월 {{ article.created_at.day }}일</p>
+          <div>
+            <p class="mb-0 mt-2 text-muted fw-light" style="font-size: 14px">
+              등록 일자 : {{ article.created_at.year }}년 {{ article.created_at.month}}월 {{ article.created_at.day }}일
+            </p>
+          </div>
+        </div>
       </div>
       <div class="d-flex justify-content-end">
         <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary me-2">수정</a>

@@ -76,6 +76,7 @@ class Comment(models.Model):
     content = models.TextField()
     review = models.ForeignKey(Review,on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Age(models.IntegerChoices):
     zero = 0, '0'

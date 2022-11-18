@@ -215,20 +215,31 @@ def detail(request, article_pk):
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     photos = ArticlePhoto.objects.filter(article_id=article_pk)
+    region = get_object_or_404(Region, article_id=article_pk)
+    theme = get_object_or_404(Theme, article_id=article_pk)
+    location = get_object_or_404(Location, article_id=article_pk)
     # 로그인한 유저와 작성한 유저가 같다면
     # if request.user == article.user:
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES, instance=article)
         article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
-        if article_form.is_valid() and article_photo_form.is_valid():
+        locationform = LocationForm(request.POST)
+        x = request.POST.getlist('x')
+        y = request.POST.getlist('y')
+        location = request.POST.getlist('location')
+        article.region = get_object_or_404(Region, pk=request.POST.get("region"))
+
+        if article_form.is_valid() and article_photo_form.is_valid() and locationform.is_valid():
             article = article_form.save(commit=False)
             if len(images):
                 for image in images:
                     image_instance = ArticlePhoto(article=article, image=image)
                     article.save()
                     image_instance.save()
+            location.save()
             article.save()
+
             return redirect("articles:detail", article_pk)
     else:
         article_form = ArticleForm(instance=article)
@@ -239,11 +250,10 @@ def update(request, article_pk):
     context = {
         "article_form": article_form,
         "article_photo_form": article_photo_form,
+        "regions": Region.objects.all(),
+        "themes": Theme.objects.all(),
     }
     return render(request, "articles/update.html", context)
-    # 작성자가 아닐 경우
-    # else:
-    #     return redirect('articles:detail', articles_pk)
     
 
 # @login_required
@@ -458,7 +468,7 @@ def comment_delete(request, review_pk, comment_pk):
     if comment.user == request.user:
         if request.method == "POST":
             comment.delete()
-            return redirect("reviews:review_detail", review_pk)
+            return redirect("articles:review_detail", review_pk)
     else:
         return HttpResponseForbidden()
 
