@@ -40,7 +40,7 @@
   <h3>총 {{ articles|length }}개의 상품이 있습니다.</h3>
   <div class="row">
     {% for article in articles %}
-      <div class="col-sm-3">
+      <div class="col-sm-5 col-lg-3">
         <div class="card my-4">
           <div>
             <img class='card-img-top' src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.image }}" style="height:200px; object-fit: cover;">
