@@ -22,7 +22,7 @@ class Article(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = ProcessedImageField(upload_to='images/articles/',null=True,
+    image = ProcessedImageField(upload_to='images/articles/', null=True,
                                 processors=[ResizeToFill(1600, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
@@ -41,7 +41,7 @@ class Location(models.Model):
 
 class ArticlePhoto(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
-    image = ProcessedImageField(upload_to='images/articles/',null=True,
+    image = ProcessedImageField(upload_to='images/articles/', null=True, blank=True,
                                 processors=[ResizeToFill(800, 600)],
                                 format='JPEG',
                                 options={'quality': 80})
@@ -72,7 +72,7 @@ class Review(models.Model):
 
 class ReviewPhoto(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
-    image = ProcessedImageField(upload_to='images/articles/',null=True,
+    image = ProcessedImageField(upload_to='images/articles/',null=True,blank=True,
                                 processors=[ResizeToFill(800, 600)],
                                 format='JPEG',
                                 options={'quality': 80})
