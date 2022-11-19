@@ -41,7 +41,7 @@
 			<input type="text" class="form-control" name="Address" id="address" placeholder="숙소 주소를 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ location.location }}">
 			<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>
 		</div>
-		<input type="hidden" name="location" id="location">
+		<input type="hidden" name="location" id="location" value="{{ location.location }}">
 		<input type="hidden" name="y" id="lat" value="{{ location.y }}">
 		<input type="hidden" name="x" id="lng" value="{{ location.x }}">
 		<div id="map" style="width:100%;height:350px;" class='my-2 rounded' data-article-xd="{{ location.x }}" data-article-yd="{{ location.y }}" data-location-id="{{ location.location }}"></div>
