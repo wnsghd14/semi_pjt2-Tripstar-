@@ -197,3 +197,19 @@ a {
     right: 12px;
     margin: 0;
 }
+
+.region-img-btn {
+    opacity: 0.6;
+}
+
+.region-img-btn:hover {
+    opacity: 1.0;
+}
+
+.region-img-btn>span {
+    color: black;
+}
+
+.region-img-btn:hover>span {
+    color: white;
+}
