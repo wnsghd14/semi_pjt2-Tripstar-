@@ -13,7 +13,7 @@ class Theme(models.Model):
 class Region(models.Model):
     title = models.CharField(max_length=20)
     index_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(800, 600)], format='JPEG', options={'quality':100})
-    detail_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(300, 300)], format='JPEG', options={'quality':100})
+    detail_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(1600, 300)], format='JPEG', options={'quality':100})
 
 
 class Article(models.Model):

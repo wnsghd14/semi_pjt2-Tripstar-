@@ -197,7 +197,7 @@
                     </div>
                   {% endfor %}
                 {% else %}
-                  <div class="d-flex justify-content-center align-items-center h-100 rounded">
+                  <div class="d-lg-flex d-none justify-content-center align-items-center h-100 rounded ">
                     <h5 class='m-0'>평점이 없습니다.</h5>
                   </div>
                 {% endif %}
@@ -305,14 +305,14 @@
         </div>
         {% if request.user.is_authenticated %}
           {% if request.user in article.like_users.all %}
-           <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart-fill btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"> 위시리스트</i>
+           <i id="like-btn1" data-article-id="{{ article.pk }}" class="bi bi-heart-fill btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"> 위시리스트</i>
           {% else %}
-            <i id="like-btn" data-article-id="{{ article.pk }}" class="bi bi-heart btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"> 위시리스트</i>
+            <i id="like-btn1" data-article-id="{{ article.pk }}" class="bi bi-heart btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"> 위시리스트</i>
           {% endif %}
         {% else %}
           <a href="{% url 'accounts:login' %}" class="btn my-2" style="font-style: normal; height: 45px; border: 1px solid #4567d7; color: #4567d7;"><i class="bi bi-heart" style="font-style: normal;"> 위시리스트</i></a>
         {% endif %}
-        <p class="text-muted text-center m-0" style="font-size: 15px"><span class="ms-2" id="like-count">{{ article.like_users.count }}</span><span>명이 위시리스트에 담은 상품</span></p>
+        <p class="text-muted text-center m-0" style="font-size: 15px"><span class="ms-2" id="like-count1">{{ article.like_users.count }}</span><span>명이 위시리스트에 담은 상품</span></p>
         <hr>
         <div class="d-flex justify-content-end flex-wrap">
           <div>
@@ -359,6 +359,10 @@
 <script>
   // 좋아요 버튼
   const likeBtn = document.querySelector('#like-btn')
+  const likeBtn1 = document.querySelector('#like-btn1')
+  const likeCount = document.querySelector('#like-count')
+  const likeCount1 = document.querySelector('#like-count1')
+
   // 좋아요 버튼을 누르면 함수 실행
   likeBtn.addEventListener('click', function(event) {
     // 서버로 비동기 요청
@@ -368,14 +372,46 @@
     })
     .then(response => {
       if (response.data.isLiked === true) {
-        event.target.classList.add('bi-heart-fill')
-        event.target.classList.remove('bi-heart')
+        likeBtn.classList.add('bi-heart-fill')
+        likeBtn.classList.remove('bi-heart')
+        likeBtn1.classList.add('bi-heart-fill')
+        likeBtn1.classList.remove('bi-heart')
+
       } else {
-        event.target.classList.add('bi-heart')
-        event.target.classList.remove('bi-heart-fill')
+        likeBtn.classList.add('bi-heart')
+        likeBtn.classList.remove('bi-heart-fill')
+        likeBtn1.classList.add('bi-heart')
+        likeBtn1.classList.remove('bi-heart-fill')
       }
-      const likeCount = document.querySelector('#like-count')
       likeCount.innerText = response.data.likeCount
+      likeCount1.innerText = response.data.likeCount
+    })
+  })
+
+  // 좋아요 버튼을 누르면 함수 실행
+  likeBtn1.addEventListener('click', function(event) {
+    // 서버로 비동기 요청
+    axios({
+      method: 'get',
+      url: `/articles/${event.target.dataset.articleId}/like/`
+    })
+    .then(response => {
+      // event.target.classList.toggle('bi-heart')
+      // event.target.classList.toggle('bi-heart-fill')
+      if (response.data.isLiked === true) {
+        likeBtn.classList.add('bi-heart-fill')
+        likeBtn.classList.remove('bi-heart')
+        likeBtn1.classList.add('bi-heart-fill')
+        likeBtn1.classList.remove('bi-heart')
+
+      } else {
+        likeBtn.classList.add('bi-heart')
+        likeBtn.classList.remove('bi-heart-fill')
+        likeBtn1.classList.add('bi-heart')
+        likeBtn1.classList.remove('bi-heart-fill')
+      }
+      likeCount.innerText = response.data.likeCount
+      likeCount1.innerText = response.data.likeCount
     })
   })
 </script>
