@@ -24,14 +24,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-oxm@ck0!(i^r+(*xj3%mtyzv3^=sd4!%hxv1)=@4^u3q%q*mqs"
-
+SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
-
+# DEBUG = True
 if DEBUG: 
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 else:   
     DEFAULT_FILE_STORAGE = "pjt.storages.MediaStorage"
@@ -45,8 +50,24 @@ else:
         AWS_STORAGE_BUCKET_NAME,
         AWS_REGION,
     )
-ALLOWED_HOSTS = []
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DATABASE_NAME"), # .env 파일에 value 작성
+            "USER": "postgres",
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"), # .env 파일에 value 작성
+            "HOST": os.getenv("DATABASE_HOST"), # .env 파일에 value 작성
+            "PORT": "5432",
+        }
+    }    
 
+
+ALLOWED_HOSTS = [
+    # "Elastic Beanstalk URL",
+    "tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com", # 예시입니다. 본인 URL로 해주세요.
+    "127.0.0.1",
+    "localhost",
+]
 
 # Application definition
 
@@ -128,13 +149,12 @@ WSGI_APPLICATION = "pjt.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -173,7 +193,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = "staticfiles"
 import os
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)

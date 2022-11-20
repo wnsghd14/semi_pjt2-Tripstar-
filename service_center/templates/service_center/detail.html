@@ -9,8 +9,7 @@
   <div class="d-flex justify-content-end">
     <a href="" class="btn btn-outline-warning">수정하기</a>
   </div>
-  <!-- 운영자라면 -->
-  <!-- 답변 작성 폼-->
+  <!-- 운영자라면 --><!-- 답변 작성 폼-->
   {% if user.is_superuser %}
     <form id="comment-form" data-question-id="{{ question.pk }}">
       {% csrf_token %}

@@ -5,9 +5,9 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import *
 from django.http import JsonResponse
-from django.contrib.auth.forms import AuthenticationForm
+from accounts.models import *
 from articles.models import Reservation
 from django.contrib import messages
 
@@ -18,24 +18,21 @@ def signup(request):
         return redirect("articles:index")
     
     if request.method == "POST":
+        login_form = AuthenticationForm(request, data=request.POST)
+        if login_form.is_valid():
+            auth_login(request, login_form.get_user())
+            return redirect(request.GET.get('next') or 'articles:index')
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect("articles:index")
-
-        username = request.POST['username'].lower()
-        password = request.POST['password1']
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            auth_login(request, user)
-            return redirect(request.GET.get("next") or "articles:index")
     else:
         form = CustomUserCreationForm()
+        login_form = AuthenticationForm()
     context = {
         "form": form,
+        "login_form":login_form,
     }
     return render(request, "accounts/signup.html", context)
 
@@ -45,24 +42,23 @@ def login(request):
         return redirect("articles:index")
     
     if request.method == "POST":
+        # AuthenticationForm은 ModelForm이 아님!
+        login_form = AuthenticationForm(request, data=request.POST)
+        if login_form.is_valid():
+            auth_login(request, login_form.get_user())
+            messages.info(request,'로그인성공')
+            return redirect(request.GET.get('next') or 'articles:index')
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect("articles:index")
-
-        username = request.POST['username'].lower()
-        password = request.POST['password1']
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            auth_login(request, user)
-            return redirect(request.GET.get("next") or "articles:index")
     else:
         form = CustomUserCreationForm()
+        login_form = AuthenticationForm()
     context = {
         "form": form,
+        "login_form":login_form,
     }
     return render(request, "accounts/login.html", context)
 

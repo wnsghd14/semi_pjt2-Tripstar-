@@ -165,7 +165,7 @@ def create(request):
                 theme = get_object_or_404(Theme, pk=theme_pk)
                 article.theme.add(theme)
             messages.success(request, '성공적으로 등록되었습니다.')
-            return redirect("articles:index")
+            return redirect("articles:detail", article.pk)
     else:
         article_form = ArticleForm()
         article_photo_form = ArticlePhotoForm()
@@ -406,7 +406,7 @@ def review_create(request, article_pk):
             review.article = article
             review.save()
             messages.success(request, '성공적으로 등록되었습니다.')
-            return redirect("articles:detail", article_pk)
+            return redirect("articles:review_detail", review.pk)
     else:
         review_form = ReviewForm()
         review_photo_form = ReviewPhotoForm()
