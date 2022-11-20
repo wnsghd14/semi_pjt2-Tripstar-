@@ -3,11 +3,11 @@
 {% load django_bootstrap5 %}
 {% block body %}
   <div class="container">
-    <h1>검색결과</h1>
-    <h5>articles</h5>
+    <h1 class="mb-5">"{{ query }}" 검색 결과</h1>
+    <h5>상품 검색 결과</h5>
     <div class="row">
       {% for article in articles %}
-        <div class="col-2">
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
           <a class='text-decoration-none text-dark' href="{% url 'articles:detail' article.pk %}">
             <img class='w-100 rounded' src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}">
             <p>{{ article.title }}</p>
@@ -16,22 +16,26 @@
       {% endfor %}
     </div>
     <hr>
-    <h5>reviews</h5>
+    <h5>리뷰 검색 결과</h5>
     <div class="row">
       {% for review in reviews %}
-        <div class="col-2">
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
           <a href="{% url 'articles:review_detail' review.pk %}">
+            {% if review.reviewphoto_set.all.0.image %}
             <img class='w-100 rounded' src="{{ review.reviewphoto_set.all.0.image.url }}" alt="{{ review.reviewphoto_set.all.0.image }}">
+            {% else %}
+            <img class='w-100 rounded' src="{% static 'images/dummy.jpg' %}">
+            {% endif %}
             <p>{{ review.title }}</p>
           </a>
         </div>
       {% endfor %}
     </div>
     <hr>
-    <h5>users</h5>
+    <h5>회원 검색 결과</h5>
     <div class="row">
       {% for user in users %}
-        <div class="col-2">
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
           <a href="{% url 'accounts:detail' user.pk %}">
             {% if user.image %}
               <img class='w-100 rounded' src="{{ user.image.url }}" alt="{{ user.image }}">
