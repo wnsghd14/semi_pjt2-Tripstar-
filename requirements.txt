@@ -34,6 +34,7 @@ pickleshare==0.7.5
 pilkit==2.0
 Pillow==9.2.0
 prompt-toolkit==3.0.31
+psycopg2-binary==2.9.5
 pure-eval==0.2.2
 pycparser==2.21
 pydantic==1.10.2
