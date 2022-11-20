@@ -30,7 +30,7 @@
   <!-- 카테고리 버튼 -->
   <div class="row my-5 justify-content-center">
     {% for theme in themes %}
-      <div class="col-2 my-1">
+      <div class="col-3 sm-2 my-1">
         <a class='btn btn-outline-dark w-100' href="{% url 'articles:region_theme_articles' region.pk theme.pk %}">{{ theme.title }}</a>
       </div>
     {% endfor %}
@@ -40,10 +40,10 @@
   <h3>총 {{ articles|length }}개의 상품이 있습니다.</h3>
   <div class="row">
     {% for article in articles %}
-      <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+      <div class="col-sm-5 col-lg-3">
         <div class="card my-4">
           <div>
-            <img class='card-img-top' src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.image }}" style="height:140px;">
+            <img class='card-img-top' src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.image }}" style="height:200px; object-fit: cover;">
           </div>
           <div class="card-body">
             <h5 class="card-title">{{ article.title }}</h5>
