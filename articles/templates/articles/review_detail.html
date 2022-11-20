@@ -92,7 +92,7 @@
       <!-- 코멘트 내용 -->
       <div class="mt-3">
         {% for comment in comments %}
-          <div class="d-flex justify-content-between mb-2">
+          <div class="d-flex justify-content-between mb-3">
             {% if request.user.is_authenticated %}
               <div class="d-flex flex-column">
                 <div class="d-flex align-items-center">
@@ -105,7 +105,7 @@
                     {% endif %}
                     </a>
                   </div>
-                  <div>
+                  <div style="line-height: 120%;">
                     <div class="mb-0">
                       <a href="{% url 'accounts:detail' comment.user.pk %}">{{ comment.user.username }}</a><span class="ms-2" style="font-size: 15px">{{ comment.content }}</span>
                     </div>
@@ -120,7 +120,7 @@
                   <form action="{% url 'articles:comment_delete' review.pk comment.pk %}" method="POST">
                     {% csrf_token %}
                     <button class="btn btn-none border-0 p-0" type="submit">
-                    <img src="{% static 'images/bin.png' %}" style="width: 24px">
+                    <img src="{% static 'images/bin.png' %}" style="width: 24px; margin-bottom: 3px;">
                     </button>
                   </form>
                 </div>

@@ -1,7 +1,70 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
+{% load humanize %}
 
 {% block body %}
-
+<div class="row pb-5">
+    {% for review in reviews %}
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+        <a href="{% url 'articles:review_detail' review.pk %}">
+          <div>
+            {% if review.reviewphoto_set.all.0.image %}
+            <img src="{{ review.reviewphoto_set.all.0.image.url }}" alt="..." style="width: 250px; border-radius: 0.8rem;">
+            {% else %}
+            <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 250px; border-radius: 0.8rem;">
+            {% endif %}
+          </div>
+          <div class="ms-1">
+            <div class="my-2">
+              <a href="{% url 'accounts:detail' review.user.pk %}" class="text-dark">
+                <div class='d-flex mt-2'>
+                  {% if review.user.image %}
+                    <img src="{{ review.user.image.url }}" alt="{{ review.user.image }}" class="rounded-circle border border-2 mt-1" style="width: 30px; height: 30px;">
+                  {% else %}
+                    <img src="{% static 'images/no-avatar.jpg' %}" alt="no-avatar" class="rounded-circle border border-2 mt-1" style="width: 35px; height: 35px;" >
+                  {% endif %}
+                  <div class="d-flex flex-column ms-2">  
+                    <span>{{ review.user.username }}</span>
+                    <span style='font-size:.5rem;'>{{ review.get_grade_display }}</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <!-- 리뷰 타이틀 -->
+            <div>
+              <a href="{% url 'articles:review_detail' review.pk %}"><h5 class="mt-2 mb-1 text-dark" style="font-size: 15px;">{{ review.title }}</h5></a>
+            </div>
+            <!-- 좋아요, 댓글 -->
+            <div class="d-flex align-items-center">
+              <span></span>
+              <div class="text-muted fs-6">
+                <i class="bi bi-heart"></i>
+                  <span>{{ review.like_users.count }}</span>
+                <span class="bi bi-chat-dots-fill mx-3"> 
+                  <span>{{ review.comment_set.all.count }}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </a>
+          <a href="{% url 'articles:detail' review.article.pk %}">
+            <div class="mt-2 d-flex align-items-center mb-3">
+              <div>
+                {% if review.article.articlephoto_set.all.0.image %}
+                <img src="{{ review.article.articlephoto_set.all.0.image.url }}" style="width: 40px; height: 40px; border-radius: 0.4rem;">
+                {% else %}
+                <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 40px; height: 40px; border-radius: 0.4rem;">
+                {% endif %}
+              </div>
+              <div class="ms-3">
+                <div class="m-0 text-muted" style="line-height: 100%;">
+                  <span style="font-size: 13px;">{{ review.article.title }}<br>{{ review.article.price|intcomma }}원</span>
+                </div>
+              </div>
+            </div>
+          </a>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock body %}
