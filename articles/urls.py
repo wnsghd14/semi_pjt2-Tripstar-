@@ -23,6 +23,7 @@ urlpatterns = [
     path('<int:region_pk>/<int:theme_pk>/region_theme_articles_low/', views.region_theme_articles_low, name='region_theme_articles_low'),
     path('<int:region_pk>/<int:theme_pk>/region_theme_articles_high/', views.region_theme_articles_high, name='region_theme_articles_high'),
     path('<int:region_pk>/<int:theme_pk>/region_theme_articles_recent/', views.region_theme_articles_recent, name='region_theme_articles_recent'),
+    path('review_index/', views.review_index, name="review_index"),
     path("<int:article_pk>/review/create/", views.review_create, name="review_create"),
     path("review/<int:review_pk>/", views.review_detail, name="review_detail"),
     path("review/<int:review_pk>/delete/", views.review_delete, name="review_delete"),
