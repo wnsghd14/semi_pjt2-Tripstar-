@@ -19,9 +19,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 from django.contrib.auth import views as auth_views
-
+from articles import views
 urlpatterns = [
-    path("", views.base, name="base"),
+    path('', views.index, name='main'),
     path("admin/", admin.site.urls),
     path("articles/", include("articles.urls")),
     path("accounts/", include("accounts.urls")),

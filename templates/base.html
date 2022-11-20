@@ -102,23 +102,15 @@
             {% endfor %}
           </ul>
         </li>
-        <li><a href="#">리뷰모음</a></li>
+        <li style="min-width:65px;"><a href="#">리뷰모음</a></li>
         {% comment %} <li><a href="#">오션뷰🌊</a></li>
         <li><a href="#">글램핑</a></li> {% endcomment %}
         <li><a href="#">이벤트</a></li>
-        <li><a href="{% url 'service_center:index' %}">고객센터</a></li>
+        <li style="min-width:65px;"><a href="{% url 'service_center:index' %}">고객센터</a></li>
         </ul>
     </div>
     <hr class='my-0'>
-
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
-
+    {% include "messages.html" %}
     {% block banner %}
     {% endblock banner %}
 

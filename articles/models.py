@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill, Thumbnail
+from imagekit.processors import ResizeToFill, ResizeToFit, Thumbnail
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
@@ -13,7 +13,7 @@ class Theme(models.Model):
 class Region(models.Model):
     title = models.CharField(max_length=20)
     index_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(800, 600)], format='JPEG', options={'quality':100})
-    detail_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(1600, 300)], format='JPEG', options={'quality':100})
+    detail_image = ProcessedImageField(blank=False, upload_to='images/region/', processors=[ResizeToFill(300, 300)], format='JPEG', options={'quality':100})
 
 
 class Article(models.Model):
@@ -22,8 +22,8 @@ class Article(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = ProcessedImageField(upload_to='images/articles/',null=True,
-                                processors=[ResizeToFill(800, 600)],
+    image = ProcessedImageField(upload_to='images/articles/', null=True,
+                                processors=[ResizeToFill(1600, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -41,7 +41,10 @@ class Location(models.Model):
 
 class ArticlePhoto(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
-    image = models.ImageField(upload_to="images/articles", blank=True, null=True)
+    image = ProcessedImageField(upload_to='images/articles/', null=True, blank=True,
+                                processors=[ResizeToFill(800, 600)],
+                                format='JPEG',
+                                options={'quality': 80})
 
 
 class GradeSelector(models.IntegerChoices):
@@ -69,8 +72,10 @@ class Review(models.Model):
 
 class ReviewPhoto(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
-    image = models.ImageField(upload_to="images/reviews", blank=True, null=True)
-
+    image = ProcessedImageField(upload_to='images/articles/',null=True,blank=True,
+                                processors=[ResizeToFill(800, 600)],
+                                format='JPEG',
+                                options={'quality': 80})
 
 class Comment(models.Model):
     content = models.TextField()

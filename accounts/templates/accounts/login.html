@@ -1,29 +1,40 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% load socialaccount %}
+{% load widget_tweaks %}
 {% providers_media_js %}
 
 
 <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+
 <div style="margin-top:9rem; margin-bottom:3rem;">
     <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:6rem;' src="{% static 'images/Logo.png' %}" alt="Logo"></a>
 </div>
-  
+<div style="margin-bottom:10px; color:RGB(225, 255, 238);">
+    {% include "messages.html" %}
+</div>
 <div class="container left-panel-active">
     <!-- Sign Up -->
     <div class="container__form container--signup">
       <form action="" class="form" id="form1" method="POST">
         {% csrf_token %}
         <h2 class="form__title">Sign Up</h2>
-        <input type="text" placeholder="User" class="input" name="username"/>
-        <input type="email" placeholder="Email" class="input" name="email"/>
-        <input type="password" placeholder="Password" class="input" name="password1"/>
-        <input type="password" placeholder="Password Confirmation" class="input" name="password2"/>
+        {{ form.username|add_class:"input"|attr:"placeholder:ID" }}
+        {{ form.email|add_class:"input"|attr:"placeholder:email" }}
+        {{ form.password1|add_class:"input"|attr:"placeholder:비밀번호"|attr:"type:password" }}
+        {{ form.password2|add_class:"input"|attr:"placeholder:비밀번호확인"|attr:"type:password"|add_error_class:"error" }}
+        {% for error in form.password2.errors %}
+        <div class="error-message" style="font-size:12px; margin:0; padding:0; color:grey;">{{ error }}</div>
+        {% endfor %}
+        {% comment %} <input type="text" placeholder="User" class="input" name="username" value="{{ form.username.value|default_if_none:'' }}"/>
+        <input type="email" placeholder="Email" class="input" name="email" value="{{ form.email.value|default_if_none:'' }}"/>
+        <input type="password" placeholder="Password" class="input" name="password1" value="{{ form.password1.value|default_if_none:'' }}"/>
+        <input type="password" placeholder="Password Confirmation" class="input" name="password2" value="{{ form.password2.value|default_if_none:'' }}"/> {% endcomment %}
         <div class="d-flex justify-content-start">
             <input type="checkbox" name="is_seller" id="agree" value="yes agree"/>
             <label for="agree">Is_seller</label>
         </div>
-        <button class="btn" type="submit">Sign Up</button>
+        <button class="btn" style="margin-top:10px;" type="submit">Sign Up</button>
       </form>
     </div>
   
@@ -31,17 +42,22 @@
     <div class="container__form container--signin">
       <form action="" class="form" id="form2" method="POST">
         {% csrf_token %}
-        <h2 class="form__title">Sign In</h2>
-        <input type="text" placeholder="User" class="input" name="username"/>
-        <input type="password" placeholder="Password" class="input" name="password1"/>
-        <a href="" class="link">Forgot your password?</a>
+        <h2 class="form__title" style="margin-bottom:10px;">Sign In</h2>
+        {{ login_form.username|add_class:"input"|attr:"placeholder:ID"|add_error_class:"error" }}
+        {{ login_form.password|add_class:"input"|attr:"placeholder:비밀번호"|attr:"type:password"|add_error_class:"error"}}
+        {% for error in login_form.non_field_errors  %}
+        <div class="error-message" style="font-size:12px; margin:0; padding:0; color:grey;">{{ error }}</div>
+        {% endfor %}
+        {% comment %} <input type="text" placeholder="User" class="input" name="username"/>
+        <input type="password" placeholder="Password" class="input" name="password1"/> {% endcomment %}
+        <a href="" class="link" style="margin-top:1px; margin-bottom:2px; font-size:10px;">Forgot your password?</a>
         <div class="mt-3 mx-3 d-flex justify-content-between">
           <a href="{% provider_login_url 'kakao' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/kakao.png' %}"></a>
           <a href="{% provider_login_url 'google' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/google.png' %}"></a>
           <a href="{% provider_login_url 'github' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/github.png' %}"></a>
           <a href="{% provider_login_url 'naver' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/naver.png' %}"></a>
         </div>
-        <button class="btn" type="submit">Sign In</button>
+        <button class="btn" style="margin-top:10px;" type="submit">Sign In</button>
       </form>
     </div>
   
