@@ -80,7 +80,7 @@ def theme_create(request):
             form = ThemeForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save()
-                return redirect('articles:index')
+                return redirect('articles:theme_region_list')
         else:
             form = ThemeForm()
         context = {
@@ -257,7 +257,7 @@ def update(request, article_pk):
     # if request.user == article.user:
     if request.method == "POST":
         article_form = ArticleForm(request.POST, request.FILES, instance=article)
-        article_photo_form = ArticlePhotoForm(request.POST, request.FILES, instance=photos[0])
+        article_photo_form = ArticlePhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
         locationform = LocationForm(request.POST, instance=location)
         article.region = get_object_or_404(Region, pk=request.POST.get("region"))
@@ -273,7 +273,6 @@ def update(request, article_pk):
             article.save()
             for existing_theme in article.theme.all():
                 article.theme.remove(existing_theme)
-
             for theme_pk in request.POST.getlist("theme"):
                 theme = get_object_or_404(Theme, pk=theme_pk)
                 article.theme.add(theme)
@@ -281,10 +280,7 @@ def update(request, article_pk):
             return redirect("articles:detail", article_pk)
     else:
         article_form = ArticleForm(instance=article)
-        if photos:
-            article_photo_form = ArticlePhotoForm(instance=photos[0])
-        else:
-            article_photo_form = ArticlePhotoForm()
+        article_photo_form = ArticlePhotoForm()
     context = {
         'article': article,
         'location': get_object_or_404(Location, article=article),
