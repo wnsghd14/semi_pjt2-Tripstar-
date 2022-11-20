@@ -42,14 +42,14 @@
         {% for error in login_form.non_field_errors  %}
         <div class="error-message" style="font-size:12px; margin:0; padding:0; color:grey;">{{ error }}</div>
         {% endfor %}
-        <a href="" class="link">Forgot your password?</a>
+        <a href="" class="link" style="margin-top:1px; margin-bottom:2px; font-size:10px;">Forgot your password?</a>
         <div class="mt-3 mx-3 d-flex justify-content-between">
           <a href="{% provider_login_url 'kakao' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/kakao.png' %}"></a>
           <a href="{% provider_login_url 'google' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/google.png' %}"></a>
           <a href="{% provider_login_url 'github' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/github.png' %}"></a>
           <a href="{% provider_login_url 'naver' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/naver.png' %}"></a>
         </div>
-        <button class="btn" type="submit">Sign In</button>
+        <button class="btn" style="margin-top:10px;" type="submit">Sign In</button>
       </form>
     </div>
   
