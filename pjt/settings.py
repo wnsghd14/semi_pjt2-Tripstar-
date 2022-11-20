@@ -27,16 +27,37 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv("DEBUG") == "True"
-DEBUG = False
+DEBUG = True
 if DEBUG: 
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+    # MEDIA_URL = "/media/"
+    # MEDIA_ROOT = BASE_DIR / "media"
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.sqlite3',
+    #         'NAME': BASE_DIR / 'db.sqlite3',
+    #     }
+    # }
+    DEFAULT_FILE_STORAGE = "pjt.storages.MediaStorage"
+
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+
+    AWS_REGION = "ap-northeast-2"
+    AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (
+        AWS_STORAGE_BUCKET_NAME,
+        AWS_REGION,
+    )
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DATABASE_NAME"), # .env 파일에 value 작성
+            "USER": "postgres",
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"), # .env 파일에 value 작성
+            "HOST": os.getenv("DATABASE_HOST"), # .env 파일에 value 작성
+            "PORT": "5432",
         }
-    }
+    }    
 
 else:   
     DEFAULT_FILE_STORAGE = "pjt.storages.MediaStorage"
@@ -63,8 +84,8 @@ else:
 
 
 ALLOWED_HOSTS = [
-		# "Elastic Beanstalk URL",
-    "tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/", # 예시입니다. 본인 URL로 해주세요.
+    # "Elastic Beanstalk URL",
+    "tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com", # 예시입니다. 본인 URL로 해주세요.
     "127.0.0.1",
     "localhost",
 ]
@@ -193,7 +214,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = "staticfiles"
 import os
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
