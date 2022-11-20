@@ -97,7 +97,7 @@
               <div class="d-flex flex-column">
                 <div class="d-flex align-items-center">
                   <div class="me-2">
-                    <a class='text-dark' href="{% url 'accounts:detail' review.user.pk %}">
+                    <a class='text-dark' href="{% url 'accounts:detail' comment.user.pk %}">
                     {% if comment.user.image %}
                     <img style='width: 35px;' class="rounded-circle me-1" src="{{ comment.user.image.url }}" alt=""> 
                     {% else %}
@@ -155,7 +155,6 @@
 {% endblock body %}
 
 
-
 {% block script %}
 <script>
   // 리뷰 좋아요
@@ -179,4 +178,79 @@
     })
   })
 </script>
+{% comment %} 
+// 댓글 생성
+const commentForm = document.querySelector('#comment-form')
+const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value
+if (commentForm) {
+  commentForm.addEventListener('submit', event => {
+    event.preventDefault()
+    const reviewId = event.target.dataset.reviewId
+    const commentId = event.target.dataset.commentId
+    axios({
+      method: 'POST',
+      url: `/${reviewId}/comments/`,
+      headers: {'X-CSRFToken': csrfToken},
+      data: new FormData(commentForm)
+    })
+    .then(response => {
+      const commentCount = document.querySelectorAll('.comment-count')
+      const commentsBox = document.querySelector('#comments-box')
+      commentCount.forEach(cnt => {
+        cnt.innerText = response.data.commentCount
+      })
+      console.log(response.data.comment_pk)
+      const created_at = new moment(response.data.created_at)
+      const newDateFormat = created_at.format("YYYY-MM-DD HH:mm")
+      commentsBox.insertAdjacentHTML('beforeend', 
+        `<div class="d-flex justify-content-between mb-2">
+          {% if request.user.is_authenticated %}
+            <div class="d-flex flex-column">
+              <div class="d-flex align-items-center">
+                <div class="me-2">
+                  <a class='text-dark' href="/accounts/${response.data.user_pk}/">
+                  {% if comment.user.image %}
+                  <img style='width: 35px;' class="rounded-circle me-1" src="${response.data.user.image.url}" alt=""> 
+                  {% else %}
+                  <img style='width: 35px;' class="rounded-circle me-1" src="{% static 'images/no-avatar.jpg' %}" alt="">
+                  {% endif %}
+                  </a>
+                </div>
+                <div>
+                  <div class="mb-0">
+                    <a href="/accounts/${response.data.user_pk}/">${response.data.user.username}</a><span class="ms-2" style="font-size: 15px">${response.data.content}</span>
+                  </div>
+                  <div>
+                    <span class='text-secondary mt-0' style='font-size:.5rem;'>${newDateFormat}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if request.user == comment.user %}
+              <div class="d-flex align-items-center">
+                <form data-article-id="${reviewId}" data-comment-id="${commentId}">
+                  {% csrf_token %}
+                  <button class="btn btn-none border-0 p-0" type="submit">
+                  <img src="{% static 'images/bin.png' %}" style="width: 24px">
+                  </button>
+                </form>
+              </div>
+            {% endif %} 
+          {% else %}
+            <div class="d-flex flex-column">
+              <div>
+                <span>익명</span>
+                <span class='text-secondary' style='font-size:.7rem;'>${newDateFormat}</span>
+              </div>
+              <span class="fs-5">${response.data.content}</span>
+            </div>
+          {% endif %}
+        </div>`
+      )
+      
+      commentForm.reset()
+    })
+  })
+} {% endcomment %}
+
 {% endblock script %}
