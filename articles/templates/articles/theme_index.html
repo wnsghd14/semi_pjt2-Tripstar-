@@ -17,9 +17,12 @@
   <!-- 카테고리 버튼 -->
   <div class="row my-5 justify-content-center">
     {% for region in regions %}
-      <div class="col-2 my-1">
-        <a class='btn btn-outline-dark w-100' href="{% url 'articles:region_theme_articles' region.pk theme.pk %}">{{ region.title }}</a>
-      </div>
+    <div class="col-lg-2 col-md-4 col-sm-6 col-12 my-1">
+      <a type='button' class='w-100 position-relative p-0 region-img-btn opacity-100' href="{% url 'articles:region_theme_articles' region.pk theme.pk %}">
+        <img class='w-100 rounded border border-dark region-img-btn' src="{{ region.detail_image.url }}" alt="{{ region.detail_image_image }}">
+        <span class='position-absolute top-50 start-50 translate-middle'>{{ region.title }}</span>
+      </a>
+    </div>
     {% endfor %}
   </div>
 
