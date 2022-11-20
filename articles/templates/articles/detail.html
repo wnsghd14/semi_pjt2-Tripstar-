@@ -60,7 +60,6 @@
     <div class="d-lg-none">
       <div class="p-4 my-4 d-flex flex-column aside-box">
         <h3 class="mb-3" style="font-size: 22px">{{ article.price|intcomma }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
-        {% comment %} <a href="{% url 'articles:reservation_create' article.pk %}"> {% endcomment %}
         <a href="#reservationBox{{ article.pk }}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
           <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #4567d7; color: white;" value="예약하기">
         </a>
@@ -101,7 +100,7 @@
                 <label for="date" class="my-1">날짜</label>
                 <input class="form-control" type="text" name="date" id="daterange" value="">
               </div>
-              <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #45c6d7; color: white;" value="예약 완료하러 가기">
+              <input type="submit" class="btn w-100 mt-2 mb-1" style="height: 46px; background-color: #45c6d7; color: white;" value="예약 완료하러 가기">
             </form>
           </div>
         </div>
@@ -129,7 +128,7 @@
               </div>
             </a>
           </div>
-          <div>
+          <div> 
             <p class="mb-0 mt-2 text-muted fw-light" style="font-size: 14px">
               등록 일자 : {{ article.created_at.year }}년 {{ article.created_at.month}}월 {{ article.created_at.day }}일
             </p>
@@ -256,12 +255,10 @@
   </article>
     
   <!-- 가격, 예약, 위시리스트 -->
-  <!-- <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12"> -->
   <aside class="d-none d-lg-block col-4">
     <div style="position: sticky; top: 30px;">
       <div class="p-4 my-4 d-flex flex-column aside-box">
         <h3 class="mb-3" style="font-size: 22px">{{ article.price|intcomma }}원<span class="ms-2 text-muted" style="font-size: 15px">부터</span></h3>
-        {% comment %} <a href="{% url 'articles:reservation_create' article.pk %}"> {% endcomment %}
         <a href="#reservationBox{{ article.pk }}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
           <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #4567d7; color: white;" value="예약하기">
         </a>
@@ -302,7 +299,7 @@
                 <label for="date" class="my-1">날짜</label>
                 <input class="form-control" type="text" name="date" id="daterange" value="" />
               </div>
-              <input type="submit" class="btn w-100 my-1" style="height: 46px; background-color: #45c6d7; color: white;" value="예약 완료하러 가기">
+              <input type="submit" class="btn w-100 mt-2 mb-1" style="height: 46px; background-color: #45c6d7; color: white;" value="예약 완료하러 가기">
             </form>
           </div>
         </div>
@@ -348,6 +345,7 @@
 </div>
 {% endblock body %}
 
+
 {% block script %}
 <script>
   $(function() {
@@ -369,8 +367,6 @@
       url: `/articles/${event.target.dataset.articleId}/like/`
     })
     .then(response => {
-      // event.target.classList.toggle('bi-heart')
-      // event.target.classList.toggle('bi-heart-fill')
       if (response.data.isLiked === true) {
         event.target.classList.add('bi-heart-fill')
         event.target.classList.remove('bi-heart')

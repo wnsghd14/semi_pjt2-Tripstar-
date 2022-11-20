@@ -9,8 +9,10 @@
   <div class="col-sm-12 col-lg-6 col-md-8">
 
     <!-- 본문 & 댓글 -->
-
-    <div class="p-3 mb-4" style="border-radius: 0rem; border: 0px solid #b9b9b9; background-color: white;">
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'articles:detail' review.article.pk %}"><i class="bi bi-arrow-left me-3" style="font-size: 30px;"></i></a>
+    </div>
+    <div class="px-3 mb-4" style="border-radius: 0rem; border: 0px solid #b9b9b9; background-color: white;">
       <div class="d-flex justify-content-between">
         <div>
           <h2>{{ review.title }}</h2>
@@ -39,7 +41,7 @@
         </div>
         <div class="carousel-inner">
           {% for photo in review.reviewphoto_set.all %} 
-            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" style="height: 500px">
+            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" style="">
               <img src="{{ photo.image.url }}" class="d-block w-100 mx-auto rounded" alt="{{ photo.image }}">
             </div>
           {% endfor %}
@@ -96,7 +98,11 @@
                 <div class="d-flex align-items-center">
                   <div class="me-2">
                     <a class='text-dark' href="{% url 'accounts:detail' review.user.pk %}">
-                    <img style='width: 35px;' class="rounded-circle me-1" src="{{ review.user.image.url }}" alt="{{ review.user.image }}"> 
+                    {% if comment.user.image %}
+                    <img style='width: 35px;' class="rounded-circle me-1" src="{{ comment.user.image.url }}" alt=""> 
+                    {% else %}
+                    <img style='width: 35px;' class="rounded-circle me-1" src="{% static 'images/no-avatar.jpg' %}" alt="">
+                    {% endif %}
                     </a>
                   </div>
                   <div>
@@ -130,7 +136,7 @@
             {% endif %}
           </div>
           {% empty %}
-          <p>댓글이 없어요 ㅠ_ㅠ</p>
+          <p>댓글이 아직 없어요!</p>
         {% endfor %}
       </div>
 
@@ -139,13 +145,10 @@
         {% if request.user == review.user %}
         <form action="{% url 'articles:review_delete' review.pk %}" method="POST" class="form">
           {% csrf_token %}
-          <a href="{% url 'articles:review_update' review.pk %}" class="btn btn-outline-primary btn-sm">수정</a>
+          <a href="{% url 'articles:review_update' review.pk %}" class="btn btn-outline-secondary btn-sm">수정</a>
           <input class="btn btn-outline-danger btn-sm" type="submit" value="삭제">
         </form>
         {% endif %}
-        <div class="mx-1">
-          <a href="{% url 'articles:detail' review.article.pk %}" class="btn btn-outline-secondary btn-sm">뒤로</a>
-        </div>
       </div>
   </div>
 </div>
