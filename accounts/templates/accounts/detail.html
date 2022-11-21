@@ -39,7 +39,6 @@
           </h5>             
           <br>
           <div class="mx-2">
-
             <span class=""><b>게시물수</b></span>
             <span><a href=""></a>{{ user.review_set.all|length }}</span>
             <span class="ms-2"><b>팔로워</b></span>
@@ -47,6 +46,31 @@
             <span class="ms-2"><b>팔로잉</b></span>
             <span><a type="button" data-bs-toggle="modal" data-bs-target="#followingModal">{{ user.following.all|length }}</a></span>
           </div>
+          {% if request.user.is_seller %}
+            <button type="button" class="btn btn-outline-dark my-4" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              등록한 상품
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ request.user }}님이 등록한 상품</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <div class="row">
+                        {% for article in request.user.article_set.all %}
+                          <a class='text-dark col-6 my-3' href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
           <br>
           <div>
             <p class="mx-2">{{ user.content }}</p>
