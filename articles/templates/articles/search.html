@@ -3,7 +3,7 @@
 {% load django_bootstrap5 %}
 {% block body %}
   <div class="container">
-    <h1 class="mb-5">"{{ query }}" 검색 결과</h1>
+    <h1 class="mb-4">"{{ query }}" 검색 결과</h1>
     <h5>상품 검색 결과</h5>
     <div class="row">
       {% for article in articles %}
@@ -16,7 +16,7 @@
       {% endfor %}
     </div>
     <hr>
-    <h5>리뷰 검색 결과</h5>
+    <h5 class="mb-4">리뷰 검색 결과</h5>
     <div class="row">
       {% for review in reviews %}
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
@@ -32,13 +32,15 @@
       {% endfor %}
     </div>
     <hr>
-    <h5>회원 검색 결과</h5>
-    <div class="row">
+    <h5 class="mb-4">회원 검색 결과</h5>
+    <div class="row text-center">
       {% for user in users %}
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
           <a href="{% url 'accounts:detail' user.pk %}">
             {% if user.image %}
-              <img class='w-100 rounded' src="{{ user.image.url }}" alt="{{ user.image }}">
+            <img src="{{ user.image.url }}" alt="{{ user.image }}" style="width:90px; height:90px; border-radius:50%; border: 1px solid #e9e7e7;">
+            {% else %}
+            <img src="{% static 'images/no-avatar.jpg' %}" style="width:90px; height:90px; border-radius:50%; border: 1px solid #e9e7e7;">
             {% endif %}
             <p>{{ user.username }}</p>
           </a>
