@@ -322,7 +322,7 @@ def like(request, pk):
 def region_theme_articles_grade(request, region_pk, theme_pk):
     region = get_object_or_404(Region, pk=region_pk)
     theme = get_object_or_404(Theme, pk=theme_pk)
-    articles = Article.objects.filter(Q(region=region) & Q(theme=theme)).annotate(grade_avg=Avg('review__grade'))
+    articles = Article.objects.filter(Q(region=region) & Q(theme=theme)).annotate(grade_avg=Avg('review__grade')).annotate(int_grade_avg=Cast('grade_avg', IntegerField())).order_by('-int_grade_avg')
     context = {
         'region': region,
         'theme': theme,
