@@ -173,7 +173,7 @@ def block_user_block(request, pk):
     return redirect("accounts:block_user")
 
 def pay_history(request, user_pk):
-    reservations = Reservation.objects.filter(user=user_pk)
+    reservations = Reservation.objects.filter(user=user_pk).order_by('-pk')
     context = {
         'reservations':reservations,
         
