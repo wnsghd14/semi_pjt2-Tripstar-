@@ -109,7 +109,7 @@
   <h3 class='my-3'>베스트 상품</h3>
   <div class='mb-5 row'>
     {% for best_article in best_articles %}
-      <div class="col-4 position-relative">
+      <div class="col-4 position-relative lately">
         <a href="{% url 'articles:detail' best_article.pk %}">
           <img class='w-100 h-100 rounded position-relative' src="{{ best_article.articlephoto_set.all.0.image.url }}" alt="{{ best_article.articlephoto_set.all.0.image }}">
         </a>
