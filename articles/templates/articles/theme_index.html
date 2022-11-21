@@ -38,7 +38,7 @@
           <div class="card-body">
             <h5 class="card-title text-nowrap text-truncate">{{ article.title }}</h5>
             <p>{{ article.price|intcomma }}원</p>
-            <a href="{% url 'articles:detail' article.pk %}" class="btn btn-primary">더 보기</a>
+            <a style='background-color: #4567d7; color: white;' href="{% url 'articles:detail' article.pk %}" class="btn">더 보기</a>
           </div>
         </div>
       </div>

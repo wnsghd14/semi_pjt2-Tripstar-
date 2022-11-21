@@ -209,3 +209,11 @@ a {
 .region-img-btn:hover>span {
     color: white;
 }
+
+.developer {
+    opacity: 1.0;
+}
+
+.developer:hover {
+    opacity: 0.6;
+}
