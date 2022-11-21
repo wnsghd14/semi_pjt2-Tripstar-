@@ -10,9 +10,9 @@
         <a href="{% url 'articles:review_detail' review.pk %}">
           <div>
             {% if review.reviewphoto_set.all.0.image %}
-            <img src="{{ review.reviewphoto_set.all.0.image.url }}" alt="..." style="width: 250px; border-radius: 0.8rem;">
+            <img src="{{ review.reviewphoto_set.all.0.image.url }}" alt="..." style="width: 250px; height: 200px; border-radius: 0.8rem;">
             {% else %}
-            <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 250px; border-radius: 0.8rem;">
+            <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 250px; height: 200px; border-radius: 0.8rem;">
             {% endif %}
           </div>
           <div class="ms-1">
