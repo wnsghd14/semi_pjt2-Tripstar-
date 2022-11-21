@@ -5,6 +5,7 @@
 {% load humanize %}
 {% load static %}
 {% block css %}
+  <link rel="stylesheet" href="{% static 'css/calender.css' %}">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 {% endblock css %}
 
@@ -123,7 +124,7 @@
                 {% else %}
                   <img style='width:10%;' class="rounded-circle me-1" src="{% static 'images/no-avatar.jpg' %}" alt="{{ article.user.image }}">
                 {% endif %}                
-                <h5 class='mx-1 my-0 text-center'>{{ article.user.username }}</h5>
+                <h5 class='mx-1 my-0 text-center'>{{ article.user.username }}</hh>
               </div>
             </a>
           </div>
@@ -274,7 +275,7 @@
                 <div class="form-group w-100 me-2 mb-1">
                   <label for="adult" class="mb-1">어른</label>
                   <select name="adult" class="form-select" id="id_adult">
-                    <option value="0" selected>0</option>
+                    <option value="0" selected="">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -342,7 +343,7 @@
     </div>
   </aside>
 </div>
-
+{% endblock body %}
 
 
 {% block script %}
@@ -421,7 +422,7 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script> -->
 
 <!-- kakao API 키 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=360d4e9d8c7d23e1a238112e47caf46f"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3144d0c758dd4362c375eb78f6763f63&libraries=services"></script>
 <script>
   const x = document.querySelector('#x').innerText
   const y = document.querySelector('#y').innerText
@@ -452,4 +453,3 @@
 
 
 {% endblock script %}
-{% endblock body %}
