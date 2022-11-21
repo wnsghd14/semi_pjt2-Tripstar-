@@ -50,9 +50,9 @@ def kakaoPayLogic(request, pk):
         "total_amount": total_price, # Integer Field로 맞춰줘야함       
         "vat_amount": "200", # total_amount = vat_amount 보다 값이 커야 함
         "tax_free_amount": "0",        
-        "approval_url": "http://127.0.0.1:8000/cart/paySuccess",
-        "fail_url": "http://127.0.0.1:8000/cart/payFail",
-        "cancel_url": "http://127.0.0.1:8000/cart/payCancel",
+        "approval_url": "http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/cart/paySuccess",
+        "fail_url": "http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/cart/payFail",
+        "cancel_url": "http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/cart/payCancel",
     }
 
     _res = requests.post(_url, data=_data, headers=_headers)
