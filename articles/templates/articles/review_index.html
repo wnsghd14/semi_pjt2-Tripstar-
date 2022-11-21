@@ -6,13 +6,13 @@
 {% block body %}
 <div class="row pb-5">
     {% for review in reviews %}
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
-        <a href="{% url 'articles:review_detail' review.pk %}">
+      <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+        <a class='w-100' href="{% url 'articles:review_detail' review.pk %}">
           <div>
             {% if review.reviewphoto_set.all.0.image %}
-            <img src="{{ review.reviewphoto_set.all.0.image.url }}" alt="..." style="width: 250px; height: 200px; border-radius: 0.8rem;">
+            <img src="{{ review.reviewphoto_set.all.0.image.url }}" alt="..." style="width: 100%; border-radius: 0.8rem;">
             {% else %}
-            <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 250px; height: 200px; border-radius: 0.8rem;">
+            <img src="{% static 'images/dummyimg.jpeg'%}" style="width: 100%; height: 100%; border-radius: 0.8rem;">
             {% endif %}
           </div>
           <div class="ms-1">
@@ -48,22 +48,22 @@
             </div>
           </div>
         </a>
-          <a href="{% url 'articles:detail' review.article.pk %}">
-            <div class="mt-2 d-flex align-items-center mb-3">
-              <div>
-                {% if review.article.articlephoto_set.all.0.image %}
-                <img src="{{ review.article.articlephoto_set.all.0.image.url }}" style="width: 40px; height: 40px; border-radius: 0.4rem;">
-                {% else %}
-                <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 40px; height: 40px; border-radius: 0.4rem;">
-                {% endif %}
-              </div>
-              <div class="ms-3">
-                <div class="m-0 text-muted text-nowrap text-truncate" style=" width:190px; line-height: 100%;">
-                  <span style="font-size: 13px;" class="text-nowrap text-truncate">{{ review.article.title }}<br>{{ review.article.price|intcomma }}원</span>
-                </div>
+        <a href="{% url 'articles:detail' review.article.pk %}">
+          <div class="mt-2 d-flex align-items-center mb-3">
+            <div>
+              {% if review.article.articlephoto_set.all.0.image %}
+              <img src="{{ review.article.articlephoto_set.all.0.image.url }}" style="width: 40px; height: 40px; border-radius: 0.4rem;">
+              {% else %}
+              <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 40px; height: 40px; border-radius: 0.4rem;">
+              {% endif %}
+            </div>
+            <div class="ms-3">
+              <div class="m-0 text-muted text-nowrap text-truncate" style=" width:190px; line-height: 100%;">
+                <span style="font-size: 13px;" class="text-nowrap text-truncate">{{ review.article.title }}<br>{{ review.article.price|intcomma }}원</span>
               </div>
             </div>
-          </a>
+          </div>
+        </a>
       </div>
     {% endfor %}
   </div>
