@@ -2,7 +2,9 @@
 {% load static %}
 {% load django_bootstrap5 %}
 {% load humanize %}
-
+{% block css %}
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock css %}
 {% block banner %}
   <div class='position-relative'>
     <img class='w-100' src="{{ region.detail_image.url }}" alt="{{ region.detail_image }}">
@@ -49,7 +51,7 @@
             <img class='card-img-top' src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.image }}" style="height:200px; object-fit: cover;">
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ article.title }}</h5>
+            <h5 class="card-title text-nowrap text-truncate">{{ article.title }}</h5>
             <p>{{ article.price|intcomma }}원</p>
             <a href="{% url 'articles:detail' article.pk %}" class="btn btn-primary">더 보기</a>
           </div>

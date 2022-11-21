@@ -74,9 +74,9 @@
           </a>
         </div>
         <!-- 리뷰, 상품 타이틀 -->
-        <div>
-          <h5 class="ms-3">{{ review.article.title }}</h5>
-          <p class="ms-3">{{ review.title }}</p>
+        <div style="width:280px;">
+          <h5 class="ms-3 text-nowrap text-truncate">{{ review.article.title }}</h5>
+          <p class="ms-3 text-nowrap text-truncate">{{ review.title }}</p>
         </div>
       </div>
       {% endfor %}
@@ -91,8 +91,8 @@
           <a href="{% url 'articles:detail' article.pk %}"><img class="rounded" src="{{ article.articlephoto_set.all.0.image.url }}" alt="{{ article.articlephoto_set.all.0.image }}" style="width:300px; height:170px; object-fit: cover;"></a>
         </div>
         <!-- 위시리스트 타이틀 -->
-        <div>
-          <h5 class="ms-3 mb-3">{{ article.title }}</h5>
+        <div style="width:280px;">
+          <h5 class="ms-3 mb-3 text-nowrap text-truncate">{{ article.title }}</h5>
         </div>
       </div>
       {% endfor %}

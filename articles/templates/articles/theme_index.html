@@ -2,7 +2,9 @@
 {% load static %}
 {% load django_bootstrap5 %}
 {% load humanize %}
-
+{% block css %}
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock css %}
 {% block banner %}
   <div class='position-relative'>
     <img class='w-100' src="{{ theme.image.url }}" alt="{{ theme.image }}">
@@ -30,11 +32,11 @@
   <h3>총 {{ articles|length }}개의 상품이 있습니다.</h3>
   <div class="row">
     {% for article in articles %}
-      <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+      <div class="col-sm-5 col-lg-3">
         <div class="card my-4">
-          <img src="{{ article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ article.image }}" style="height:140px;">
+          <img src="{{ article.articlephoto_set.all.0.image.url }}" class="card-img-top" alt="{{ article.image }}" style="height:200px; object-fit: cover;">
           <div class="card-body">
-            <h5 class="card-title">{{ article.title }}</h5>
+            <h5 class="card-title text-nowrap text-truncate">{{ article.title }}</h5>
             <p>{{ article.price|intcomma }}원</p>
             <a href="{% url 'articles:detail' article.pk %}" class="btn btn-primary">더 보기</a>
           </div>

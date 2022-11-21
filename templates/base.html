@@ -10,8 +10,8 @@
     <title>Trip-Star</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="static/favicon/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'favicon/favicon.ico' %}" type="image/x-icon">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     {% bootstrap_css %}
     {% block css %}{% endblock css %}
@@ -107,7 +107,7 @@
         <li  class='w-100'style="min-width:65px;"><a href="{% url 'articles:review_index' %}">리뷰모음</a></li>
         {% comment %} <li><a href="#">오션뷰🌊</a></li>
         <li><a href="#">글램핑</a></li> {% endcomment %}
-        <li class='w-100'><a href="#">이벤트</a></li>
+        <li class='w-100'><a href="/articles/game/">이벤트</a></li>
         <li class='w-100' style="min-width:65px;"><a href="{% url 'service_center:index' %}">고객센터</a></li>
         </ul>
     </div>
