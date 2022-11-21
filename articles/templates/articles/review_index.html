@@ -33,7 +33,7 @@
             </div>
             <!-- 리뷰 타이틀 -->
             <div>
-              <a href="{% url 'articles:review_detail' review.pk %}"><h5 class="mt-2 mb-1 text-dark" style="font-size: 15px;">{{ review.title }}</h5></a>
+              <a class='w-100' href="{% url 'articles:review_detail' review.pk %}"><h5 class="mt-2 mb-1 text-dark card-ellipsis" style="font-size: 15px;">{{ review.title }}</h5></a>
             </div>
             <!-- 좋아요, 댓글 -->
             <div class="d-flex align-items-center">
@@ -57,9 +57,10 @@
               <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 40px; height: 40px; border-radius: 0.4rem;">
               {% endif %}
             </div>
-            <div class="ms-3">
-              <div class="m-0 text-muted text-nowrap text-truncate" style=" width:190px; line-height: 100%;">
-                <span style="font-size: 13px;" class="text-nowrap text-truncate">{{ review.article.title }}<br>{{ review.article.price|intcomma }}원</span>
+            <div class="ms-3 w-100">
+              <div class="m-0 text-muted w-75" >
+                <p style="font-size: 13px;" class="m-0 card-ellipsis">{{ review.article.title }}</p>
+                <p style="font-size: 13px;" class='m-0'>{{ review.article.price|intcomma }}원</p>
               </div>
             </div>
           </div>
