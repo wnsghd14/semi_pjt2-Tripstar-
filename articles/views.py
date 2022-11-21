@@ -317,16 +317,6 @@ def like(request, pk):
     }
     return JsonResponse(context)
 
-def region_theme_articles(request, region_pk, theme_pk):
-    region = get_object_or_404(Region, pk=region_pk)
-    theme = get_object_or_404(Theme, pk=theme_pk)
-    context = {
-        'region': region,
-        'theme': theme,
-        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme))
-    }
-    return render(request, 'articles/region_theme_articles.html', context)
-
 def region_theme_articles_grade(request, region_pk, theme_pk):
     region = get_object_or_404(Region, pk=region_pk)
     theme = get_object_or_404(Theme, pk=theme_pk)

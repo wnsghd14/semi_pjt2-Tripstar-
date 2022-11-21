@@ -8,7 +8,17 @@
     <h1>{{ region.title }}에서 {{ theme.title }}</h1>
     <div class="dropdown">
       <button class="btn btn-white dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        평점 높은순
+        {% if request.resolver_match.url_name == "region_theme_articles_grade" %}
+          평점 높은 순
+        {% elif request.resolver_match.url_name == "region_theme_articles_review" %}
+          후기 많은 순
+        {% elif request.resolver_match.url_name == "region_theme_articles_low" %}
+          낮은 가격 순
+        {% elif request.resolver_match.url_name == "region_theme_articles_high" %}
+          높은 가격 순
+        {% elif request.resolver_match.url_name == "region_theme_articles_recent" %}
+          신상품순
+        {% endif %}
       </button>
       <ul class="dropdown-menu dropdown-menu-white">
         <li>
