@@ -121,7 +121,7 @@
         <a href="{% url 'articles:detail' best_article.pk %}">
           <img class='w-100 h-100 rounded position-relative' src="{{ best_article.articlephoto_set.all.0.image.url }}" alt="{{ best_article.articlephoto_set.all.0.image }}">
         </a>
-        <p style='font-size: 3rem;' class='position-absolute bottom-0 text-white m-1 ms-2'>{{ forloop.counter }}</p>
+        <p style='font-size: 3rem;' class='position-absolute bottom-0 text-white m-1 ms-2'>{{ forloop.counter }} {{ best_article.reservation_set.count }}</p>
       </div>
     {% endfor %}
   </div>
