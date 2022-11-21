@@ -50,7 +50,7 @@
         {% endfor %}
         {% comment %} <input type="text" placeholder="User" class="input" name="username"/>
         <input type="password" placeholder="Password" class="input" name="password1"/> {% endcomment %}
-        <a href="" class="link" style="margin-top:1px; margin-bottom:2px; font-size:10px;">Forgot your password?</a>
+        <a href="{% url 'accounts:password_reset' %}" class="link" style="margin-top:1px; margin-bottom:2px; font-size:10px;">Forgot your password?</a>
         <div class="mt-3 mx-3 d-flex justify-content-between">
           <a href="{% provider_login_url 'kakao' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/kakao.png' %}"></a>
           <a href="{% provider_login_url 'google' method='oauth2' %}"><img style="width: 50px;" src="{% static 'images/google.png' %}"></a>
