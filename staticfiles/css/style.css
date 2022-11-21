@@ -1,10 +1,13 @@
+.min-container {
+    min-height: 60vh;
+}
+
 .contents_container {
     /*display: flex;*/
     flex-wrap: wrap;
     justify-content: space-between;
     display: none;
 }
-
 
 .contents_container.active {
     display: flex;
@@ -208,4 +211,12 @@ a {
 
 .region-img-btn:hover>span {
     color: white;
+}
+
+.developer {
+    opacity: 1.0;
+}
+
+.developer:hover {
+    opacity: 0.6;
 }
