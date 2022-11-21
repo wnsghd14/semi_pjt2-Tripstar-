@@ -20,17 +20,19 @@
     </select>
     <br>
     <label for="theme" class="mb-1">테마선택(복수선택가능)</label>
-    <div class='d-flex mt-1 mb-3'>
+    <div class='row mt-1 mb-3'>
       {% for theme in themes %}
-      <div class="form-check me-3" id='theme'>
-				{% if theme in article.theme.all %}
+			<div class="col-3">
+				<div class="form-check" id='theme'>
+					{% if theme in article.theme.all %}
         	<input class="form-check-input" name="theme" type="checkbox" value="{{ theme.pk }}" id="{{ theme.title }}" checked >
-				{% else %}
+					{% else %}
 					<input class="form-check-input" name="theme" type="checkbox" value="{{ theme.pk }}" id="{{ theme.title }}" >
-				{% endif %}
-        <label class="form-check-label" for="{{ theme.title }}">
-          {{ theme.title }}
-        </label>
+					{% endif %}
+					<label class="form-check-label" for="{{ theme.title }}">
+						{{ theme.title }}
+					</label>
+				</div>
       </div>
       {% endfor %}
     </div>

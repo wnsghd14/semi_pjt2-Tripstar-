@@ -29,7 +29,7 @@
     <nav class="navbar navbar-expand-lg pt-4">
       <div class="container-fluid container">
         <div class="col-lg-4 col-12 d-flex justify-content-between">
-          <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:3rem;' src="{% static 'images/Logo.png' %}" alt="Logo"></a>
+          <a style="font-size:30px;" href="{% url 'articles:index' %}"><img style='height:2.5rem;' src="{% static 'images/Logo.png' %}" alt="Logo"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -116,16 +116,42 @@
     {% block banner %}
     {% endblock banner %}
 
-    <div class="container my-5 pb-5">
+    <div class="container my-5 pb-5 min-container">
       {% block body %}{% endblock body %}
     </div>
 
     <!-- footer-->
-    <div style="width:100%; height:4rem;" class='bg-light fixed-bottom d-flex justify-content-center align-items-center flex-column'>
-      <p class='m-0'>
-        김수빈, 김재형, 김지연, 백동원, 최준홍 Supported by HyperGrowth 
-      </p>
-      <a class='text-decoration-underline' href="{% url 'service_center:index' %}">고객 센터</a>
+    <div style="width:100%; height:10rem;" class='bg-light justify-content-center align-items-center d-flex flex-column border-top'>
+      <div class="me-3">
+        <img style='width:10rem;' src="{% static 'images/Logo.png' %}" alt="Logo">
+      </div>
+      <div class="d-flex mx-5">
+        <div class='d-flex flex-column m-1'>
+          <a href="https://github.com/buzzzlight">
+            <img style='width: 2.5rem;' class='rounded-circle developer' src="{% static 'images/김수빈.jfif' %}" alt="김수빈">
+          </a>
+        </div>
+        <div class='d-flex flex-column m-1'>
+          <a href="https://github.com/jhkim9028">
+            <img style='width: 2.5rem;' class='rounded-circle developer' src="{% static 'images/김재형.png' %}" alt="김재형">
+          </a>
+        </div>
+        <div class='d-flex flex-column m-1'>
+          <a href="https://github.com/jn-97">
+            <img style='width: 2.5rem;' class='rounded-circle developer' src="{% static 'images/김지연.jfif' %}" alt="김지연">
+          </a>
+        </div>
+        <div class='d-flex flex-column m-1'>
+          <a href="https://github.com/dongwonbaek">
+            <img style='width: 2.5rem;' class='rounded-circle developer' src="{% static 'images/백동원.jfif' %}" alt="백동원">
+          </a>
+        </div>
+        <div class='d-flex flex-column m-1'>
+          <a href="https://github.com/wnsghd14">
+            <img style='width: 2.5rem;' class='rounded-circle developer' src="{% static 'images/최준홍.jfif' %}" alt="최준홍">
+          </a>
+        </div>
+      </div>
     </div>
   
 

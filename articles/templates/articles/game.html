@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-  <div class="d-flex justify-content-center">
-    <img style="width: 650px;" src="{% static 'images/event.JPG' %}">
-  </div>
+
+<div class="row-cols-12 d-flex justify-content-center mt-0">
+    <img style="min-width:400px; height: 100px;" src="{% static 'images/event.JPG' %}">
+</div>
 
     <script src="{% static 'js/phaser.min.js' %}"></script>
     <script>
-        var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {preload: preload, create: create, update: update});
+        var game = new Phaser.Game(480, 320, Phaser.AUTO,null, {preload: preload, create: create, update: update});
 
         var ball;
         var paddle;

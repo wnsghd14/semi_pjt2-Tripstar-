@@ -21,7 +21,7 @@ def index(request):
         "regions": Region.objects.all(),
         "themes": Theme.objects.all(),
         'recent_articles': recent_articles,
-        'best_articles': Article.objects.all().annotate(grade_avg=Avg('review__grade')).order_by('-grade_avg')[:3]
+        'best_articles': Article.objects.all().annotate(reservation_count=Count('reservation')).order_by('-reservation_count')[:3]
     }
     return render(request, "articles/index.html", context)
 
