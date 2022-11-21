@@ -9,6 +9,8 @@ import json
 import math
 from collections import deque
 from django.contrib import messages
+from django.db.models import IntegerField
+from django.db.models.functions import Cast
 
 # Create your views here.
 def index(request):
@@ -345,7 +347,7 @@ def region_theme_articles_low(request, region_pk, theme_pk):
     context = {
         'region': region,
         'theme': theme,
-        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme)).order_by('price')
+        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme)).annotate(int_price=Cast('price', IntegerField())).order_by('int_price')
     }
     return render(request, 'articles/region_theme_articles.html', context)
 
@@ -355,7 +357,7 @@ def region_theme_articles_high(request, region_pk, theme_pk):
     context = {
         'region': region,
         'theme': theme,
-        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme)).order_by('-price')
+        'articles': Article.objects.filter(Q(region=region) & Q(theme=theme)).annotate(int_price=Cast('price', IntegerField())).order_by('-int_price')
     }
     return render(request, 'articles/region_theme_articles.html', context)
 
