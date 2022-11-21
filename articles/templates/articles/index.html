@@ -97,7 +97,7 @@
     <div class='mb-5 row'>
         {% for recent_article in recent_articles %}
           <div class="col-3 lately">
-            <a href="{% url 'articles:detail' recent_article.0 %}"><img class='w-100 rounded' src="{{ recent_article.1 }}/" alt="{{ recent_article.1 }}"></a>
+            <a href="{% url 'articles:detail' recent_article.0 %}"><img class='w-100 rounded' src="{{ recent_article.1 }}" alt="{{ recent_article.1 }}"></a>
           </div>
         {% empty %}
           <h5>최근에 본 상품이 없습니다.</h5>
