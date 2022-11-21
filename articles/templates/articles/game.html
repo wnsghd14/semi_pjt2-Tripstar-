@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+  <div class="d-flex justify-content-center">
+    <img style="width: 650px;" src="{% static 'images/event.jpg' %}">
+  </div>
+
     <script src="{% static 'js/phaser.min.js' %}"></script>
     <script>
         var game = new Phaser.Game(480, 320, Phaser.AUTO, null, {preload: preload, create: create, update: update});
