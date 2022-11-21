@@ -21,7 +21,7 @@ def index(request):
         "regions": Region.objects.all(),
         "themes": Theme.objects.all(),
         'recent_articles': recent_articles,
-        'best_articles': Article.objects.all().annotate(grade_avg=Avg('review__grade')).order_by('-grade_avg')[:3]
+        'best_articles': Article.objects.all().annotate(grade_avg=Avg('review__grade')).order_by('grade_avg')[:3]
     }
     return render(request, "articles/index.html", context)
 
@@ -510,7 +510,7 @@ def search(request):
     if "q" in request.GET:
         query = request.GET.get("q")
         articles = Article.objects.order_by("-pk").filter(
-            Q(title__contains=query) | Q(content__contains=query)
+            Q(title__contains=query)
         )
         reviews = Review.objects.order_by("-pk").filter(
             Q(title__contains=query) | Q(content__contains=query)
