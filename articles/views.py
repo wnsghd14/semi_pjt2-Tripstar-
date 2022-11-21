@@ -565,6 +565,12 @@ def reservation_create(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == "POST":
         reservation_form = ReservationForm(request.POST, request.FILES)
+        if request.POST.get('name') == '':
+            messages.warning(request, '이름을 입력해주세요')
+            return redirect('articles:detail', article_pk)
+        if request.POST.get('adult') == '0':
+            messages.warning(request, '최소 인원은 1명입니다.')
+            return redirect('articles:detail', article_pk)
         if reservation_form.is_valid():
             reservation = reservation_form.save(commit=False)
             reservation.user = request.user

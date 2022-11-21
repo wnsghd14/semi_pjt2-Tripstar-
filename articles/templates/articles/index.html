@@ -71,13 +71,23 @@
                       <img src="https://dummyimage.com/310x310/000000/c4c4c4" style="height: 200px; width: 292px;" class="card-img-top">
                     {% endif %}
                   </div>
-                  <div class="card-body text-dark text-nowrap text-truncate" style="padding:10px; width:260px;">
-                    {{ article.title }}
-                    <span style='font-size:0.8rem;'>
-                      <i class="bi bi-star-fill" style="margin-right:3px; color:#ebeb07;"></i>{{ article.grade_avg|floatformat }}
-                    </span>
-                    <h4 class="pt-1 card-ellipsis">[{{ article.title }}]{{ article.content }}</h4>
-                    <p style='font-size:0.8rem;' class='text-secondary m-0'>{{ article.price|intcomma }}원 <br>{{ article.review.all|length }}개의 후기<p>
+                  <div class="card-body text-dark text-nowrap text-truncate" style="padding:10px; width:292px;">
+                    
+                    <p class="mb-1"style="font-size:14px; color:gray;">{% for t in article.theme.all %}
+                        {{ t.title }}
+                        {% endfor %}
+                        · {{ article.region.title }}</p>
+                   
+                    
+                    <h4 class="pt-1 card-ellipsis">{{ article.title }}</h4>
+                   
+                        <p style='font-size:0.8rem;' class='text-secondary m-0 d-flex'>{{ article.price|intcomma }}원</p>
+                        <div class="d-flex justify-content-between">
+                        <p style='font-size:0.8rem;' class='text-secondary m-0 d-flex'>{{ article.review.all|length }}개의 후기<p>
+                        <span style='font-size:0.8rem;' class='text-secondary m-0 d-flex'>
+                            <i class="bi bi-star-fill" style="color:#ebeb07;"></i>{{ article.grade_avg|floatformat }}
+                        </span>
+                    </div>
                   </div>
                 </a>
               </div>
