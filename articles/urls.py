@@ -17,7 +17,6 @@ urlpatterns = [
     path('<int:article_pk>/update', views.update, name="update"),
     path('<int:article_pk>/delete', views.delete, name="delete"),
     path('<int:pk>/like/', views.like, name="like"),
-    path('<int:region_pk>/<int:theme_pk>/region_theme_articles/', views.region_theme_articles, name='region_theme_articles'),
     path('<int:region_pk>/<int:theme_pk>/region_theme_articles_grade/', views.region_theme_articles_grade, name='region_theme_articles_grade'),
     path('<int:region_pk>/<int:theme_pk>/region_theme_articles_review/', views.region_theme_articles_review, name='region_theme_articles_review'),
     path('<int:region_pk>/<int:theme_pk>/region_theme_articles_low/', views.region_theme_articles_low, name='region_theme_articles_low'),

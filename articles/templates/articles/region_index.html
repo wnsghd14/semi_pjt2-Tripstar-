@@ -31,7 +31,7 @@
   <div class="row my-5 justify-content-center">
     {% for theme in themes %}
       <div class="col-lg-2 col-md-4 col-sm-6 col-12 my-1">
-        <a type='button' class='w-100 position-relative p-0 region-img-btn text-dark opacity-100' href="{% url 'articles:region_theme_articles' region.pk theme.pk %}">
+        <a type='button' class='w-100 position-relative p-0 region-img-btn text-dark opacity-100' href="{% url 'articles:region_theme_articles_grade' region.pk theme.pk %}">
           <img class='w-100 rounded border border-dark region-img-btn' src="{{ theme.image.url }}" alt="{{ theme.image }}">
           <span class='position-absolute top-50 start-50 translate-middle '>{{ theme.title }}</span>
         </a>
