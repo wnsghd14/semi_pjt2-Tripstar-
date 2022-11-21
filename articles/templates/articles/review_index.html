@@ -58,8 +58,8 @@
                 {% endif %}
               </div>
               <div class="ms-3">
-                <div class="m-0 text-muted" style="line-height: 100%;">
-                  <span style="font-size: 13px;">{{ review.article.title }}<br>{{ review.article.price|intcomma }}원</span>
+                <div class="m-0 text-muted text-nowrap text-truncate" style=" width:190px; line-height: 100%;">
+                  <span style="font-size: 13px;" class="text-nowrap text-truncate">{{ review.article.title }}<br>{{ review.article.price|intcomma }}원</span>
                 </div>
               </div>
             </div>
