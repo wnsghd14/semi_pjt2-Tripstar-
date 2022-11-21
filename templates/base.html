@@ -70,9 +70,11 @@
                   <li>
                     <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
                   </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url 'articles:theme_region_list' %}">지역, 테마 목록</a>
-                  </li>
+                  {% if request.user.is_superuser %}
+                    <li>
+                      <a class="dropdown-item" href="{% url 'articles:theme_region_list' %}">지역, 테마 목록</a>
+                    </li>
+                  {% endif %}
                 </ul>
               </div>
             {% else %}
@@ -88,25 +90,25 @@
     <!-- 메뉴 바 -->
     <div id="menu" class="container-fluid container">
       <ul class="main1 justify-content-between">
-        <li style="border: none;"><a href="#">지역별</a>
+        <li class='w-100' style="border: none;"><a href="#">지역별</a>
           <ul class="main2" style="background-color: rgba(256, 256, 256, 0.9); border-radius: 5px; box-shadow: 0px 5px 10px 1px rgb(169 169 169 / 50%);">
             {% for region in regions %}
               <li><a href="{% url 'articles:region_index' region.pk %}">{{ region.title }}</a></li>
             {% endfor %}
           </ul>
         </li>
-        <li style="border: none;"><a href="#">테마별</a>
+        <li class='w-100' style="border: none;"><a href="#">테마별</a>
           <ul class="main2" style="background-color: rgba(256, 256, 256, 0.9); border-radius: 5px; box-shadow: 0px 5px 10px 1px rgb(169 169 169 / 50%);">
             {% for theme in themes %}
               <li><a href="{% url 'articles:theme_index' theme.pk %}">{{ theme.title }}</a></li>
             {% endfor %}
           </ul>
         </li>
-        <li style="min-width:65px;"><a href="{% url 'articles:review_index' %}">리뷰모음</a></li>
+        <li  class='w-100'style="min-width:65px;"><a href="{% url 'articles:review_index' %}">리뷰모음</a></li>
         {% comment %} <li><a href="#">오션뷰🌊</a></li>
         <li><a href="#">글램핑</a></li> {% endcomment %}
-        <li><a href="#">이벤트</a></li>
-        <li style="min-width:65px;"><a href="{% url 'service_center:index' %}">고객센터</a></li>
+        <li class='w-100'><a href="#">이벤트</a></li>
+        <li class='w-100' style="min-width:65px;"><a href="{% url 'service_center:index' %}">고객센터</a></li>
         </ul>
     </div>
     <hr class='my-0'>
