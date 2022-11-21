@@ -28,7 +28,7 @@ class CustomUserChangeForm(UserChangeForm):
     password = None
     class Meta:
         model = get_user_model()
-        fields = ["username", "email", "content", "image"]
+        fields = ["username", "email", "content", "image", 'is_seller']
         labels = {
             'username': 'ID',
             'email': '이메일',
