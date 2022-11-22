@@ -2,7 +2,7 @@
 ## 서비스 화면
 [github](https://github.com/wnsghd14/semi_pjt2)
 [배포사이트](http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/)
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e40b6f8b-76b9-4f47-9bba-01a37bd3f8d8/Untitled.png)
+
 
 ## 프로젝트 자료
 
