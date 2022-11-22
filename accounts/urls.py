@@ -17,5 +17,8 @@ urlpatterns = [
     path("<int:pk>/block_user_block/", views.block_user_block, name="block_user_block"),
     path("password/", views.password, name='password'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(),name="password_reset_dont"),
+    path('password_reset_confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(),name="password_reset_confirm"),
+    path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
     path('<int:user_pk>/pay_history', views.pay_history, name="pay_history"),
 ]
