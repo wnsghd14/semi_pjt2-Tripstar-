@@ -3,12 +3,23 @@
 [github](https://github.com/wnsghd14/semi_pjt2)
 [배포사이트](http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/)
 
+서비스 이름 : TRIPSTAR
+
+서비스 소개 : 대한민국 팔도 여행 아이템 추천
+
+제작 기간 : 2022-11-09 ~ 2022-11-22
+
+팀 구성 : 14팀 TRIPSTAR / 최준홍, 백동원, 김재형, 김수빈, 김지연
+
+⚙️ Stack
+
 
 ## 프로젝트 자료
 
 [14팀. 트립스타](https://www.notion.so/14-ce358022f6fd4e30bdb5d7a93f4e5966) 
 
 ## 화면구성
+
 
 ## 프로젝트 후기
 
