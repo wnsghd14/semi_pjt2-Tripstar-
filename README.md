@@ -33,6 +33,8 @@
 
 <img src ="README.assets/화면설계(Figma).png" width="600" height="338"/>
 
+### 서비스 화면
+
 ![ezgif.com-gif-maker](README.assets/ezgif.com-gif-maker.gif)
 
 <img src ="README.assets/pay.gif" width="600" height="338"/>
@@ -40,6 +42,10 @@
 ![login](README.assets/login.gif)
 
 <img title="" src="assets/3083e225089cbf2b8d42a3388890b3ae12fcccbe.gif" alt="" data-align="inline" width="597">
+
+### 개발 이슈
+
+<img src="assets/d477574356fbfceeeadd0ab926df6b8a87a641f0.PNG" title="" alt="" width="602">
 
 ## 프로젝트 후기
 
