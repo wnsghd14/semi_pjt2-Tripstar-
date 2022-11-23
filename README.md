@@ -25,6 +25,10 @@
 
 ![pay](https://user-images.githubusercontent.com/112358700/203456010-4dad63fb-3883-419b-bb9a-a70378313ca3.gif)
 
+
+
+![article_detail](README.assets/article_detail.gif)
+
 ## 프로젝트 후기
 
 - 김지연
