@@ -5,12 +5,13 @@
 
 ## 서비스 이름 : TRIPSTAR
 
-### 서비스 소개 : 대한민국 팔도 여행 아이템 추천
+### 서비스 소개 : 대한민국 팔도 여행 아이템 추천 및 판매
 
 ### 제작 기간 : 2022-11-09 ~ 2022-11-22
 
-### 팀 구성 : 14팀 TRIPSTAR / 최준홍(프론트엔드), 백동원(프론트엔드), 김재형(백엔드), 김수빈(프론트엔드), 김지연(백엔드)
+### 팀 구성 : 최준홍(프론트엔드), 백동원(프론트엔드), 김재형(백엔드), 김수빈(프론트엔드), 김지연(백엔드)
 
+### 
 ⚙️ Stack
 
 <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=ffffff"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=ffffff"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=Git&logoColor=ffffff"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=ffffff"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=ffffff"/>
