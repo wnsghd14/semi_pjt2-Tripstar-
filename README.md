@@ -43,6 +43,22 @@
 
 <img title="" src="assets/3083e225089cbf2b8d42a3388890b3ae12fcccbe.gif" alt="" data-align="inline" width="597">
 
+
+
+### 반응형 페이지
+
+<img title="" src="assets/c7a4f191eea0c376db8e4b95a0a48eeedb29c598.jpg" alt="" width="230">
+
+<img title="" src="assets/258e6d6dc53d8adbb250b61920e1bde88a8af0a0.jpg" alt="" width="234">
+
+<img title="" src="assets/41db250662b1ffbb8c0fd8957baebcaed62b42c0.jpg" alt="" width="237">
+
+<img title="" src="assets/84fedc2c2764e4bae0a3d03738476ac4438c8cfe.jpg" alt="" width="240">
+
+<img title="" src="assets/14a227a3b91f5acc584aca3bade02c95a09d8349.jpg" alt="" width="241">
+
+
+
 ### 개발 이슈
 
 <img src="assets/d477574356fbfceeeadd0ab926df6b8a87a641f0.PNG" title="" alt="" width="602">
