@@ -5,6 +5,8 @@
 
 ![Logo](README.assets/Logo.png)
 
+[TRIPSTAR-AWS-ElasticBeanstalk](http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/)
+
 ## 🔖 Table of Contents
 
 - Contributors
