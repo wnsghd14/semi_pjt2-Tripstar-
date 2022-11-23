@@ -31,7 +31,7 @@
 
 ![login](README.assets/login.gif)
 
- ![](assets/3083e225089cbf2b8d42a3388890b3ae12fcccbe.gif)
+ <img title="" src="assets/3083e225089cbf2b8d42a3388890b3ae12fcccbe.gif" alt="" data-align="inline" width="597">
 
 ## 프로젝트 후기
 
