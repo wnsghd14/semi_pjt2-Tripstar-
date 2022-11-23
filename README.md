@@ -47,17 +47,27 @@
 
 
 
-### 반응형 페이지
+### 모바일 반응형 페이지
 
-<img title="" src="assets/c7a4f191eea0c376db8e4b95a0a48eeedb29c598.jpg" alt="" width="230">
+#### 메인 페이지
 
-<img title="" src="assets/258e6d6dc53d8adbb250b61920e1bde88a8af0a0.jpg" alt="" width="234">
+<img src ="README.assets/모바일-메인페이지.png" width="700" height="350"/>
 
-<img title="" src="assets/41db250662b1ffbb8c0fd8957baebcaed62b42c0.jpg" alt="" width="237">
+#### 상품 상세페이지
 
-<img title="" src="assets/84fedc2c2764e4bae0a3d03738476ac4438c8cfe.jpg" alt="" width="240">
+<img src ="README.assets/모바일-디테일.png" width="700" height="350"/>
 
-<img title="" src="assets/14a227a3b91f5acc584aca3bade02c95a09d8349.jpg" alt="" width="241">
+#### 예약 및 결제 페이지
+
+<img src ="README.assets/모바일-예약결제.png" width="1000" height="350"/>
+
+#### 리뷰모음 및 이벤트 페이지
+
+<img src ="README.assets/모바일-리뷰모음및이벤트.png" width="700" height="350"/>
+
+#### 검색 및 문의 페이지
+
+<img src ="README.assets/모바일-검색및문의.png" width="1000" height="350"/>
 
 
 
