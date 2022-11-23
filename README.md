@@ -21,6 +21,8 @@
 
 ## 화면구성
 
+![unknown_2022_11_23-10_31_1_AdobeExpress](README.assets/unknown_2022_11_23-10_31_1_AdobeExpress.gif)
+
 
 ## 프로젝트 후기
 
