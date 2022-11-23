@@ -25,9 +25,15 @@
 
 ## 화면구성
 
+### ERD 설계
+<img src ="README.assets/ERD.png" width="600" height="338"/>
+
+### Figma 설계
+<img src ="README.assets/화면설계(Figma).png" width="600" height="338"/>
+
 ![ezgif.com-gif-maker](README.assets/ezgif.com-gif-maker.gif)
 
-<img src ="README.assets/pay.gif" width="50" height="50"/>
+<img src ="README.assets/pay.gif" width="600" height="338"/>
 
 ![login](README.assets/login.gif)
 
