@@ -1,4 +1,4 @@
-# 세미 프로젝트 2
+# TRIPSTAR 프로젝트
 
 ![image-20221123132920976](README.assets/image-20221123132920976.png)
 
