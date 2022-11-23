@@ -25,6 +25,8 @@
 
 <img src ="README.assets/pay.gif" width="50" height="50"/>
 
+![login](README.assets/login.gif)
+
 ## 프로젝트 후기
 
 - 김지연
