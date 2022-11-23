@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 세미 프로젝트 2
 
 ![image-20221123132920976](README.assets/image-20221123132920976.png)
@@ -13,47 +12,6 @@
 - 대한민국 팔도 여행 아이템 추천 및 판매
 
 ### 서비스 제작 기간
-=======
-# ⭐ 서비스 이름 → TRIPSTAR
-
-<aside> 💡 대한민국 팔도 여행 아이템 추천 및 판매 | 제작기간 : 2022-11-09 ~ 2022-11-22
-</aside>
-
-![Logo](README.assets/Logo.png)
-
-[TRIPSTAR-AWS-ElasticBeanstalk](http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/)
-
-## 🔖 Table of Contents
-
-- Contributors
-- 기술 스택
-- 팀원 소개 및 담당 역할
-- 주요 기능 소개
-- 화면 구성
-- 프로젝트 후기
-
-## 👨‍👩‍👧‍👦 Contibutors
-
-- 최준홍
-
-[wnsghd14 - Overview](https://github.com/wnsghd14)
-
-- 백동원
-
-[dongwonbaek - Overview](https://github.com/dongwonbaek)
-
-- 김수빈
-
-[buzzzlight - Overview](https://github.com/buzzzlight)
-
-- 김재형
-
-[jhkim9028 - Overview](https://github.com/jhkim9028)
-
-- 김지연
-
-[jn-97 - Overview](https://github.com/jn-97)
->>>>>>> eccdd554e21568a50138f954c5a7430865ee79eb
 
 - 2022-11-09 ~ 2022-11-22
 
@@ -128,7 +86,6 @@
 - 고객센터
 - 리뷰모음 페이지
 - 최근 본 상품과 베스트 상품
-<<<<<<< HEAD
 - 카카오 맵 api 사용
 
 ## 프로젝트 자료
@@ -136,35 +93,16 @@
 [14팀. 트립스타](https://www.notion.so/14-ce358022f6fd4e30bdb5d7a93f4e5966) 
 
 ## 기획 단계
-=======
-- 카카오 맵 api을 활용하여 상품의 위치정보 제공
-
-## 📚프로젝트 자료
-
-[14팀. 트립스타](https://www.notion.so/14-ce358022f6fd4e30bdb5d7a93f4e5966) 
-
-## 기획단계
->>>>>>> eccdd554e21568a50138f954c5a7430865ee79eb
 
 ### ERD Model 설계
 
-<<<<<<< HEAD
 <img src ="README.assets/ERD.png" width="600" height="700"/>
-=======
-<img src ="README.assets/erd-16691787227863.png" width="600" height="338"/>
->>>>>>> eccdd554e21568a50138f954c5a7430865ee79eb
 
 ### Template 설계
 
 <img src ="README.assets/화면설계(Figma).png" width="600" height="338"/>
 
-<<<<<<< HEAD
 ## 화면 구성
-=======
-## 화면구성
-
-### 서비스 화면
->>>>>>> eccdd554e21568a50138f954c5a7430865ee79eb
 
 ### 서비스 화면 전반
 
@@ -184,11 +122,7 @@
 
 <img src ="README.assets/pay.gif" width="600" height="338"/>
 
-<<<<<<< HEAD
 ### 리뷰 모음 및 이벤트
-=======
-<img src ="README.assets/article_detail.gif" width="600" height="338"/>
->>>>>>> eccdd554e21568a50138f954c5a7430865ee79eb
 
 <img title="" src="assets/3083e225089cbf2b8d42a3388890b3ae12fcccbe.gif" alt="" data-align="inline" width="597">
 
