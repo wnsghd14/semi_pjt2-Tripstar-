@@ -21,7 +21,7 @@
 
 ## 화면구성
 
-![unknown_2022_11_23-10_31_1_AdobeExpress](README.assets/unknown_2022_11_23-10_31_1_AdobeExpress.gif)
+![ezgif.com-gif-maker](README.assets/ezgif.com-gif-maker.gif)
 
 ![pay](https://user-images.githubusercontent.com/112358700/203456010-4dad63fb-3883-419b-bb9a-a70378313ca3.gif)
 
