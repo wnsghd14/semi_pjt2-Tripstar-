@@ -1,10 +1,9 @@
 # ⭐ 서비스 이름 → TRIPSTAR
 
 <aside> 💡 대한민국 팔도 여행 아이템 추천 및 판매 | 제작기간 : 2022-11-09 ~ 2022-11-22
-
 </aside>
 
-![Logo.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/56cee46a-61c6-47c9-9e4f-39c13f367db0/Logo.png)
+![Logo](README.assets/Logo.png)
 
 ## 🔖 Table of Contents
 
