@@ -23,7 +23,7 @@
 
 ![ezgif.com-gif-maker](README.assets/ezgif.com-gif-maker.gif)
 
-<img src ="README.assets/pay.gif" width="50" height="50"/>
+<img src ="README.assets/pay.gif" width="600" height="338"/>
 
 ![login](README.assets/login.gif)
 
