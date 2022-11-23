@@ -1,4 +1,10 @@
-# semi_pjt2
+# ⭐ 서비스 이름 → TRIPSTAR
+
+<aside> 💡 대한민국 팔도 여행 아이템 추천 및 판매 | 제작기간 : 2022-11-09 ~ 2022-11-22
+
+</aside>
+
+![Logo.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/56cee46a-61c6-47c9-9e4f-39c13f367db0/Logo.png)
 
 ## 🔖 Table of Contents
 
@@ -30,19 +36,6 @@
 - 김지연
 
 [jn-97 - Overview](https://github.com/jn-97)
-
-## 서비스 화면
-
-[github](https://github.com/wnsghd14/semi_pjt2)
-[배포사이트](http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/)
-
-## 서비스 이름 : TRIPSTAR
-
-### 서비스 소개 : 대한민국 팔도 여행 아이템 추천 및 판매
-
-### 제작 기간 : 2022-11-09 ~ 2022-11-22
-
-### 팀 구성 : 최준홍(프론트엔드), 백동원(프론트엔드), 김재형(백엔드), 김수빈(프론트엔드), 김지연(백엔드)
 
 ### 
 
@@ -96,7 +89,7 @@
 
 ### ERD 설계
 
-<img src ="README.assets/ERD.png" width="600" height="338"/>
+<img src ="README.assets/erd-16691787227863.png" width="600" height="338"/>
 
 ### Figma 설계
 
