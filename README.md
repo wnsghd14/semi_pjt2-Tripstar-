@@ -3,7 +3,7 @@
 ![image-20221123132920976](README.assets/image-20221123132920976.png)
 
 - [TripStar github](https://github.com/wnsghd14/semi_pjt2)
-- [TripStar (배포 사이트)](http://tripstar-env.eba-rvqec9xz.ap-northeast-2.elasticbeanstalk.com/)
+TripStar (배포 사이트)(현재는닫힌상태입니다.)
 
 ## ⭐ TRIPSTAR
 
